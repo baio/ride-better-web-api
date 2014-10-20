@@ -1,0 +1,60 @@
+{
+  "settings": {
+    "analysis": {
+      "filter": {
+        "label_ngram": {
+          "max_gram": 20,
+          "min_gram": 3,
+          "type": "edge_ngram"
+        }
+      },
+      "analyzer": {
+        "ngram_index": {
+          "filter": [
+            "lowercase",
+            "edge_ngram"
+          ],
+          "tokenizer": "whitespace"
+        },
+        "whitespace_index": {
+          "filter": [
+            "lowercase"
+          ],
+          "tokenizer": "whitespace"
+        },
+        "whitespace_search": {
+          "filter": [
+            "lowercase"
+          ],
+          "tokenizer": "whitespace"
+        }
+      }
+    }
+  },
+  "mappings": {
+    "spot": {
+      "properties": {
+        "geo": {
+          "type": "geo_point",
+          "lat_lon": true
+        },
+        "label": {
+          "fields": {
+            "autocomplete": {
+              "search_analyzer": "whitespace_search",
+              "index_analyzer": "ngram_index",
+              "type": "string"
+            },
+            "country": {
+              "search_analyzer": "whitespace_search",
+              "index_analyzer": "whitespace_index",
+              "index": "not_analyzed",
+              "type": "string"
+            }
+          },
+          "type": "multi_field"
+        }
+      }
+    }
+  }
+}

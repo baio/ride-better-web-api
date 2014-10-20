@@ -1,0 +1,63 @@
+dev:
+  server:
+    port: 8001
+    opts:
+      cors:
+        headers: ['authorization', 'Content-Type']
+  mongo:
+    uri: mongodb://localhost/surf-better-dev
+  catbox:
+    mongo :
+      partition : "surf-better-dev-cache"
+  auth:
+    user : "baio"
+  msw:
+    key: "ni5E1bOpV0KM3Hl31ZBkkQ6jAXXEaJHL"
+  elasticsearch:
+    host : "localhost:9200"
+debug:
+  server:
+    port: 8001
+    opts:
+      cors:
+        headers: ['authorization', 'Content-Type']
+  mongo:
+    uri: mongodb://localhost/surf-better-dev
+  catbox:
+    mongo :
+      partition : "surf-better-dev-cache"
+  msw:
+    key: "ni5E1bOpV0KM3Hl31ZBkkQ6jAXXEaJHL"
+  elasticsearch:
+    host : "localhost:9200"
+  secret : "allBestthings1979"
+test:
+  server:
+    port: 8002
+  mongo:
+    uri: mongodb://localhost/surf-better-test
+  auth:
+    user : "baio"
+  msw:
+    key: "ni5E1bOpV0KM3Hl31ZBkkQ6jAXXEaJHL"
+  elasticsearch:
+    host : "localhost:9200"
+    log : "trace"
+  catbox:
+    mongo :
+      partition : "surf-better-dev-cache"
+stage:
+  server:
+    opts:
+      cors:
+        headers: ['authorization', 'Content-Type']
+  catbox:
+    mongo :
+      host : ds063809.mongolab.com
+      port : 63809
+      username : baio
+      password : "123"
+      partition : "heroku_app28714524"
+  msw:
+    key: "ni5E1bOpV0KM3Hl31ZBkkQ6jAXXEaJHL"
+  secret : "allBestthings1979"
