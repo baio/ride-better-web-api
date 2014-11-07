@@ -8,12 +8,13 @@ module.exports = (spot) ->
   q =
     spot : spot
     date : $gte : dateFrom
-  Q(reportModel.find(q).sort(date : 1).limit(25).exec()).then (res) ->
+  Q(reportModel.find(q).sort(date : -1).limit(25).exec()).then (res) ->
     res.map (m) ->
-      r = m.toObject()
+      r = m.toObject virtuals: true
+      console.log ">>>reports-get.coffee:14", r.date.unix
       delete r._id
       delete r.__v
       user : r.user
       conditions : r.data
-      time : r.date
+      time : r.date.unix
       operate : r.data.operate

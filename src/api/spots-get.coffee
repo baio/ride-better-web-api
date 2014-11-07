@@ -13,6 +13,7 @@ module.exports = (geo, term) ->
     match = match : "label.autocomplete" : {"query" : term, "fuzziness": "AUTO"}
 
   if geo
+    console.log ">>>spots-get.coffee:16", geo
     q =
       sort : [
         "_score",
@@ -24,6 +25,7 @@ module.exports = (geo, term) ->
             order : "asc",
             unit : "km"
         }]
+
     if match
       q.query =
         function_score :
@@ -32,8 +34,11 @@ module.exports = (geo, term) ->
               script : if geo then "doc['geo'].value != null && doc['geo'].distanceInKm(#{geo[0]}, #{geo[1]}) < 50 ? _score * 1000 : _score" else "_score"
           ]
           query : match
-  else if match
+  else
     q = query : match
+
+  if match
+    q.highlight =  fields : {"label.autocomplete" : {} }
 
   if q
     s =
@@ -42,11 +47,13 @@ module.exports = (geo, term) ->
       body : q
     client.search(s).then (res) ->
       res.hits.hits.map (m) ->
+        console.log ">>>spots-get.coffee:45", m
         r = m._source
-        r.id = m._id
+        r.code = m._id
         if m.sort
           r.dist = Math.round m.sort[1]
-        r.label = null if !r.label
+        if m.highlight
+          r.label = m.highlight["label.autocomplete"][0]
         r
   else
     Q([])

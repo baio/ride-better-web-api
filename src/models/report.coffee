@@ -44,4 +44,9 @@ reportSchema.virtual("date.str").get( ->
   moment.utc(@date).format("YYYY-MM-DDTHH:mm:ss")
 )
 
+reportSchema.virtual("date.unix").get( ->
+  moment.utc(@date).unix()
+)
+
+
 module.exports = mongoose.model("report", reportSchema)
