@@ -1,7 +1,7 @@
 "use strict"
 
 joi = require "joi"
-forecastApi = require "../../api/forecast-get"
+snapshotApi = require "../../api/snapshot-get"
 hapi = require "hapi"
 
 paramsValidationSchema =
@@ -9,15 +9,16 @@ paramsValidationSchema =
 
 module.exports =
   method : "GET"
-  path : "/forecast/{spot}"
+  path : "/snapshot/{spot}"
   config :
     auth : false
     validate : params : paramsValidationSchema
   handler : (req, resp) ->
     spot = req.params.spot
-    forecastApi(spot).then (res) ->
+    snapshotApi(spot).then (res) ->
       resp res
     , (err) ->
+      console.log ">>>snapshot-get.coffee:21", err
       if err.message == "Not Found"
         resp hapi.Error.notFound err
       else

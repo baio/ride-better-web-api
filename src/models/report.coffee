@@ -24,13 +24,21 @@ reportSchema = mongoose.Schema
   spot :
     type : String
     required : true
-  code :
-    type : String
-    required : true
-    enum : ["no", "yes", "dunno"]
-  message :
-    type : String
-    match : /^[.*]{3, 150}$/
+  data :
+    operate :
+      type : Boolean
+      default : true
+    tracks :
+      type : String
+      enum : ["best", "good", "normal", "bad", "worst"]
+    snowing :
+      type : String
+      enum : ["best", "good", "normal", "bad", "worst"]
+    crowd :
+      type : String
+      enum : ["best", "good", "normal", "bad", "worst"]
+    text :
+      type : String
 
 reportSchema.virtual("date.str").get( ->
   moment.utc(@date).format("YYYY-MM-DDTHH:mm:ss")

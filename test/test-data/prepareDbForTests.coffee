@@ -2,24 +2,15 @@
 
 async = require "async"
 models = require "../../src/models"
-#sbForecast = require "./surf-better-forecast"
-#sbSpot = require "./surf-better-spot"
-mswSpot = require "./msw-spot"
+skimapData = "./skimap"
 
 module.exports = (done) ->
 
-  async.waterfall [
+  async.parallel [
     (ck) -> models.spot.remove {}, (err) -> ck(err)
-    (ck) ->
-      mswSpotModel = new models.spot mswSpot
-      mswSpotModel.save (err) -> ck(err)
-  ], done
+    (ck) -> models.report.remove {}, (err) -> ck(err)
+    (ck) -> models.skimap.remove {}, (err) -> ck(err)
+  ], ->
+    skimap = new models.skimap id : "1936", "latitude" : 54.773888,  "longitude" : 58.526112
+    skimap.save(done)
 
-###
-    (ck) ->
-      pgSpotModel = new models.spot pgSpot
-      pgSpotModel.save (err) -> ck(err)
-    (ck) ->
-      pfSpotModel = new models.spot pfSpot
-      pfSpotModel.save (err) -> ck(err)
-###

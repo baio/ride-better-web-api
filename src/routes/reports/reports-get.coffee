@@ -1,5 +1,5 @@
 "use strict"
-report = require "../../api/report-get"
+reportsGet = require "../../api/reports-get"
 moment = require "moment"
 hapi = require "hapi"
 joi = require "joi"
@@ -9,13 +9,10 @@ paramsValidationSchema =
 
 module.exports =
   method : "GET"
-  path : "/report/{spot}"
+  path : "/reports/{spot}"
   config :
     auth : false
     validate : params : paramsValidationSchema
   handler : (req, resp) ->
-    report(req.params.spot).then resp, (err) ->
-      if err.message == "404"
-        resp hapi.Error.notFound()
-      else
+    reportsGet(req.params.spot).then resp, (err) ->
         resp hapi.Error.badRequest err

@@ -5,10 +5,10 @@ dev:
       cors:
         headers: ['authorization', 'Content-Type']
   mongo:
-    uri: mongodb://localhost/surf-better-dev
+    uri: mongodb://localhost/ride-better-dev
   catbox:
     mongo :
-      partition : "surf-better-dev-cache"
+      partition : "ride-better-dev-cache"
   auth:
     user : "baio"
   msw:
@@ -22,10 +22,10 @@ debug:
       cors:
         headers: ['authorization', 'Content-Type']
   mongo:
-    uri: mongodb://localhost/surf-better-dev
+    uri: mongodb://localhost/ride-better-dev
   catbox:
     mongo :
-      partition : "surf-better-dev-cache"
+      partition : "ride-better-dev-cache"
   msw:
     key: "ni5E1bOpV0KM3Hl31ZBkkQ6jAXXEaJHL"
   elasticsearch:
@@ -35,17 +35,14 @@ test:
   server:
     port: 8002
   mongo:
-    uri: mongodb://localhost/surf-better-test
-  auth:
-    user : "baio"
-  msw:
-    key: "ni5E1bOpV0KM3Hl31ZBkkQ6jAXXEaJHL"
+    uri: mongodb://localhost/ride-better-test
   elasticsearch:
     host : "localhost:9200"
     log : "trace"
   catbox:
     mongo :
-      partition : "surf-better-dev-cache"
+      partition : "ride-better-test-cache"
+  secret : "allBestthings1979"
 stage:
   server:
     opts:

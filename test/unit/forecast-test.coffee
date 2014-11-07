@@ -1,9 +1,21 @@
 "use strict"
 server = require "../../src/server"
+
+forecast = require "../../src/api/forecast-get"
 expect = require("chai").expect
 
-describe "request `forecast` route", ->
 
+describe.only "request `forecast` route", ->
+
+  it "test", (next) ->
+
+    server.inject url : "/forecast/1936999", method: "get", (resp) ->
+      console.log resp.result
+      next()
+    , (err) ->
+      console.log ">>>forecast-test.coffee:16", err
+      next()
+  ###
   it "request `AU_QLD_MA_PCM` must return data", (next) ->
 
     server.inject url : "/forecast/AU_QLD_MA_PCM", method: "get", (resp) ->
@@ -26,3 +38,4 @@ describe "request `forecast` route", ->
     server.inject url : "/forecast/BS_NP_NA_WI/10-308-2014", method: "get", (resp) ->
       expect(resp.result).to.deep.equal expected
       next()
+  ###

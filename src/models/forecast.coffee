@@ -1,7 +1,6 @@
 mongoose = require "mongoose"
 moment = require("moment")
 
-
 forecastConditionSchema = mongoose.Schema
   dateTime :
     type : Date
