@@ -13,7 +13,7 @@ module.exports = (spot) ->
   promise = Q.nbind(skimapModel.findOne, skimapModel)(id : spot, latitude : $exists : true)
   promise = promise.then (res) ->
     if res
-      Q.nbind(forecast.getAtTime, forecast)(res.latitude,res.longitude,units : "si")
+      Q.nbind(forecast.get, forecast)(res.latitude,res.longitude,units : "si")
     else
       throw new Error "Not Found"
   promise.then (r) ->

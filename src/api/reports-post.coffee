@@ -3,5 +3,7 @@ Q = require "Q"
 reportModel = require "../models/report"
 
 module.exports = (user, spot, data) ->
-  report = new reportModel user : user, spot : spot, data : data
+  data.user = user
+  data.spot = spot
+  report = new reportModel data
   Q.nbind(report.save, report)()

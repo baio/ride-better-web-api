@@ -17,35 +17,30 @@ reportSchema = mongoose.Schema
       required : true
     avatar :
       type : String
-  date :
+  time :
     type : Date
     required : true
     default : Date.now
   spot :
     type : String
     required : true
-  data :
-    operate :
-      type : Boolean
-      default : true
+  conditions :
     tracks :
-      type : String
-      enum : ["best", "good", "normal", "bad", "worst"]
+      type : Number
     snowing :
-      type : String
-      enum : ["best", "good", "normal", "bad", "worst"]
+      type : Number
     crowd :
+      type : Number
+  operate :
+    status :
       type : String
-      enum : ["best", "good", "normal", "bad", "worst"]
-    text :
-      type : String
+      enum : ["open", "off-season", "day-off", "closed"]
+    openDate : Date
+  comment : String
 
-reportSchema.virtual("date.str").get( ->
-  moment.utc(@date).format("YYYY-MM-DDTHH:mm:ss")
-)
 
-reportSchema.virtual("date.unix").get( ->
-  moment.utc(@date).unix()
+reportSchema.virtual("time.unix").get( ->
+  moment.utc(@time).unix()
 )
 
 

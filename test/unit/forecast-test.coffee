@@ -5,7 +5,7 @@ forecast = require "../../src/api/forecast-get"
 expect = require("chai").expect
 
 
-describe.only "request `forecast` route", ->
+describe "request `forecast` route", ->
 
   it "test", (next) ->
 

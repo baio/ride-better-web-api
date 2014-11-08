@@ -24,7 +24,8 @@
     "catbox-mongodb": "^1.0.5",
     "catbox": "^3.4.2",
     "elasticsearch": "^2.4.3",
-    "jsonwebtoken": "^1.1.2"
+    "jsonwebtoken": "^1.1.2",
+    "stats-lite": "^1.0.3"
   },
   "repository": {
     "type": "git",

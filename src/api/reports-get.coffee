@@ -2,19 +2,21 @@
 Q = require "Q"
 reportModel = require "../models/report"
 moment = require "moment"
+summaryFormatter = require "./summaryFormatter"
 
 module.exports = (spot) ->
   dateFrom = moment.utc().add(-2, "d").toDate()
   q =
     spot : spot
-    date : $gte : dateFrom
-  Q(reportModel.find(q).sort(date : -1).limit(25).exec()).then (res) ->
+    time : $gte : dateFrom
+  Q(reportModel.find(q).sort(time : -1).limit(25).exec()).then (res) ->
     res.map (m) ->
       r = m.toObject virtuals: true
-      console.log ">>>reports-get.coffee:14", r.date.unix
       delete r._id
       delete r.__v
       user : r.user
-      conditions : r.data
-      time : r.date.unix
-      operate : r.data.operate
+      time : r.time.unix
+      conditions : r.conditions
+      operate : r.operate
+      comment : r.comment
+      summary : summaryFormatter.summary(r.conditions)

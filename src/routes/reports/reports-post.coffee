@@ -14,7 +14,6 @@ module.exports =
     spot = req.params.spot
     user = req.auth.credentials
     data = req.payload
-    console.log ">>>reports-post.coffee:17", data
     reportsPost(user, spot, data).then ->
       resp ok : true
     , (err) ->
