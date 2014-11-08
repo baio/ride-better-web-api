@@ -19,4 +19,4 @@ module.exports = (spot) ->
       conditions : r.conditions
       operate : r.operate
       comment : r.comment
-      summary : summaryFormatter.summary(r.conditions)
+      summary : if r.conditions then summaryFormatter.summary(r.conditions) else summaryFormatter.operate(r.operate.status)

@@ -34,3 +34,10 @@ module.exports.summary = (conditions, variance) ->
     "#{formatVariance(variance)}  #{formatSnowCover(conditions.tracks)} and #{formatCrowd(conditions.crowd)} on the tracks, #{formatSnowfall(conditions.snowing)}"
   else
     "#{formatSnowCover(conditions.tracks)} and #{formatCrowd(conditions.crowd)} on the tracks, #{formatSnowfall(conditions.snowing)}"
+
+module.exports.operate = (status) ->
+  switch status
+    when "open" then "open"
+    when "closed" then "closed"
+    when "off-season" then "off season"
+    when "day-off" then "day off"
