@@ -50,11 +50,11 @@ stage:
         headers: ['authorization', 'Content-Type']
   catbox:
     mongo :
-      host : ds063809.mongolab.com
-      port : 63809
+      host : ds053080.mongolab.com
+      port : 53080
       username : baio
-      password : "123"
-      partition : "heroku_app28714524"
+      password : 123
+      partition : heroku_app31445045
   msw:
     key: "ni5E1bOpV0KM3Hl31ZBkkQ6jAXXEaJHL"
   secret : "allBestthings1979"
