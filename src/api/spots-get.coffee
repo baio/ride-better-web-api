@@ -50,7 +50,7 @@ module.exports = (geo, term) ->
         console.log ">>>spots-get.coffee:45", m
         r = m._source
         r.code = m._id
-        if m.sort
+        if r.geo
           r.dist = Math.round m.sort[1]
         if m.highlight
           r.label = m.highlight["label.autocomplete"][0]
