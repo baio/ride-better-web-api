@@ -3,13 +3,13 @@ Q = require "Q"
 skimapModel = require "../models/skimap"
 moment = require "moment"
 Forecast = require "forecast.io"
+cache = require "../cache"
 
 forecast = new Forecast
   APIKey: "c627c992deb04400940b50c6e1ee0562"
 #celcius
 
-module.exports = (spot) ->
-  console.log ">>>forecast-get.coffee:12", spot
+request = (spot) ->
   promise = Q.nbind(skimapModel.findOne, skimapModel)(id : spot, latitude : $exists : true)
   promise = promise.then (res) ->
     if res
@@ -34,3 +34,19 @@ module.exports = (spot) ->
         res
     else
       throw new Error "Unknow Error"
+
+module.exports = (spot) ->
+  promise = cache.get("forecastio-forecast", spot)
+  promise.then (res) ->
+    d1 = moment.utc(res.items[0].time, "X").dayOfYear()
+    d2 = moment.utc().dayOfYear()
+    console.log ">>>forecast-get.coffee:41", d1, d2
+    if !res or d1 != d2
+      request(spot).then (res) ->
+        cache.set "forecastio-forecast", spot, items : res, 1000 * 60 * 60 * 24
+        res
+    else
+      console.log ">>>forecast-get.coffee:48", "from cache"
+      res.items
+
+

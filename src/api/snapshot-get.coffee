@@ -48,7 +48,7 @@ module.exports = (spot) ->
       summary = "no reports for last two days"
 
     forecast :
-      forecast[1]
+      forecast[0]
     report :
       status : "open"
       summary : summary
