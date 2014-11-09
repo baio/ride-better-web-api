@@ -5,6 +5,7 @@ formatSnowCover = (condition) ->
       when 2 then "enough snow"
       when 3 then "much snow"
       when 4 then "lots of snow"
+      else "unknown amount of snow"
 
 
 formatSnowfall = (condition) ->
@@ -14,6 +15,7 @@ formatSnowfall = (condition) ->
       when 2 then "dropped enough snow"
       when 3 then "much snow fell"
       when 4 then "lots of snow fell"
+      else "unknown amount of snow fell"
 
 formatCrowd = (condition) ->
     switch condition
@@ -22,6 +24,7 @@ formatCrowd = (condition) ->
       when 2 then "enough people"
       when 3 then "many people"
       when 4 then "too many people"
+      else "unknown amount of people"
 
 formatVariance = (condition) ->
   switch condition
@@ -30,7 +33,9 @@ formatVariance = (condition) ->
     when 2 then "recent reports have strong opinions that"
 
 module.exports.summary = (conditions, variance) ->
-  if variance
+  if !conditions.tracks and !conditions.crowd and !conditions.snowing
+    null
+  else if variance
     "#{formatVariance(variance)}  #{formatSnowCover(conditions.tracks)} and #{formatCrowd(conditions.crowd)} on the tracks, #{formatSnowfall(conditions.snowing)}"
   else
     "#{formatSnowCover(conditions.tracks)} and #{formatCrowd(conditions.crowd)} on the tracks, #{formatSnowfall(conditions.snowing)}"
