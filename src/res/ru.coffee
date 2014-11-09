@@ -16,7 +16,7 @@ module.exports =
 
   "very few people" : "очень мало людей"
   "few people" : "мало людей"
-  "enough people" : "достаточно люей"
+  "enough people" : "достаточно людей"
   "many people" : "много людей"
   "too many people" : "очень много людей"
   "unknown amount of people" : "неиестное количество людей"

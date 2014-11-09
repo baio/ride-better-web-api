@@ -7,12 +7,17 @@ hapi = require "hapi"
 paramsValidationSchema =
   spot : joi.string()
 
+queryValidationSchema =
+  lang : joi.any().valid(['ru', 'en'])
+
 module.exports =
   method : "GET"
   path : "/forecast/{spot}"
   config :
     auth : false
-    validate : params : paramsValidationSchema
+    validate :
+      params : paramsValidationSchema
+      query : queryValidationSchema
   handler : (req, resp) ->
     spot = req.params.spot
     forecastApi(spot).then (res) ->

@@ -8,7 +8,7 @@ paramsValidationSchema =
   spot : joi.string()
 
 queryValidationSchema =
-  lang : joi.any().allow(['ru'])
+  lang : joi.any().allow(['ru', 'en'])
 
 module.exports =
   method : "GET"
