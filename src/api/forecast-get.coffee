@@ -19,12 +19,18 @@ module.exports = (spot) ->
   promise.then (r) ->
     if r and r[1]
       data = r[1]
+      #time is return in UTC, this means we need to know local tz to convert it in actual time.
+      #straighforward convert by index
+      day = moment.utc().startOf('day')
       data.daily.data.map (d) ->
-        time : d.time
-        summary: d.summary
-        precipType: d.precipType
-        precipAccumulation: d.precipAccumulation
-        temperatureMin: d.temperatureMin
-        temperatureMax: d.temperatureMax
+        res =
+          time : day.unix()
+          summary: d.summary
+          precipType: d.precipType
+          precipAccumulation: d.precipAccumulation
+          temperatureMin: d.temperatureMin
+          temperatureMax: d.temperatureMax
+        day = day.add 1, "d"
+        res
     else
       throw new Error "Unknow Error"
