@@ -7,15 +7,20 @@ hapi = require "hapi"
 paramsValidationSchema =
   spot : joi.string()
 
+queryValidationSchema =
+  lang : joi.any().valid(['ru'])
+
 module.exports =
   method : "GET"
   path : "/snapshot/{spot}"
   config :
     auth : false
-    validate : params : paramsValidationSchema
+    validate :
+      params : paramsValidationSchema
+      query : queryValidationSchema
   handler : (req, resp) ->
     spot = req.params.spot
-    snapshotApi(spot).then (res) ->
+    snapshotApi(req.query.lang, spot).then (res) ->
       resp res
     , (err) ->
       if err.message == "Not Found"

@@ -5,8 +5,8 @@ forecastGet = require "./forecast-get"
 reportsGet = require "./reports-get"
 summaryFormatter = require "./summaryFormatter"
 
-module.exports = (spot) ->
-  Q.all [forecastGet(spot), reportsGet(spot)]
+module.exports = (lang, spot) ->
+  Q.all [forecastGet(spot), reportsGet(lang, spot)]
   .then (res) ->
     console.log ">>>snapshot-get.coffee:11"
     forecast = res[0]
@@ -30,7 +30,7 @@ module.exports = (spot) ->
           variance = 1
         else
           variance = 2
-        summary = summaryFormatter.summary snowing : Math.round(mSnowing), tracks : Math.round(mTracks), crowd : Math.round(mCrowd), variance
+        summary = summaryFormatter.summary lang, snowing : Math.round(mSnowing), tracks : Math.round(mTracks), crowd : Math.round(mCrowd), variance
         conditions =
           conditions:
             snow :

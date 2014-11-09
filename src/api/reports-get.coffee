@@ -4,7 +4,7 @@ reportModel = require "../models/report"
 moment = require "moment"
 summaryFormatter = require "./summaryFormatter"
 
-module.exports = (spot) ->
+module.exports = (lang, spot) ->
   dateFrom = moment.utc().add(-2, "d").toDate()
   q =
     spot : spot
@@ -19,4 +19,4 @@ module.exports = (spot) ->
       conditions : r.conditions
       operate : r.operate
       comment : r.comment
-      summary : if r.conditions then summaryFormatter.summary(r.conditions) else summaryFormatter.operate(r.operate.status)
+      summary : if r.conditions then summaryFormatter.summary(lang, r.conditions) else summaryFormatter.operate(lang, r.operate.status)

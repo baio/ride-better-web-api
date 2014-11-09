@@ -7,12 +7,17 @@ joi = require "joi"
 paramsValidationSchema =
   spot : joi.string()
 
+queryValidationSchema =
+  lang : joi.any().allow(['ru'])
+
 module.exports =
   method : "GET"
   path : "/reports/{spot}"
   config :
     auth : false
-    validate : params : paramsValidationSchema
+    validate :
+      params : paramsValidationSchema
+      query : queryValidationSchema
   handler : (req, resp) ->
-    reportsGet(req.params.spot).then resp, (err) ->
+    reportsGet(req.query.lang, req.params.spot).then resp, (err) ->
         resp hapi.Error.badRequest err
