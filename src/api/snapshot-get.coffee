@@ -6,9 +6,9 @@ reportsGet = require "./reports-get"
 summaryFormatter = require "./summaryFormatter"
 
 module.exports = (spot) ->
-  console.log ">>>snapshot-get.coffee:9"
   Q.all [forecastGet(spot), reportsGet(spot)]
   .then (res) ->
+    console.log ">>>snapshot-get.coffee:11"
     forecast = res[0]
     reports = res[1]
     if reports.length
@@ -19,14 +19,14 @@ module.exports = (spot) ->
         mSnowing = stats.median snowing
         mTracks = stats.median tracks
         mCrowd = stats.median crowd
-        vSnowing = stats.variance snowing
-        vTracks = stats.variance tracks
-        vCrowd = stats.variance crowd
+        vSnowing = stats.stdev snowing
+        vTracks = stats.stdev tracks
+        vCrowd = stats.stdev crowd
         avgVar = (vSnowing + vTracks + vCrowd) / 3
         console.log ">>>snapshot-get.coffee:23", mSnowing, vSnowing
-        if avgVar < 0.1
+        if avgVar <= 1
           variance = 0
-        else if avgVar < 0.3
+        else if avgVar <= 2
           variance = 1
         else
           variance = 2

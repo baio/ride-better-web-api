@@ -34,13 +34,15 @@ request = (spot) ->
         res
     else
       throw new Error "Unknow Error"
+  , (err) ->
+    if err.message == "Not Found"
+      []
 
 module.exports = (spot) ->
   promise = cache.get("forecastio-forecast", spot)
   promise.then (res) ->
-    d1 = moment.utc(res.items[0].time, "X").dayOfYear()
+    d1 = moment.utc(res.items[0].time, "X").dayOfYear() if res and res.length
     d2 = moment.utc().dayOfYear()
-    console.log ">>>forecast-get.coffee:41", d1, d2
     if !res or d1 != d2
       request(spot).then (res) ->
         cache.set "forecastio-forecast", spot, items : res, 1000 * 60 * 60 * 24

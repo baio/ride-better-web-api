@@ -18,7 +18,6 @@ module.exports =
     snapshotApi(spot).then (res) ->
       resp res
     , (err) ->
-      console.log ">>>snapshot-get.coffee:21", err
       if err.message == "Not Found"
         resp hapi.Error.notFound err
       else

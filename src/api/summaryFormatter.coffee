@@ -28,14 +28,14 @@ formatCrowd = (condition) ->
 
 formatVariance = (condition) ->
   switch condition
-    when 0 then "recent reports have divergent opinions, but majority report that"
+    when 0 then "recent reports have strong opinions that"
     when 1 then "recent reports have opinions that"
-    when 2 then "recent reports have strong opinions that"
+    when 2 then "recent reports have divergent opinions, but majority report that"
 
 module.exports.summary = (conditions, variance) ->
   if !conditions.tracks and !conditions.crowd and !conditions.snowing
     null
-  else if variance
+  else if variance?
     "#{formatVariance(variance)}  #{formatSnowCover(conditions.tracks)} and #{formatCrowd(conditions.crowd)} on the tracks, #{formatSnowfall(conditions.snowing)}"
   else
     "#{formatSnowCover(conditions.tracks)} and #{formatCrowd(conditions.crowd)} on the tracks, #{formatSnowfall(conditions.snowing)}"
