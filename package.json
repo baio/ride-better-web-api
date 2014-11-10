@@ -26,7 +26,8 @@
     "elasticsearch": "^2.4.3",
     "jsonwebtoken": "^1.1.2",
     "stats-lite": "^1.0.3",
-    "newrelic": "^1.13.2"
+    "newrelic": "^1.13.2",
+    "forecast.io": "0.0.9"
   },
   "repository": {
     "type": "git",
