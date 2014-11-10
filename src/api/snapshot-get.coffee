@@ -1,5 +1,5 @@
 "use strict"
-Q = require "Q"
+Q = require "q"
 stats = require("stats-lite")
 forecastGet = require "./forecast-get"
 reportsGet = require "./reports-get"

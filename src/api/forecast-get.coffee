@@ -1,5 +1,5 @@
 "use strict"
-Q = require "Q"
+Q = require "q"
 skimapModel = require "../models/skimap"
 moment = require "moment"
 Forecast = require "forecast.io"

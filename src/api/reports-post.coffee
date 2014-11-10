@@ -1,5 +1,5 @@
 "use strict"
-Q = require "Q"
+Q = require "q"
 reportModel = require "../models/report"
 
 module.exports = (user, spot, data) ->
