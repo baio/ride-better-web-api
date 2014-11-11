@@ -1,4 +1,5 @@
 res = require "../res"
+moment = require "moment"
 
 formatSnowCover = (condition, lang) ->
     switch condition
@@ -42,9 +43,21 @@ module.exports.summary = (lang, conditions, variance) ->
   else
     "#{formatSnowCover(conditions.tracks, lang)} #{res "and", lang} #{formatCrowd(conditions.crowd, lang)} #{res "on the tracks", lang}, #{formatSnowfall(conditions.snowing, lang)}"
 
-module.exports.operate = (lang, status) ->
+operateStatus = (lang, status) ->
   switch status
     when "open" then res "open", lang
     when "closed" then res "closed", lang
     when "off-season" then res "off season", lang
     when "day-off" then res "day off", lang
+
+module.exports.notOperate = (lang, operate) ->
+  r = res("Latest report suggests that place is NOT operating", lang)
+  if operate.status != "closed"
+    r = r + ", " + res("because of", lang) + " " + operateStatus(lang, operate.status) + "."
+  if operate.openDate
+    r = r + " " + res("Suggested open date is", lang) + " " +
+      moment.utc(operate.openDate, "X").locale(lang).format("D MMMM") + "."
+  r
+
+module.exports.noReports = (lang) ->
+  res "No reports for last two days", lang

@@ -42,6 +42,8 @@ reportSchema = mongoose.Schema
 reportSchema.virtual("time.unix").get( ->
   moment.utc(@time).unix()
 )
-
+reportSchema.virtual("operate.openDate.unix").get( ->
+  moment.utc(@time).unix()
+)
 
 module.exports = mongoose.model("report", reportSchema)

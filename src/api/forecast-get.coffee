@@ -7,7 +7,7 @@ cache = require "../cache"
 
 forecast = new Forecast
   APIKey: "c627c992deb04400940b50c6e1ee0562"
-#celcius
+
 
 request = (spot) ->
   promise = Q.nbind(skimapModel.findOne, skimapModel)(id : spot, latitude : $exists : true)

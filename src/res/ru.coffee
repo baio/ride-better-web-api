@@ -27,8 +27,12 @@ module.exports =
 
   "open" : "открыто"
   "closed" :  "закрыто"
-  "off-season" : "сезон закрыт"
-  "day-off" : "выходной"
+  "off season" : "сезон закрыт"
+  "day off" : "выходной"
 
   "and" : "и"
   "on the tracks" : "на трассах"
+
+  "Latest report suggests that place is NOT operating" : "Последнее сообщение говорит о том что курорт ЗАКРЫТ"
+  "because of" : "потому что"
+  "Suggested open date is" : "Возможная дата открытия"

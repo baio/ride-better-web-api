@@ -5,7 +5,8 @@ models = require "../../src/models"
 skimapData = "./skimap"
 
 module.exports = (done) ->
-
+  setTimeout(done, 100)
+  ###
   async.parallel [
     (ck) -> models.spot.remove {}, (err) -> ck(err)
     (ck) -> models.report.remove {}, (err) -> ck(err)
@@ -13,4 +14,4 @@ module.exports = (done) ->
   ], ->
     skimap = new models.skimap id : "1936", "latitude" : 54.773888,  "longitude" : 58.526112
     skimap.save(done)
-
+  ###

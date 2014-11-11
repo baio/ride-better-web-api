@@ -23,6 +23,8 @@ module.exports =
     snapshotApi(req.query.lang, spot).then (res) ->
       resp res
     , (err) ->
+      stack = err.stack
+      console.log stack
       if err.message == "Not Found"
         resp hapi.Error.notFound err
       else

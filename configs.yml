@@ -35,13 +35,13 @@ test:
   server:
     port: 8002
   mongo:
-    uri: mongodb://localhost/ride-better-test
+    uri: mongodb://localhost/ride-better-dev
   elasticsearch:
     host : "localhost:9200"
     log : "trace"
   catbox:
     mongo :
-      partition : "ride-better-test-cache"
+      partition : "ride-better-dev-cache"
   secret : "allBestthings1979"
 stage:
   server:

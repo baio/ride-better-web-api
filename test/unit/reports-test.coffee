@@ -3,7 +3,7 @@ server = require "../../src/server"
 expect = require("chai").expect
 sinon = require "sinon"
 
-describe.only "test `reports`", ->
+describe "test `reports`", ->
 
   it "post `/reports/215` without authorization should fail", (next) ->
 
@@ -35,8 +35,7 @@ describe.only "test `reports`", ->
       #console.log ">>>reports-test.coffee:43", resp.result
       next()
 
-  it "get `/snapshot/1936` must return results", (next) ->
+  it.only "get `/snapshot/1936` must return results", (next) ->
 
     server.inject url : "/snapshot/1936", method: "get", (resp) ->
-      console.log ">>>reports-test.coffee:41", resp.result
       next()

@@ -2,7 +2,6 @@ catbox = require "catbox"
 Q = require "q"
 
 config = require("yaml-config").readConfig('./configs.yml', process.env.NODE_ENV)
-host = config.mongo?.uri || process.env.MONGOLAB_URI
 mongo = new catbox.Client require("catbox-mongodb"), config.catbox.mongo
 
 

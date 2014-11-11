@@ -1,5 +1,4 @@
-require "newrelic"
-
+#require "newrelic"
 hapi = require "hapi"
 mongoose = require "mongoose"
 routes = require "./routes"
