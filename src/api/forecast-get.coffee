@@ -25,6 +25,7 @@ request = (spot) ->
       data.daily.data.map (d) ->
         res =
           time : day.unix()
+          icon : d.icon
           summary: d.summary
           precipType: d.precipType
           precipAccumulation: d.precipAccumulation
