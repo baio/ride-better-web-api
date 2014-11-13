@@ -5,9 +5,10 @@ moment = require "moment"
 Forecast = require "forecast.io"
 cache = require "../cache"
 
-forecast = new Forecast
-  APIKey: "c627c992deb04400940b50c6e1ee0562"
+config = require("yaml-config").readConfig('./configs.yml', process.env.NODE_ENV)
 
+forecast = new Forecast
+  APIKey: config.forecastio.key
 
 request = (spot) ->
   promise = Q.nbind(skimapModel.findOne, skimapModel)(id : spot, latitude : $exists : true)

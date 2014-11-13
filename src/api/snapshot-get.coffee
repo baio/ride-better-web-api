@@ -53,10 +53,12 @@ module.exports = (lang, spot) ->
   promise.then (res) ->
     if !res.report.conditions
       reportsGet(lang, spot, true).then (res1) ->
-        if res1?[0].operate?.status != "open"
+        if res1.length and res1[0].operate?.status != "open"
           res.report.lastOperate.operate = res1[0].operate
           res.report.lastOperate.comment = res1[0].comment
           res.report.summary = summaryFormatter.notOperate lang, res1[0].operate
         else
           res.report.summary = summaryFormatter.noReports lang
-    res
+        res
+    else
+      res

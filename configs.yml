@@ -11,8 +11,8 @@ dev:
       partition : "ride-better-dev-cache"
   auth:
     user : "baio"
-  msw:
-    key: "ni5E1bOpV0KM3Hl31ZBkkQ6jAXXEaJHL"
+  forecastio:
+    key: c627c992deb04400940b50c6e1ee0562
   elasticsearch:
     host : "localhost:9200"
 debug:
@@ -26,8 +26,8 @@ debug:
   catbox:
     mongo :
       partition : "ride-better-dev-cache"
-  msw:
-    key: "ni5E1bOpV0KM3Hl31ZBkkQ6jAXXEaJHL"
+  forecastio:
+    key: c627c992deb04400940b50c6e1ee0562
   elasticsearch:
     host : "localhost:9200"
   secret : "allBestthings1979"
@@ -43,6 +43,8 @@ test:
     mongo :
       partition : "ride-better-dev-cache"
   secret : "allBestthings1979"
+  forecastio:
+    key: c627c992deb04400940b50c6e1ee0562
 stage:
   server:
     opts:
@@ -55,6 +57,6 @@ stage:
       username : baio
       password : 123
       partition : heroku_app31445045
-  msw:
-    key: "ni5E1bOpV0KM3Hl31ZBkkQ6jAXXEaJHL"
+  forecastio:
+    key: c627c992deb04400940b50c6e1ee0562
   secret : "allBestthings1979"

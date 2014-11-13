@@ -13,6 +13,7 @@ module.exports = (lang, spot, allDates) ->
     q.time = $gte : dateFrom
   console.log ">>>reports-get.coffee:14", q
   Q(reportModel.find(q).sort(time : -1).limit(25).exec()).then (res) ->
+    console.log ">>>reports-get.coffee:16", res
     res.map (m) ->
       r = m.toObject virtuals: true
       if r.operate?.openDate

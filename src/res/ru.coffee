@@ -36,3 +36,5 @@ module.exports =
   "Latest report suggests that place is NOT operating" : "Последнее сообщение говорит о том что курорт ЗАКРЫТ"
   "because of" : "потому что"
   "Suggested open date is" : "Возможная дата открытия"
+
+  "No reports for last two days" : "За последние 2 дня не было оставлено ни одного сообщения. Будьте первым!"
