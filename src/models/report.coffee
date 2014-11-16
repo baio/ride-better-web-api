@@ -43,7 +43,14 @@ reportSchema.virtual("time.unix").get( ->
   moment.utc(@time).unix()
 )
 reportSchema.virtual("operate.openDate.unix").get( ->
-  moment.utc(@time).unix()
+  if @operate.openDate
+    moment.utc(@operate.openDate).unix()
+).set((val) ->
+  if val
+    date = moment.utc(val, "X").toDate()
+    utcDate = new Date Date.UTC date.getFullYear(), date.getMonth(), date.getDate()
+    console.log ">>>report.coffee:52", utcDate
+    @operate.openDate = utcDate
 )
 
 module.exports = mongoose.model("report", reportSchema)

@@ -53,10 +53,12 @@ operateStatus = (lang, status) ->
 module.exports.notOperate = (lang, operate) ->
   r = res("Latest report suggests that place is NOT operating", lang)
   if operate.status != "closed"
-    r = r + ", " + res("because of", lang) + " " + operateStatus(lang, operate.status) + "."
+    r = r + ", " + res("because of", lang) + " " + operateStatus(lang, operate.status)
+  r = r + "."
   if operate.openDate
+    openDate = moment.utc(operate.openDate, "X")
     r = r + " " + res("Suggested open date is", lang) + " " +
-      moment.utc(operate.openDate, "X").locale(lang).format("D MMMM") + "."
+      openDate.locale(lang).format("D MMMM") + "."
   r
 
 module.exports.noReports = (lang) ->

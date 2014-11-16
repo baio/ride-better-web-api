@@ -11,9 +11,7 @@ module.exports = (lang, spot, allDates) ->
   if !allDates
     dateFrom = moment.utc().add(-2, "d").startOf("d").valueOf()
     q.time = $gte : dateFrom
-  console.log ">>>reports-get.coffee:14", q
   Q(reportModel.find(q).sort(time : -1).limit(25).exec()).then (res) ->
-    console.log ">>>reports-get.coffee:16", res
     res.map (m) ->
       r = m.toObject virtuals: true
       if r.operate?.openDate
