@@ -1,6 +1,6 @@
 "use strict"
 
 module.exports = [
-  require("./spots/spots-get")
-  require("./home/home-get")
+  require("./spots-get")
+  require("./home-get")
 ]
