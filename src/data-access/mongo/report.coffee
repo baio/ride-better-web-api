@@ -12,3 +12,9 @@ exports.getCurrentYearLastClosedReport = (spot) ->
     spot : spot
     time : $gte : moment.utc().startOf("year").valueOf()
   reportModel.findOneAsync(q).then (res) -> res
+
+exports.createReport = (data) ->
+  report = new reportModel data
+  if data.operate?.openDate
+    report.set "operate.openDate.unix", data.operate.openDate
+  report.saveAsync(report)

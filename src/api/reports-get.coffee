@@ -6,9 +6,7 @@ _ = require "underscore"
 
 module.exports = (opts) ->
   _.defaults opts, lang : "en", culture : "eu"
-  console.log ">>>reports-get.coffee:9"
   report.getLatest2Days(opts.spot).then (res) ->
-    console.log ">>>reports-get.coffee:11"
     res.map (m) ->
       r = m.toObject virtuals: true
       if r.operate?.openDate
