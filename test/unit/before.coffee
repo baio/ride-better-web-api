@@ -1,6 +1,7 @@
 "use strict"
 
-prepareDbForTests = require "../test-data/prepareDbForTests"
+server = require "../../src/server"
 
 before (next) ->
-  prepareDbForTests(next)
+  @server = server
+  setTimeout next, 200

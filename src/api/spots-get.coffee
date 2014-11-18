@@ -5,7 +5,7 @@ elasticsearch = require "elasticsearch"
 config = require("yaml-config").readConfig('./configs.yml', process.env.NODE_ENV).elasticsearch
 config ?= host : process.env.BONSAI_URL
 client = new elasticsearch.Client config
-Q = require "q"
+
 
 module.exports = (geo, term) ->
 

@@ -1,7 +1,7 @@
 "use strict"
 Hapi = require "hapi"
 config = require("yaml-config").readConfig('./configs.yml', process.env.NODE_ENV)
-Q = require "q"
+
 jwt = require "jsonwebtoken"
 
 getJWT = (headers) ->

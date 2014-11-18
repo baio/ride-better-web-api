@@ -27,7 +27,9 @@
     "jsonwebtoken": "^1.1.2",
     "stats-lite": "^1.0.3",
     "newrelic": "^1.13.2",
-    "forecast.io": "0.0.9"
+    "forecast.io": "0.0.9",
+    "bluebird": "^2.3.11",
+    "underscore": "^1.7.0"
   },
   "repository": {
     "type": "git",

@@ -1,3 +1,4 @@
+bluebird = require "bluebird"
 mongoose = require "mongoose"
 moment = require "moment"
 
@@ -49,8 +50,7 @@ reportSchema.virtual("operate.openDate.unix").get( ->
   if val
     date = moment.utc(val, "X").toDate()
     utcDate = new Date Date.UTC date.getFullYear(), date.getMonth(), date.getDate()
-    console.log ">>>report.coffee:52", utcDate
     @operate.openDate = utcDate
 )
 
-module.exports = mongoose.model("report", reportSchema)
+module.exports = bluebird.promisifyAll mongoose.model("report", reportSchema)

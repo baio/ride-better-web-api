@@ -1,56 +1,37 @@
 "use strict"
-Q = require "q"
-skimapModel = require "../models/skimap"
 moment = require "moment"
-Forecast = require "forecast.io"
-cache = require "../cache"
+cache = require "../data-access/cache/forecast"
+spot = require "../data-access/mongo/spot"
+forecast = require "../data-access/forecastio/forecast"
+_ = require "underscore"
 
-config = require("yaml-config").readConfig('./configs.yml', process.env.NODE_ENV)
+request = (opts) ->
+  spot.getGeo(opts.spot)
+  .then (geo) -> forecast.getForecast(geo, opts)
+  .then (res) ->
+    #time is return in UTC, this means we need to know local tz to convert it in actual time.
+    #straighforward convert by index
+    day = moment.utc().startOf('day')
+    res.daily.data.map (d) ->
+      data =
+        time : day.unix()
+        icon : d.icon
+        summary: d.summary
+        precipType: d.precipType
+        precipAccumulation: d.precipAccumulation
+        temperatureMin: d.temperatureMin
+        temperatureMax: d.temperatureMax
+      day = day.add 1, "d"
+      data
 
-forecast = new Forecast
-  APIKey: config.forecastio.key
-
-request = (spot) ->
-  promise = Q.nbind(skimapModel.findOne, skimapModel)(id : spot, latitude : $exists : true)
-  promise = promise.then (res) ->
-    if res
-      Q.nbind(forecast.get, forecast)(res.latitude,res.longitude,units : "si")
-    else
-      throw new Error "Not Found"
-  promise.then (r) ->
-    if r and r[1]
-      data = r[1]
-      #time is return in UTC, this means we need to know local tz to convert it in actual time.
-      #straighforward convert by index
-      day = moment.utc().startOf('day')
-      data.daily.data.map (d) ->
-        res =
-          time : day.unix()
-          icon : d.icon
-          summary: d.summary
-          precipType: d.precipType
-          precipAccumulation: d.precipAccumulation
-          temperatureMin: d.temperatureMin
-          temperatureMax: d.temperatureMax
-        day = day.add 1, "d"
+module.exports = (opts) ->
+  _.defaults opts, lang : "en", culture : "eu"
+  cache.getForecast(opts).then (res) ->
+    if !res
+      request(opts).then (res) ->
+        cache.setForecast opts, res
         res
     else
-      throw new Error "Unknow Error"
-  , (err) ->
-    if err.message == "Not Found"
-      []
-
-module.exports = (spot) ->
-  promise = cache.get("forecastio-forecast", spot)
-  promise.then (res) ->
-    d1 = moment.utc(res.items[0].time, "X").dayOfYear() if res and res.length
-    d2 = moment.utc().dayOfYear()
-    if !res or d1 != d2
-      request(spot).then (res) ->
-        cache.set "forecastio-forecast", spot, items : res, 1000 * 60 * 60 * 24
-        res
-    else
-      console.log ">>>forecast-get.coffee:48", "from cache"
-      res.items
+      res
 
 

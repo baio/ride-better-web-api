@@ -8,5 +8,4 @@ module.exports = (user, spot, data) ->
   report = new reportModel data
   if data.operate?.openDate
     report.set "operate.openDate.unix", data.operate.openDate
-  console.log ">>>reports-post.coffee:10", report.operate.openDate
   Q.nbind(report.save, report)()
