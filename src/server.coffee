@@ -1,4 +1,4 @@
-#require "newrelic"
+require "newrelic"
 hapi = require "hapi"
 mongoose = require "mongoose"
 routes = require "./routes"
@@ -15,8 +15,6 @@ serverOpts = config("server").opts
 server = hapi.createServer port, serverOpts
 server.route routes
 auth(server, config("user"))
-
-console.log ">>>server.coffee:16", config("export_server")
 
 if !config("export_server")
   server.start ->
