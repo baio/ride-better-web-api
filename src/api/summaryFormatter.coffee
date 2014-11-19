@@ -39,9 +39,13 @@ module.exports.summary = (lang, conditions, variance) ->
   if !conditions.tracks and !conditions.crowd and !conditions.snowing
     null
   else if variance?
-    "#{formatVariance(variance, lang)}  #{formatSnowCover(conditions.tracks, lang)} #{res "and", lang} #{formatCrowd(conditions.crowd, lang)} #{res "on the tracks", lang}, #{formatSnowfall(conditions.snowing, lang)}"
+    r = "#{formatVariance(variance, lang)}  #{formatSnowCover(conditions.tracks, lang)} #{res "and", lang} #{formatCrowd(conditions.crowd, lang)} #{res "on the tracks", lang}, #{formatSnowfall(conditions.snowing, lang)}"
   else
-    "#{formatSnowCover(conditions.tracks, lang)} #{res "and", lang} #{formatCrowd(conditions.crowd, lang)} #{res "on the tracks", lang}, #{formatSnowfall(conditions.snowing, lang)}"
+    r = "#{formatSnowCover(conditions.tracks, lang)} #{res "and", lang} #{formatCrowd(conditions.crowd, lang)} #{res "on the tracks", lang}, #{formatSnowfall(conditions.snowing, lang)}"
+
+  r = r[0].toUpperCase() + r[1..]
+  r = r + "."
+  r
 
 operateStatus = (lang, status) ->
   switch status
@@ -62,4 +66,4 @@ module.exports.notOperate = (lang, operate) ->
   r
 
 module.exports.noReports = (lang) ->
-  res "No reports for last two days", lang
+  res("No reports for last two days", lang) + "."
