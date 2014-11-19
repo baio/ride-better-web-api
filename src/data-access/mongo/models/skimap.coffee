@@ -1,5 +1,4 @@
 mongoose = require "mongoose"
-bluebird = require "bluebird"
 
 skimapSchema = mongoose.Schema
   id :
@@ -8,4 +7,4 @@ skimapSchema = mongoose.Schema
   longitude : Number
   latitude : Number
 
-module.exports = bluebird.promisifyAll mongoose.model("skimap", skimapSchema, "skimap")
+module.exports = mongoose.model("skimap", skimapSchema, "skimap")

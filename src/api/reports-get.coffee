@@ -18,5 +18,5 @@ module.exports = (opts) ->
       conditions : r.conditions
       operate : r.operate
       comment : r.comment
-      summary : if r.conditions then summaryFormatter.summary(lang, r.conditions) else summaryFormatter.notOperate(opts.lang, r.operate)
+      summary : if r.conditions then summaryFormatter.summary(opts.lang, r.conditions) else summaryFormatter.notOperate(opts.lang, r.operate)
 

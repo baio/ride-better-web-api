@@ -1,5 +1,6 @@
 reportModel = require "./models/report"
 moment = require "moment"
+Promise = require "bluebird"
 
 exports.getLatest2Days = (spot) ->
   q =
@@ -17,4 +18,4 @@ exports.createReport = (data) ->
   report = new reportModel data
   if data.operate?.openDate
     report.set "operate.openDate.unix", data.operate.openDate
-  report.saveAsync(report)
+  report.saveAsync()

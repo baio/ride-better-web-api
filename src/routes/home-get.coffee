@@ -21,8 +21,7 @@ module.exports =
   handler : (req, resp) ->
     spot = req.params.spot
     lang = req.query.lang
-    lang ?= "en"
-    homeApi(lang, spot).then (res) ->
+    homeApi(lang : lang, spot : spot).then (res) ->
       resp res
     , (err) ->
       if err.message == "Not Found"

@@ -1,5 +1,5 @@
 "use strict"
-reportsPost = require "../../api/reports-post"
+reportsPost = require "../api/reports-post"
 hapi = require "hapi"
 joi = require "joi"
 

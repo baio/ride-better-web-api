@@ -45,7 +45,7 @@ module.exports = (opts, reports, forecast) ->
     else
       #latest report `closed`
       summary = summaryFormatter.notOperate opts.lang,  reports[0].operate
-    snapshot.reoport =
+    snapshot.report =
         summary : summary
         conditions : conditions
         lastStatus : if reports[0] then operate : reports[0].operate, comment : reports[0].comment

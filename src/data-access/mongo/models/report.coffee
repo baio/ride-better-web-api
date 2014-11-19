@@ -1,4 +1,3 @@
-bluebird = require "bluebird"
 mongoose = require "mongoose"
 moment = require "moment"
 
@@ -53,4 +52,4 @@ reportSchema.virtual("operate.openDate.unix").get( ->
     @operate.openDate = utcDate
 )
 
-module.exports = bluebird.promisifyAll mongoose.model("report", reportSchema)
+module.exports = mongoose.model("report", reportSchema)
