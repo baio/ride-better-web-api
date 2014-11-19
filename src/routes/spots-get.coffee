@@ -18,4 +18,4 @@ module.exports =
   handler : (req, resp) ->
     if req.query.geo
       geo = req.query.geo.split(",").map (m) -> parseFloat m
-    spotsGet(geo, req.query.term).then resp, (err) -> resp hapi.Error.badRequest err
+    spotsGet(req.query.term, geo).then resp, (err) -> resp hapi.Error.badRequest err

@@ -3,11 +3,10 @@ elasticsearch = require "elasticsearch"
 
 config = require("../../config")
 
-console.log ">>>spot.coffee:6", config("ELASTIC_URI")
-
-client = new elasticsearch.Client config("ELASTIC_URI")
+client = new elasticsearch.Client host : config("ELASTIC_URI")
 
 exports.findSpots = (term, geo) ->
+  console.log ">>>spot.coffee:9", term, geo
   if term
     match = match : "label.autocomplete" : {"query" : term, "fuzziness": "AUTO"}
   if geo

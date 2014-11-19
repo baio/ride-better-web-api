@@ -2,9 +2,10 @@
 Hapi = require "hapi"
 jwt = require "jsonwebtoken"
 jwt_secret = require("./config")("JWT_SECRET")
+Promise = require "bluebird"
 
 getJWT = (headers) ->
-  deferred = Q.defer()
+  deferred = Promise.defer()
   authHeader = headers["authorization"]
   if !authHeader
     deferred.reject new Error "authorization header not found"
