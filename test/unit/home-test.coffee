@@ -9,7 +9,7 @@ describe "test home api", ->
       console.log ">>>reports-test.coffee:9", res
       next()
 
-  it.only "get home for spot 1936", (next) ->
+  it "get home for spot 1936", (next) ->
     @server.inject url : "/home/1936?lang=en", method: "get", (resp) ->
       console.log ">>>reports-test.coffee:9", resp.result
       next()

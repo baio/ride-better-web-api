@@ -2,6 +2,9 @@ Promise = require "bluebird"
 elasticsearch = require "elasticsearch"
 
 config = require("../../config")
+
+console.log ">>>spot.coffee:6", config("ELASTIC_URI")
+
 client = new elasticsearch.Client config("ELASTIC_URI")
 
 exports.findSpots = (term, geo) ->
