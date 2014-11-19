@@ -1,10 +1,12 @@
 nconf = require "nconf"
 env = require "node-env-file"
+
+###
 try
 	env('../.env')
 catch e
 	console.log ".env file not found, suppose all env properly set in enviroment"
-
+###
 
 nconf
 .argv()
