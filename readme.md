@@ -16,5 +16,5 @@ JWT_SECRET=
 
 ## Static configs
 
-Parameters of the system (constant, not privated) is in config.json file.
+Parameters of the system (constant, not private) is in config.json file.
 For every NODE_ENV could by merged from `configs\{NODE_ENV}.config.json`

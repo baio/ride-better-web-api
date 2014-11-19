@@ -39,5 +39,8 @@
   },
   "scripts": {
     "start": "coffee src/server.coffee"
+  },
+  "devDependencies": {
+    "gulp-rename": "^1.2.0"
   }
 }
