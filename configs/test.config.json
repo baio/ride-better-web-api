@@ -2,5 +2,6 @@
 	"user": 
 	{
 			"key" : "unk_baio", "id" : "baio", "name" : "baio", "provider" : "unk", "avatar" : null 
-	}
+	},
+	"export_server" : true
 }

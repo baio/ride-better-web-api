@@ -13,6 +13,8 @@ server = hapi.createServer port, serverOpts
 server.route routes
 auth(server, config("user"))
 
+console.log ">>>server.coffee:16", config("export_server")
+
 if !config("export_server")
   server.start ->
     console.log "Server [#{config("NODE_ENV")}] started on port #{port}"

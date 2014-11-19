@@ -1,8 +1,13 @@
 Ride Better Web Api
 ===================
 
-+ create .env file for private env variables
++ create / copy .env file for private env variables
 
-`NODE_ENV=env`
+```
+MONGO_URI=
+ELASTIC_URI=
+FORECASTIO_KEY=
+JWT_SECRET=
+```
 
 + 

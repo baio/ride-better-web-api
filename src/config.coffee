@@ -9,7 +9,8 @@ nconf
 
 if nconf.get("NODE_ENV")
 	try
-		nconf(file: "./configs/#{nconf.get("NODE_ENV")}.config.json")
-	catch
-	
+		nconf.file("transform", file: "./configs/#{nconf.get("NODE_ENV")}.config.json")
+	catch e
+		console.log "Transform configuration for [#{nconf.get("NODE_ENV")}] not found, use default"
+
 module.exports = (name) -> nconf.get(name)
