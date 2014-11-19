@@ -1,8 +1,7 @@
 "use strict"
 Hapi = require "hapi"
-config = require("yaml-config").readConfig('./configs.yml', process.env.NODE_ENV)
-
 jwt = require "jsonwebtoken"
+jwt_secret = require("./config")("JWT_SECRET")
 
 getJWT = (headers) ->
   deferred = Q.defer()
@@ -15,7 +14,7 @@ getJWT = (headers) ->
       deferred.reject new Error "bearer not found"
     else
       bearer =  spts[1]
-      jwt.verify bearer, config.secret, (err, decoded) ->
+      jwt.verify bearer, jwt_secret, (err, decoded) ->
         if err
           deferred.reject err
         else
@@ -28,7 +27,7 @@ module.exports = (server, defaultUser) ->
 
     authenticate: (request, reply) ->
       if defaultUser
-        reply null, credentials : { key : "unk_baio", id : "baio", name : "baio", provider : "unk", avatar : null }
+        reply null, credentials : defaultUser 
       else
         getJWT(request.headers).then (res) ->
           reply null,

@@ -8,7 +8,7 @@ bluebird = require "bluebird"
 
 module.exports = (opts, reports, forecast) ->
   snapshot =
-    forecast : forecast[0]
+    forecast : if forecast then forecast[0]
   if reports.length
     #there is some reports
     if !reports[0].operate or !reports[0].operate.status or reports[0].operate.status == "open"

@@ -7,7 +7,7 @@ getName = (opts) ->
 exports.getForecast = (opts) ->
   name = getName(opts)
   cache.get("forecastio-forecast", name).then (res) ->
-    if res
+    if res and res.items
       d1 = moment.utc(res.items[0].time, "X").dayOfYear()
     d2 = moment.utc().dayOfYear()
     if !res or d1 != d2
