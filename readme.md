@@ -24,3 +24,12 @@ For every NODE_ENV could by merged from `configs\{NODE_ENV}.config.json`
 
 + Run `gulp [default, run]` - to run server
 + Run `gulp env --dev` - to copy appropriate .env file from `.env` folder & restart server
+
+
+## Set configs on heroku
+
+```
+gulp env --heroku
+heroku plugins:install git://github.com/ddollar/heroku-config.git
+heroku config:push --overwrite --interactive
+```
