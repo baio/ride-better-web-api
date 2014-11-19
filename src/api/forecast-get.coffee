@@ -33,11 +33,11 @@ module.exports = (opts) ->
   cache.getForecast(opts).then (res) ->
     if !res
       request(opts).then (res) ->
-        console.log res
         if res
           cache.setForecast opts, res
         res
     else
+      console.log ">>>forecast-get.coffee:41", "forecast from cache"
       res
 
 
