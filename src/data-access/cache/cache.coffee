@@ -1,7 +1,18 @@
 catbox = require "catbox"
-bluebird = require "bluebird"
-config = require("yaml-config").readConfig('./configs.yml', process.env.NODE_ENV)
-catboxCache = bluebird.promisifyAll new catbox.Client require("catbox-mongodb"), config.catbox.mongo
+catboxMongo = require "catbox-mongodb"
+Promise = require "bluebird"
+config = require("../../config")
+mongoURI = require "mongo-uri"
+
+mongoParsedOpts = mongoURI.parse config("MONGO_URI")
+mongoOpts =
+  host : mongoParsedOpts.hosts[0]
+  port : mongoParsedOpts.ports[0]
+  username : mongoParsedOpts.username
+  password : mongoParsedOpts.password
+  partition : mongoParsedOpts.database
+
+catboxCache = Promise.promisifyAll new catbox.Client catboxMongo, mongoOpts
 
 catboxCache.startAsync().then ->
     console.log "mongo-catbox start success"

@@ -31,7 +31,8 @@
     "sinon": "^1.10.3",
     "stats-lite": "^1.0.3",
     "underscore": "^1.7.0",
-    "yaml-config": "^0.3.0"
+    "yaml-config": "^0.3.0",
+    "mongo-uri": "^0.1.2"
   },
   "repository": {
     "type": "git",
