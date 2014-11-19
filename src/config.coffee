@@ -1,15 +1,15 @@
 nconf = require "nconf"
 env = require "node-env-file"
-env('../.env')
+try
+	env('../.env')
+catch e
+	console.log ".env file not found, suppose all env properly set in enviroment"
+
 
 nconf
 .argv()
 .env()
-
-try
-	nconf.file(file: "../config.json")
-catch e
-	console.log ".env file not found, suppose all env properly set in enviroment"
+.file(file: "../config.json")
 
 if nconf.get("NODE_ENV")
 	try
