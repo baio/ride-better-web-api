@@ -16,8 +16,8 @@ gulp.task "env", ->
   else
     console.log "Please pass argument such as --dev"
 
-gulp.task "default", ["dev-server"]
-gulp.task "dev-server", ["nodemon"]
+gulp.task "default", ["run"]
+gulp.task "run", ["nodemon"]
 
 
 

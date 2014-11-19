@@ -18,3 +18,9 @@ JWT_SECRET=
 
 Parameters of the system (constant, not private) is in config.json file.
 For every NODE_ENV could by merged from `configs\{NODE_ENV}.config.json`
+
+
+## Gulp
+
++ Run `gulp [default, run]` - to run server
++ Run `gulp env --dev` - to copy appropriate .env file from `.env` folder & restart server
