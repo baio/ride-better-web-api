@@ -1,0 +1,10 @@
+{
+	"server": {
+		"opts": {
+			"cors": {
+				"headers": ["authorization", "Content-Type"]
+
+			}
+		}
+	}
+}

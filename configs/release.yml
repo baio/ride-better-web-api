@@ -1,6 +1,0 @@
-server:
-    opts:
-      cors:
-        headers: ['authorization', 'Content-Type']
-auth:
-  user : "baio"

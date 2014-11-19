@@ -1,25 +1,21 @@
-#require "newrelic"
+require "newrelic"
 hapi = require "hapi"
 mongoose = require "mongoose"
 routes = require "./routes"
 auth = require "./server-auth"
+config = require "./config"
 
-if !process.env.NODE_ENV
-  console.log "NODE_ENV not defined, exit."
-  process.exit 1
+mongoose.connect config("MONGO_URI")
 
-config = require("yaml-config").readConfig('./configs.yml', process.env.NODE_ENV)
-
-mongoose.connect(config.mongo?.uri || process.env.MONGOLAB_URI)
-
-port = Number(process.env.PORT || config.server.port)
-server = hapi.createServer port, config.server.opts
+port = Number config("PORT")
+serverOpts = config("server").opts
+server = hapi.createServer port, serverOpts
 server.route routes
-auth(server, config.auth?.user)
+auth(server, config("user"))
 
-if process.env.NODE_ENV != "test"
+if !config("export_server")
   server.start ->
-    console.log "Server [#{process.env.NODE_ENV}] started on port #{port}"
+    console.log "Server [#{config("NODE_ENV")}] started on port #{port}"
 else
   module.exports = server
 

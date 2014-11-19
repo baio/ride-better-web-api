@@ -1,9 +1,8 @@
 Promise = require "bluebird"
 elasticsearch = require "elasticsearch"
 
-config = require("yaml-config").readConfig('./configs.yml', process.env.NODE_ENV).elasticsearch
-config ?= host : process.env.BONSAI_URL
-client = new elasticsearch.Client config
+config = require("../../config")
+client = new elasticsearch.Client config("ELASTIC_URI")
 
 exports.findSpots = (term, geo) ->
   if term
