@@ -4,7 +4,9 @@ config = require("../../config")
 forecast = Promise.promisifyAll new Forecast(APIKey: config("FORECASTIO_KEY"))
 
 exports.getForecast = (geo, opts) ->
-  forecast.getAsync(geo.latitude, geo.longitude, {units : "si", lang : opts.lang}).then (res) ->
+  units = opts.culture
+  units = "si" if units = "eu"
+  forecast.getAsync(geo.latitude, geo.longitude, {units : units, lang : opts.lang}).then (res) ->
     if res and res[1]
       return res[1]
     else

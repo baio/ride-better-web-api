@@ -9,6 +9,7 @@ paramsValidationSchema =
 
 queryValidationSchema =
   lang : joi.any().valid(['ru', 'en'])
+  culture : joi.any().valid(['eu', 'uk', "us"])
 
 module.exports =
   method : "GET"
@@ -21,7 +22,8 @@ module.exports =
   handler : (req, resp) ->
     spot = req.params.spot
     lang = req.query.lang
-    homeApi(lang : lang, spot : spot).then (res) ->
+    culture = req.query.culture
+    homeApi(lang : lang, spot : spot, culture : culture).then (res) ->
       resp res
     , (err) ->
       if err.message == "Not Found"
