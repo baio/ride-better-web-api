@@ -33,3 +33,15 @@ gulp env --heroku
 heroku plugins:install git://github.com/ddollar/heroku-config.git
 heroku config:push --overwrite --interactive
 ```
+
+## Backup mongo
+
+```
+mongodump --db ride-better-dev --out C:/bkp/mongo/ride-better/v2
+```
+
+## Usefull exports
+
+```
+mongoexport -d ride-better-dev -c skimap -q "{latitude : {$exists : 0}}" --fields name, official_website, regions[0].name --csv --out .data/nogeo_skimap.csv
+```
