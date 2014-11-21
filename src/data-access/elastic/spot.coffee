@@ -1,9 +1,5 @@
 Promise = require "bluebird"
-elasticsearch = require "elasticsearch"
-
-config = require("../../config")
-
-client = new elasticsearch.Client host : config("ELASTIC_URI")
+elastic = require "./elastic"
 
 exports.findSpots = (term, geo) ->
   console.log ">>>spot.coffee:9", term, geo
@@ -41,7 +37,7 @@ exports.findSpots = (term, geo) ->
       index: "rspots"
       type: "spot"
       body : q
-    client.search(s).then (res) ->
+    elastic.search(s).then (res) ->
       res.hits.hits.map (m) ->
         r = m._source
         r.code = m._id
@@ -52,3 +48,29 @@ exports.findSpots = (term, geo) ->
         r
   else
     Promise.resolve []
+
+
+exports.nearestSpot = (geo) ->
+  console.log ">>>spot.coffee:9", geo
+  q =
+    sort : [
+      "_score",
+      {
+        _geo_distance :
+          geo :
+            lat : geo[0]
+            lon : geo[1]
+          order : "asc",
+          unit : "km"
+      }],
+    size : 1
+  s =
+    index: "rspots"
+    type: "spot"
+    body : q
+  elastic.search(s).then (res) ->
+    res.hits.hits.map((m) ->
+      r = m._source
+      r.code = m._id
+      r.dist = Math.round m.sort[1]
+      r)[0]
