@@ -19,3 +19,10 @@ exports.get = (path) ->
       throw new Error res.statusCode
     else
       res[1]
+
+exports.delete = (path) ->
+  request.delAsync(boardUri + "/" + path, json : true).then (res) ->
+    if res[0].statusCode != 200
+      throw new Error res.statusCode
+    else
+      res[1]
