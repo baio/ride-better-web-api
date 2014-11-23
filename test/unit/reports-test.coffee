@@ -22,7 +22,7 @@ describe "test reports api", ->
       console.log ">>>reports-test.coffee:9", resp.result
       next()
 
-  it.only "get reports for 1939", (next) ->
+  it "get reports for 1939", (next) ->
     @server.inject url : "/home/1939", method: "get", (resp) ->
       console.log ">>>reports-test.coffee:19", resp.result
       next()

@@ -7,7 +7,7 @@ spotsGet = require "../api/spots-get"
 queryValidationSchema =
   #TODO : regex for geo
   geo : joi.string()
-  term : joi.string()
+  term : joi.string().allow('')
 
 module.exports =
   method : "GET"
