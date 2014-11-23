@@ -3,12 +3,12 @@ moment = require "moment"
 
 formatSnowCover = (condition, lang) ->
     switch condition
-      when 0 then res "very little snow", lang
-      when 1 then res "not enough snow", lang
-      when 2 then res "enough snow", lang
-      when 3 then res "much snow", lang
-      when 4 then res "lots of snow", lang
-      else res "unknown amount of snow", lang
+      when 0 then res "very little powder", lang
+      when 1 then res "not enough powder", lang
+      when 2 then res "enough powder", lang
+      when 3 then res "much powder", lang
+      when 4 then res "lots of powder", lang
+      else res "unknown amount of powder", lang
 
 
 formatSnowfall = (condition, lang) ->
@@ -39,9 +39,9 @@ module.exports.summary = (lang, conditions, variance) ->
   if !conditions.tracks and !conditions.crowd and !conditions.snowing
     null
   else if variance?
-    r = "#{formatVariance(variance, lang)}  #{formatSnowCover(conditions.tracks, lang)} #{res "and", lang} #{formatCrowd(conditions.crowd, lang)} #{res "on the tracks", lang}, #{formatSnowfall(conditions.snowing, lang)}"
+    r = "#{formatVariance(variance, lang)}  #{formatSnowCover(conditions.tracks, lang)} #{res "and", lang} #{formatCrowd(conditions.crowd, lang)} #{res "on the pistes", lang}, #{formatSnowfall(conditions.snowing, lang)}"
   else
-    r = "#{formatSnowCover(conditions.tracks, lang)} #{res "and", lang} #{formatCrowd(conditions.crowd, lang)} #{res "on the tracks", lang}, #{formatSnowfall(conditions.snowing, lang)}"
+    r = "#{formatSnowCover(conditions.tracks, lang)} #{res "and", lang} #{formatCrowd(conditions.crowd, lang)} #{res "on the pistes", lang}, #{formatSnowfall(conditions.snowing, lang)}"
 
   r = r[0].toUpperCase() + r[1..]
   r = r + "."

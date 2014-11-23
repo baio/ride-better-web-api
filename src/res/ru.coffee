@@ -1,11 +1,11 @@
 module.exports =
 
-  "very little snow" : "очень мало снега"
-  "not enough snow" : "недостаточно снега"
-  "enough snow" : "снега дотаточно"
-  "much snow" : "много снега"
-  "lots of snow" : "очень много снега"
-  "unknown amount of snow" : "неизвестное количество снега"
+  "very little powder" : "очень мало снега"
+  "not enough powder" : "недостаточно снега"
+  "enough powder" : "снега дотаточно"
+  "much powder" : "много снега"
+  "lots of powder" : "очень много снега"
+  "unknown amount of powder" : "неизвестное количество снега"
 
   "snow does not fall out" : "снег не выпадал"
   "not much snow fell" : "выпало немного снега"
@@ -31,7 +31,7 @@ module.exports =
   "day off" : "выходной"
 
   "and" : "и"
-  "on the tracks" : "на трассах"
+  "on the pistes" : "на трассах"
 
   "Latest report suggests that place is NOT operating" : "Последнее сообщение говорит о том что курорт ЗАКРЫТ"
   "because of" : "потому что"
