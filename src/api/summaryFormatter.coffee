@@ -37,7 +37,7 @@ formatVariance = (condition, lang) ->
 
 module.exports.summary = (lang, conditions, variance) ->
   if !conditions.tracks and !conditions.crowd and !conditions.snowing
-    null
+    return null
   else if variance?
     r = "#{formatVariance(variance, lang)}  #{formatSnowCover(conditions.tracks, lang)} #{res "and", lang} #{formatCrowd(conditions.crowd, lang)} #{res "on the pistes", lang}, #{formatSnowfall(conditions.snowing, lang)}"
   else

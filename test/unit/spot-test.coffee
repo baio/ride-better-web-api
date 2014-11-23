@@ -9,7 +9,7 @@ describe "test spots api", ->
       console.log ">>>reports-test.coffee:9", res
       next()
 
-  it.only "get nearest spot for geo 55.76220610000001,37.678805", (next) ->
+  it "get nearest spot for geo 55.76220610000001,37.678805", (next) ->
     @server.inject url : "/nearest-spot?geo=55.76220610000001,37.678805", method: "get", (resp) ->
       console.log ">>>reports-test.coffee:9", resp.result
       next()

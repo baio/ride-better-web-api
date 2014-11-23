@@ -19,5 +19,10 @@ describe "test reports api", ->
     payload =
     credentials = user : name : "baio"
     @server.inject url : "/home/1936", method: "post", payload : payload, (resp) ->
-      console.log ">>>reports-test.coffee:9", res
+      console.log ">>>reports-test.coffee:9", resp.result
+      next()
+
+  it.only "get reports for 1939", (next) ->
+    @server.inject url : "/home/1939", method: "get", (resp) ->
+      console.log ">>>reports-test.coffee:19", resp.result
       next()
