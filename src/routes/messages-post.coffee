@@ -21,7 +21,7 @@ module.exports =
     data =
       user : req.auth.credentials
       message : req.payload.message
-    dailyMessagePost(spot, data).then ->
-      resp ok : true
+    dailyMessagePost(spot, data).then (res) ->
+      resp res
     , (err) ->
       resp hapi.Error.badRequest err
