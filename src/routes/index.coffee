@@ -6,4 +6,5 @@ module.exports = [
   require("./reports-post")
   require("./nearest-spot-get")
   require("./messages-post")
+  require("./messages-get")
 ]

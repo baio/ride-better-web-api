@@ -1,27 +1,20 @@
 "use strict"
-dailyMessagePost = require "../api/daily-message-post"
+dailyMessageGet = require "../api/daily-message-get"
 hapi = require "hapi"
 joi = require "joi"
 
 paramsValidationSchema =
   spot : joi.string()
 
-payloadValidationSchema =
-  message : joi.string().required()
-
 module.exports =
-  method : "POST"
+  method : "GET"
   path : "/spots/{spot}/messages"
   config :
     validate :
       params : paramsValidationSchema
-      payload : payloadValidationSchema
   handler : (req, resp) ->
     spot = req.params.spot
-    data =
-      user : req.auth.credentials
-      message : req.payload.message
-    dailyMessagePost(spot, data).then ->
-      resp ok : true
+    dailyMessageGet(spot).then (res) ->
+      resp res
     , (err) ->
       resp hapi.Error.badRequest err
