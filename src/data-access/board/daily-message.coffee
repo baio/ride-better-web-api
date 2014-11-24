@@ -7,9 +7,10 @@ exports.addMessage = (spot, message) ->
     res.message.created = moment.utc(res.message.created).unix()
     res
 
-exports.getMessages = (spot) ->
+exports.getMessages = (spot, opts) ->
   date = moment().utc().format("DD-MM-YYYY")
-  board.get("spots/#{spot}/boards/#{date}/daily-talk/threads").then (res) ->
+  console.log ">>>daily-message.coffee:12", opts
+  board.get("spots/#{spot}/boards/#{date}/daily-talk/threads", opts).then (res) ->
     if res
       for thread in res.threads
         thread.message.created = moment.utc(thread.message.created).unix()

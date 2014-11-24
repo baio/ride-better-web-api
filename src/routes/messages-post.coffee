@@ -19,6 +19,7 @@ module.exports =
   handler : (req, resp) ->
     spot = req.params.spot
     data =
+      _user : req.auth.credentials.key
       user : req.auth.credentials
       message : req.payload.message
     dailyMessagePost(spot, data).then (res) ->

@@ -6,15 +6,22 @@ joi = require "joi"
 paramsValidationSchema =
   spot : joi.string()
 
+queryValidationSchema =
+  since : joi.number().allow("")
+  till : joi.number().allow("")
+
+
 module.exports =
   method : "GET"
   path : "/spots/{spot}/messages"
   config :
     validate :
       params : paramsValidationSchema
+      query : queryValidationSchema
   handler : (req, resp) ->
+    console.log ">>>messages-get.coffee:22", req.query
     spot = req.params.spot
-    dailyMessageGet(spot).then (res) ->
+    dailyMessageGet(spot, req.query).then (res) ->
       resp res
     , (err) ->
       resp hapi.Error.badRequest err

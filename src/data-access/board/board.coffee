@@ -13,8 +13,8 @@ exports.post = (path, data) ->
     else
       res[1]
 
-exports.get = (path) ->
-  request.getAsync(boardUri + "/" + path, json : true).then (res) ->
+exports.get = (path, qs) ->
+  request.getAsync(boardUri + "/" + path, json : true, qs : qs).then (res) ->
     if res[0].statusCode != 200
       throw new Error res.statusCode
     else
