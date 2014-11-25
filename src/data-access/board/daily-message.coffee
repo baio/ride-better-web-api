@@ -16,5 +16,5 @@ exports.getMessages = (spot, opts) ->
         thread.message.created = moment.utc(thread.message.created).unix()
     res
 
-exports.deleteMessage = (messageId) ->
-  board.delete("threads/#{messageId}")
+exports.deleteMessage = (messageId, userKey) ->
+  board.remove("threads/#{messageId}", _user : userKey)

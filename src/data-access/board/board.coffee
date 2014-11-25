@@ -20,8 +20,8 @@ exports.get = (path, qs) ->
     else
       res[1]
 
-exports.delete = (path) ->
-  request.delAsync(boardUri + "/" + path, json : true).then (res) ->
+exports.remove = (path, data) ->
+  request.delAsync(boardUri + "/" + path, json : if data then data else true).then (res) ->
     if res[0].statusCode != 200
       throw new Error res.statusCode
     else

@@ -15,7 +15,7 @@ module.exports =
       params : paramsValidationSchema
   handler : (req, resp) ->
     id = req.params.id
-    dailyMessageDelete(id).then (res) ->
+    dailyMessageDelete(id, req.auth.credentials.key).then (res) ->
       resp res
     , (err) ->
       resp hapi.Error.badRequest err
