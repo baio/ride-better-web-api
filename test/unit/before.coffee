@@ -1,7 +1,9 @@
 "use strict"
 
 server = require "../../src/server"
+config = require "../../src/config"
 
 before (next) ->
   @server = server
-  setTimeout next, 200
+  @user = config "user"
+  next()

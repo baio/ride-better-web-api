@@ -16,7 +16,6 @@ describe "test reports api", ->
       next()
 
   it "send report for 1936", (next) ->
-    payload =
     credentials = user : name : "baio"
     @server.inject url : "/home/1936", method: "post", payload : payload, (resp) ->
       console.log ">>>reports-test.coffee:9", resp.result
