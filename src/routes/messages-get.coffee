@@ -15,6 +15,7 @@ module.exports =
   method : "GET"
   path : "/spots/{spot}/messages"
   config :
+    auth : false
     validate :
       params : paramsValidationSchema
       query : queryValidationSchema
