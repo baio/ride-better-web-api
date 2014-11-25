@@ -9,6 +9,12 @@ bluebird = require "bluebird"
 module.exports = (opts, reports, forecast) ->
   snapshot =
     forecast : if forecast then forecast[0]
+  ###
+  totalSnowfall :
+    amount : 5
+    days : 3
+    summary : "Over the past 3 days has dropped 5 cm. of snow."
+  ###
   if reports.length
     #there is some reports
     if !reports[0].operate or !reports[0].operate.status or reports[0].operate.status == "open"
