@@ -12,7 +12,9 @@ exports.addMessage = (spot, message) ->
     title : null
     tags : ["daily", "talk"]
     _user : message._user
-  board.upsertBoardAndThread(boardDoc, message)
+  board.upsertBoardAndThread(boardDoc, message).then (res) ->
+    res.message.created = moment.utc(res.message.created).unix()
+    res
 
 exports.getMessages = (spot, opts) ->
   date = moment().utc().format("DD-MM-YYYY")
