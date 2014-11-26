@@ -1,7 +1,7 @@
 expect = require("chai").expect
 moment = require "moment"
 
-describe.only "test board api", ->
+describe "test board api", ->
 
   it "create message for 1936", (next) ->
     data =

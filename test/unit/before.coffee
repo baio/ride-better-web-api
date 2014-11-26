@@ -6,4 +6,4 @@ config = require "../../src/config"
 before (next) ->
   @server = server
   @user = config "user"
-  next()
+  setTimeout next, 200

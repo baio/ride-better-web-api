@@ -18,6 +18,6 @@ module.exports = (opts) ->
       conditions : res.conditions
       operate : res.operate
       comment : res.comment
-      summary : if res.conditions then summaryFormatter.summary(lang, res.conditions) else summaryFormatter.notOperate(opts.lang, res.operate)
+      summary : if res.conditions then summaryFormatter.summary(opts.lang, res.conditions) else summaryFormatter.notOperate(opts.lang, res.operate)
     else
       null
