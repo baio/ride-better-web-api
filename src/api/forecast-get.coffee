@@ -8,8 +8,10 @@ _ = require "underscore"
 request = (opts) ->
   spot.getGeo(opts.spot)
   .then (geo) ->
+    console.log ">>>forecast-get.coffee:11", geo
     if geo 
       forecast.getForecast(geo, opts).then (res) ->
+        console.log ">>>forecast-get.coffee:13", res
         # Time is return in UTC, this means we need to know local tz to convert it in actual time.
         # straighforward convert by index
         day = moment.utc().startOf('day')

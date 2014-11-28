@@ -62,7 +62,7 @@ module.exports = (opts, reports, forecast) ->
       if res
         snapshot.report =
           lastStatus : operate : res.operate, comment : res.comment
-          summary : summaryFormatter.notOperate opts.lang, res.operate
+          summary : res.summary
       else
         snapshot.report = summary : summaryFormatter.noReports opts.lang
       snapshot

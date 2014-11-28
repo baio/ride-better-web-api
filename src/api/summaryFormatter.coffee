@@ -58,6 +58,7 @@ operateStatus = (lang, status) ->
 module.exports.notOperate = (lang, operate) ->
   r = res("Latest report suggests that place is NOT operating", lang)
   if operate.status != "closed"
+    console.log ">>>summaryFormatter.coffee:61", operate.status
     r = r + ", " + res("because of", lang) + " " + operateStatus(lang, operate.status)
   r = r + "."
   if operate.openDate

@@ -12,6 +12,7 @@ exports.getCurrentYearLastClosedReport = (spot) ->
   q =
     spot : spot
     time : $gte : moment.utc().startOf("year").valueOf()
+    $or : [{"operate" : $exists : 1}, {"operate.status" : $ne : "open"}]
   reportModel.findOneAsync(q).then (res) -> res
 
 exports.createReport = (data) ->

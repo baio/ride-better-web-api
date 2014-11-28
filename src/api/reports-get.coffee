@@ -11,6 +11,11 @@ module.exports = (opts) ->
       r = m.toObject virtuals: true
       if r.operate?.openDate
         r.operate.openDate = r.operate.openDate.unix
+      if res.conditions
+        summary = summaryFormatter.summary(opts.lang, res.conditions)
+      else if res.operate
+        summary = summaryFormatter.notOperate(opts.lang, res.operate)
+
       delete r._id
       delete r.__v
       user : r.user
@@ -18,5 +23,5 @@ module.exports = (opts) ->
       conditions : r.conditions
       operate : r.operate
       comment : r.comment
-      summary : if r.conditions then summaryFormatter.summary(opts.lang, r.conditions) else summaryFormatter.notOperate(opts.lang, r.operate)
+      summary : summary
 

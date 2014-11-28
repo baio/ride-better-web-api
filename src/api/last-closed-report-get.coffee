@@ -11,6 +11,10 @@ module.exports = (opts) ->
       res = res.toObject virtuals: true
       if res.operate?.openDate
         res.operate.openDate = res.operate.openDate.unix
+      if res.conditions
+        summary = summaryFormatter.summary(opts.lang, res.conditions)
+      else if res.operate
+        summary = summaryFormatter.notOperate(opts.lang, res.operate)
       delete res._id
       delete res.__v
       user : res.user
@@ -18,6 +22,6 @@ module.exports = (opts) ->
       conditions : res.conditions
       operate : res.operate
       comment : res.comment
-      summary : if res.conditions then summaryFormatter.summary(opts.lang, res.conditions) else summaryFormatter.notOperate(opts.lang, res.operate)
+      summary : summary
     else
       null
