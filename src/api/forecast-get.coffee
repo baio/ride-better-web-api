@@ -36,8 +36,5 @@ module.exports = (opts) ->
         if res
           cache.setForecast opts, res
         res
-    else
-      console.log ">>>forecast-get.coffee:41", "forecast from cache"
-      res
 
 
