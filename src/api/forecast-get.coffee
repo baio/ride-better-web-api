@@ -1,17 +1,16 @@
 "use strict"
 moment = require "moment"
 cache = require "../data-access/cache/forecast"
-spot = require "../data-access/mongo/spot"
+spots = require "../data-access/mongo/spots"
 forecast = require "../data-access/forecastio/forecast"
 _ = require "underscore"
 
 request = (opts) ->
-  spot.getGeo(opts.spot)
+  console.log ">>>forecast-get.coffee:9", opts
+  spots.getGeo(opts.spot)
   .then (geo) ->
-    console.log ">>>forecast-get.coffee:11", geo
     if geo 
       forecast.getForecast(geo, opts).then (res) ->
-        console.log ">>>forecast-get.coffee:13", res
         # Time is return in UTC, this means we need to know local tz to convert it in actual time.
         # straighforward convert by index
         day = moment.utc().startOf('day')
@@ -32,11 +31,14 @@ request = (opts) ->
 
 module.exports = (opts) ->
   _.defaults opts, lang : "en", culture : "eu"
+  request(opts)
+  ###
   cache.getForecast(opts).then (res) ->
     if !res
       request(opts).then (res) ->
         if res
           cache.setForecast opts, res
         res
+  ###
 
 

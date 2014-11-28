@@ -10,8 +10,8 @@ Promise = require "bluebird"
 
 module.exports = (opts) ->
   Promise.join reportsGet(opts), forecastGet(opts), snowfallHistoryGet(opts), (reports, forecast, snowfallHistory) ->
-    snapshotGet(opts, reports, forecast).then (snapshot) ->
-      reports : reports
-      forecast : forecast
-      snapshot : snapshot
-      snowfallHistory : snowfallHistory
+    snapshot = snapshotGet(opts, reports, forecast)
+    reports : reports
+    forecast : forecast
+    snapshot : snapshot
+    snowfallHistory : snowfallHistory

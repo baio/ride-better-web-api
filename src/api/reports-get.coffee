@@ -1,27 +1,22 @@
 "use strict"
 
-report = require "../data-access/mongo/report"
+reports = require "../data-access/mongo/reports"
 summaryFormatter = require "./summaryFormatter"
+moment = require "moment"
 _ = require "underscore"
 
 module.exports = (opts) ->
   _.defaults opts, lang : "en", culture : "eu"
-  report.getLatest2Days(opts.spot).then (res) ->
-    res.map (m) ->
-      r = m.toObject virtuals: true
+  reports.getLatest(opts.spot).then (res) ->
+    res.map (r) ->
       if r.operate?.openDate
-        r.operate.openDate = r.operate.openDate.unix
-      if res.conditions
-        summary = summaryFormatter.summary(opts.lang, res.conditions)
-      else if res.operate
-        summary = summaryFormatter.notOperate(opts.lang, res.operate)
+        r.operate.openDate = moment.utc(r.operate.openDate).unxi()
+      if r.conditions
+        summary = summaryFormatter.summary(opts.lang, r.conditions)
+      else if r.operate
+        summary = summaryFormatter.notOperate(opts.lang, r.operate)
 
-      delete r._id
-      delete r.__v
-      user : r.user
-      time : r.time.unix
-      conditions : r.conditions
-      operate : r.operate
-      comment : r.comment
-      summary : summary
+      r.summary = summary
+      r.time = moment.utc(r.time).unix()
+      r
 

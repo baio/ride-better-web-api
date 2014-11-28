@@ -1,4 +1,4 @@
 "use strict"
-report = require "../data-access/mongo/report"
+reports = require "../data-access/mongo/reports"
 
-module.exports = report.createReport
+module.exports = reports.createReport

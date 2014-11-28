@@ -1,7 +1,7 @@
 expect = require("chai").expect
 
 reportsGet = require "../../src/api/reports-get"
-lastClosedReportGet = require "../../src/api/last-closed-report-get"
+
 
 describe "test reports api", ->
 
