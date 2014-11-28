@@ -38,3 +38,9 @@ module.exports =
   "Suggested open date is" : "Возможная дата открытия"
 
   "No reports for last two days" : "За последние 2 дня не было оставлено ни одного сообщения"
+
+  "km" : "км"
+  "cm" : "см"
+  "c" : "c"
+  "mi" : "миль"
+  "in" : "дм"

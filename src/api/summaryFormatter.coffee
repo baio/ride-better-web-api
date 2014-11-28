@@ -71,7 +71,7 @@ module.exports.noReports = (lang) ->
 
 module.exports.formatSnowHistory = (lang, culture, hist) ->
   if lang == "ru"
-    daysStr = hist.days == 1 ? "За предыдущий день" : "За предыдущие #{hist.days} дня"
+    daysStr = if hist.days == 1 then "За предыдущий день" else "За предыдущие #{hist.days} дня"
     "#{daysStr} выпало #{unitsConverter.height(culture, hist.amount)} #{res(unitsConverter.heightU(culture), lang)}. снега."
   else
     "Over the past #{hist.days} days has dropped #{unitsConverter.height(culture, hist.amount)} #{res(unitsConverter.heightU(culture), lang)}. of snow."

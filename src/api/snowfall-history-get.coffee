@@ -7,7 +7,6 @@ module.exports = (opts) ->
   _.defaults opts, lang : "en", culture : "eu"
   fhist.getSnowHistory(opts.spot)
   .then (res) ->
-    console.log ">>>snowfall-history-get.coffee:8", res
     if res
       amount : res.amount
       days : res.days

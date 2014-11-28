@@ -9,7 +9,7 @@ exports.getSnowHistory = (spot) ->
       if res
         amts = res.value.amounts.filter (f) -> f.type == "snow"
         amts = _.sortBy amts, (amt) -> amt.date
-        iter = moment.utc().startOf("d").add(-2, "d").unix()
+        iter = moment.utc().startOf("d").add(-1, "d").unix()
         res = []
         #find sequency of days with defined snow precipitation amount
         #if rain fallen all reset!

@@ -8,9 +8,9 @@ data =
 
 exports.height = (culture, cm) ->
   if data[culture][1] != "cm"
-    Math.round cm / 0.393701
+    Math.round(cm / 0.393701 * 10) / 10
   else
-    cm
+    Math.round(cm * 10) / 10
 
 exports.heightU = (culture) ->
   data[culture][1]
