@@ -5,7 +5,7 @@ homeGet = require "../../src/api/home-get"
 describe "test home api", ->
 
   it.only "get home for spot 1936 (service)", (next) ->
-    homeGet(spot : "1939").then (res) ->
+    homeGet(spot : "1936").then (res) ->
       console.log ">>>reports-test.coffee:9", res
       #next()
 

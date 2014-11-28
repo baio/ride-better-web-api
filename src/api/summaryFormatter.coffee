@@ -67,3 +67,11 @@ module.exports.notOperate = (lang, operate) ->
 
 module.exports.noReports = (lang) ->
   res("No reports for last two days", lang) + "."
+
+module.exports.formatSnowHistory = (lang, units, hist) ->
+  if lang == "ru"
+    daysStr = hist.days == 1 ? "За предыдущий день" : "За предыдущие #{hist.days} дня"
+    "#{daysStr} выпало #{hist.amount} см. снега."
+  else
+    "Over the past #{hist.days} days has dropped #{hist.amount} cm. of snow."
+
