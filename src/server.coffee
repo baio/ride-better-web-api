@@ -1,14 +1,10 @@
 require "newrelic"
 hapi = require "hapi"
-mongoose = require "mongoose"
 routes = require "./routes"
 auth = require "./server-auth"
 config = require "./config"
 Promise = require "bluebird"
 
-Promise.promisifyAll mongoose
-
-mongoose.connect config("MONGO_URI")
 
 port = Number config("PORT")
 serverOpts = config("server").opts
