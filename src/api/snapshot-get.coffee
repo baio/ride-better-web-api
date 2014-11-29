@@ -48,7 +48,6 @@ module.exports = (opts, reports, forecast) ->
   else if reports[0]
     #tehere is no operational reports, just get first one
     if isFirstReportSuggestClosed
-      console.log ">>>snapshot-get.coffee:51", reports[0]
       summary = summaryFormatter.notOperate opts.lang, reports[0].operate
     else
       conditions = reports[0]?.conditions

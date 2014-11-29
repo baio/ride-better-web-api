@@ -10,7 +10,7 @@ module.exports = (opts) ->
   reports.getLatest(opts.spot).then (res) ->
     res.map (r) ->
       if r.operate?.openDate
-        r.operate.openDate = moment.utc(r.operate.openDate).unxi()
+        r.operate.openDate = moment.utc(r.operate.openDate).unix()
       if r.conditions
         summary = summaryFormatter.summary(opts.lang, r.conditions)
       else if r.operate

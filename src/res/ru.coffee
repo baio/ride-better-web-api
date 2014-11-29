@@ -37,7 +37,7 @@ module.exports =
   "because of" : "потому что"
   "Suggested open date is" : "Возможная дата открытия"
 
-  "No reports for last two days" : "За последние 2 дня не было оставлено ни одного сообщения"
+  "No reports" : "Не было оставлено ни одного сообщения"
 
   "km" : "км"
   "cm" : "см"

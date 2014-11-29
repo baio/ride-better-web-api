@@ -6,7 +6,6 @@ forecast = require "../data-access/forecastio/forecast"
 _ = require "underscore"
 
 request = (opts) ->
-  console.log ">>>forecast-get.coffee:9", opts
   spots.getGeo(opts.spot)
   .then (geo) ->
     if geo 
@@ -31,14 +30,13 @@ request = (opts) ->
 
 module.exports = (opts) ->
   _.defaults opts, lang : "en", culture : "eu"
-  request(opts)
-  ###
   cache.getForecast(opts).then (res) ->
     if !res
       request(opts).then (res) ->
         if res
           cache.setForecast opts, res
         res
-  ###
+    else
+      res
 
 
