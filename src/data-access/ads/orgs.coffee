@@ -1,12 +1,14 @@
 mongo = require "./mongo"
 
-exports.createOrg = (org, user) ->
-  org.user = user
-  org.created = moment().utc()
+exports.createOrg = (user, profile) ->
+  org =
+    user : user
+    created : moment().utc()
+    profile : profile
   mongo.orgs.insertAsync(org)
 
 exports.removeOrg = (user) ->
   mongo.orgs.removeAsync("user.key" : user.key)
 
-exports.editOrg = (org, user) ->
-  mongo.orgs.updateAsync("user.key" : user.key, org)
+exports.updateOrg = (user, profile) ->
+  mongo.orgs.updateAsync("user.key" : user.key, $set : "profile" : profile)
