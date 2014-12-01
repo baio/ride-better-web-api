@@ -9,18 +9,17 @@ map = (doc) ->
     doc.src = "https://dataavail.blob.core.windows.net/ride-better-webcams/" + doc.key
   doc
 
-getOne = (q) ->
-  console.log ">>>index.coffee:13", q
-  cursor = webcams.find(q).sort(created : -1).limit(1)
+getOne = (q, s) ->
+  s ?= created : -1
+  cursor = webcams.find(q).sort(s).limit(1)
   Promise.promisify(cursor.toArray, cursor)().then (res) ->
-    console.log ">>>index.coffee:15", res
     map res[0]
 
 exports.getLatest = (spot) ->
   getOne spot : spot
 
 exports.getNext = (spot, date) ->
-  getOne spot : spot, created : $gt : moment.utc(date, "X").toDate()
+  getOne {spot : spot, created : $gt : moment.utc(date + 1, "X").toDate()}, created : 1
 
 exports.getPrev = (spot, date) ->
   getOne spot : spot, created : $lt : moment.utc(date, "X").toDate()
