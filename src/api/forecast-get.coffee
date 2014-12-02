@@ -12,18 +12,15 @@ request = (opts) ->
       forecast.getForecast(geo, opts).then (res) ->
         # Time is return in UTC, this means we need to know local tz to convert it in actual time.
         # straighforward convert by index
-        day = moment.utc().startOf('day')
         res.daily.data.map (d) ->
           data =
-            time : day.unix()
+            time : (d.time + res.offset * 60 * 60)
             icon : d.icon
             summary: d.summary
             precipType: d.precipType
             precipAccumulation: d.precipAccumulation
             temperatureMin: d.temperatureMin
             temperatureMax: d.temperatureMax
-          day = day.add 1, "d"
-          data
     else
       # Geo is not defined for this spot, don't know which data request
       null

@@ -17,10 +17,10 @@ mongoOpts =
 if !DISABLE_CACHE
   catboxCache = Promise.promisifyAll new catbox.Client catboxMongo, mongoOpts
 
-catboxCache.startAsync().then ->
-    console.log "mongo-catbox start success"
-  .catch (err) ->
-    console.log "mongo-catbox start err", err
+  catboxCache.startAsync().then ->
+      console.log "mongo-catbox start success"
+    .catch (err) ->
+      console.log "mongo-catbox start err", err
 
 getKey = (id) ->
   segment: "chache"
