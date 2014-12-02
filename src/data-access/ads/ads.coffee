@@ -10,12 +10,14 @@ exports.createAd = (user, ad) ->
       $push : ads :  {$each : [ad], $position : 0}
     },
     upsert : false
-  )
+  ).then (res) ->
+    if res.ok and res.n == 1
+      ad
 
 exports.updateAd = (user, ad) ->
-  ad.created = moment.utc().toDate()
+  q = { "ads._id" : mongo.ObjectId(ad._id), "user.key" : user.key}
   mongo.orgs.updateAsync(
-    { "ads._id" : ad._id, "user.key" : user.key},
+    { "ads._id" : mongo.ObjectId(ad._id), "user.key" : user.key},
     {
       $set : "adds.$" : ad
     },
@@ -26,7 +28,7 @@ exports.removeAd = (user, adId) ->
   mongo.orgs.updateAsync(
     { "user.key" : user.key },
     {
-      $pull : adds : _id : mongo.ObjectId(adId)
+      $pull : ads : _id : mongo.ObjectId(adId)
     }
     upsert : false
   )
