@@ -11,15 +11,17 @@ exports.createAd = (user, ad) ->
     },
     upsert : false
   ).then (res) ->
+    console.log ">>>ads.coffee:14", res
     if res.ok and res.n == 1
       ad
 
 exports.updateAd = (user, ad) ->
-  q = { "ads._id" : mongo.ObjectId(ad._id), "user.key" : user.key}
+  q = { "ads._id" : mongo.ObjectId(ad._id), "user.key" : user.key }
+  console.log ">>>ads.coffee:19", q, ad
   mongo.orgs.updateAsync(
-    { "ads._id" : mongo.ObjectId(ad._id), "user.key" : user.key},
+    { "ads._id" : mongo.ObjectId(ad._id), "user.key" : user.key },
     {
-      $set : "adds.$" : ad
+      $set : "ads.$" : ad
     },
     upsert : false
   )
