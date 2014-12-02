@@ -8,4 +8,7 @@ module.exports = [
   require("./messages-post")
   require("./messages-get")
   require("./messages-delete")
+  require("./webcams/webcams-latest-get")
+  require("./webcams/webcams-next-get")
+  require("./webcams/webcams-prev-get")
 ]
