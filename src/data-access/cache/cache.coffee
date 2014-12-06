@@ -6,6 +6,7 @@ mongoURI = require "mongo-uri"
 
 DISABLE_CACHE = config("DISABLE_CACHE") == "true"
 
+
 mongoParsedOpts = mongoURI.parse config("MONGO_URI")
 mongoOpts =
   host : mongoParsedOpts.hosts[0]

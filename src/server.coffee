@@ -5,6 +5,14 @@ auth = require "./server-auth"
 config = require "./config"
 Promise = require "bluebird"
 
+###
+NODE_ENV
+MONGO_URI
+ELASTIC_URI
+FORECASTIO_KEY
+REDUCED_MONGO_URI
+WEBCAMS_MONGO_URI
+###
 
 port = Number config("PORT")
 serverOpts = config("server").opts

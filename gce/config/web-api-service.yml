@@ -1,0 +1,9 @@
+id: web-api-service
+kind: Service
+apiVersion: v1beta1
+port: 85
+containerPort: web-api-port
+selector: 
+  name: web-api
+labels: 
+  name: web-api

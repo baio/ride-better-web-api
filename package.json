@@ -40,7 +40,7 @@
     "url": "https://baio@bitbucket.org/baio/ride-better-web-api.git"
   },
   "scripts": {
-    "start": "coffee src/server.coffee"
+    "start": "node_modules/.bin/coffee src/server.coffee"
   },
   "devDependencies": {
     "gulp-rename": "^1.2.0"
