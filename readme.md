@@ -1,6 +1,12 @@
 Ride Better Web Api
 ===================
 
+```
+gcloud preview container replicationcontrollers resize web-api-controller --num-replicas=0
+gcloud preview container pods list
+
+```
+
 ##Set up env variables
 
 Any variable could be omitted if it is already set in the enviroment , or could be set / overiden as command argument.
@@ -44,4 +50,8 @@ mongodump --db ride-better-dev --out C:/bkp/mongo/ride-better/v2
 
 ```
 mongoexport -h ds053080.mongolab.com:53080 -d heroku_app31445045 -u baio -p 123 -c skimap -q "{'user.name' : 'baio'}" --out .data/spots.json
+```
+
+```
+gcloud compute firewall-rules create guestbook-node-80 --allow=tcp:80 --target-tags k8s-guestbook-node
 ```
