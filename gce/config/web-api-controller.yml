@@ -18,7 +18,7 @@ desiredState:
             ports: 
               - 
                 name: "web-api-port"
-                containerPort: 8001
+                containerPort: 8080
                 hostPort: 85
             env:
               - name: "NODE_ENV"
@@ -32,7 +32,7 @@ desiredState:
               - name: "ELASTIC_URI"
                 value: "https://m09vdd3s:aohppx2un3q90oa3@maple-9608858.us-east-1.bonsai.io"
               - name: "PORT"
-                value: "8001"
+                value: "8080"
               - name: "FORECASTIO_KEY"
                 value: "c627c992deb04400940b50c6e1ee0562"   
               - name: JWT_SECRET
