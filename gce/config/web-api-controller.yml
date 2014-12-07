@@ -24,17 +24,19 @@ desiredState:
               - name: "NODE_ENV"
                 value: "gce-stage"
               - name: "MONGO_URI"
-                value: "mongodb://10.240.108.4/ride-better-stage"
+                value: "mongodb://heroku_app31445045:db9rp9npiecuson5oj9u61n233@ds053080.mongolab.com:53080/heroku_app31445045"
               - name: "REDUCED_MONGO_URI"
-                value: "mongodb://10.240.108.4/ride-better-stage"
+                value: "mongodb://baio:123@ds055680.mongolab.com:55680/ride-better-fhist"
               - name: "WEBCAMS_MONGO_URI"
-                value: "mongodb://10.240.108.4/ride-better-stage"
+                value: "mongodb://baio:123@ds053080.mongolab.com:53080/heroku_app31445045"
               - name: "ELASTIC_URI"
-                value: "10.240.204.157:9200"
+                value: "https://m09vdd3s:aohppx2un3q90oa3@maple-9608858.us-east-1.bonsai.io"
               - name: "PORT"
                 value: "8001"
               - name: "FORECASTIO_KEY"
-                value: "c627c992deb04400940b50c6e1ee0562"                
+                value: "c627c992deb04400940b50c6e1ee0562"   
+              - name: JWT_SECRET
+                value: allBestthings1979               
     labels: 
       name: "web-api"
 labels: 

@@ -43,5 +43,5 @@ mongodump --db ride-better-dev --out C:/bkp/mongo/ride-better/v2
 ## Usefull exports
 
 ```
-mongoexport -d ride-better-dev -c skimap -q "{latitude : {$exists : 0}}" --fields name, official_website, regions[0].name --csv --out .data/nogeo_skimap.csv
+mongoexport -h ds053080.mongolab.com:53080 -d heroku_app31445045 -u baio -p 123 -c skimap -q "{'user.name' : 'baio'}" --out .data/spots.json
 ```
