@@ -6,11 +6,12 @@ hapi = require "hapi"
 
 paramsValidationSchema =
   spot : joi.string().required()
+  index : joi.number().required()
   time : joi.number().required()
 
 module.exports =
   method : "GET"
-  path : "/webcams/{spot}/next/{time}"
+  path : "/webcams/{spot}/{index}/next/{time}"
   config :
     auth : false
     validate :

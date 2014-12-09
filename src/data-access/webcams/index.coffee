@@ -16,10 +16,10 @@ getOne = (q, s) ->
     map res[0]
 
 exports.getLatest = (spot) ->
-  getOne spot : spot
+  getOne spot : spot, index : index
 
-exports.getNext = (spot, date) ->
-  getOne {spot : spot, created : $gt : moment.utc(date + 1, "X").toDate()}, created : 1
+exports.getNext = (spot, index, date) ->
+  getOne {spot : spot, index : index, created : $gt : moment.utc(date + 1, "X").toDate()}, created : 1
 
-exports.getPrev = (spot, date) ->
-  getOne spot : spot, created : $lt : moment.utc(date, "X").toDate()
+exports.getPrev = (spot, index, date) ->
+  getOne spot : spot, index : index,  created : $lt : moment.utc(date, "X").toDate()
