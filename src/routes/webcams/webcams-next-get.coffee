@@ -17,7 +17,7 @@ module.exports =
     validate :
       params : paramsValidationSchema
   handler : (req, resp) ->
-    webcams.getNext(req.params.spot, req.params.time).then (res) ->
+    webcams.getNext(req.params.spot, req.params.index, req.params.time).then (res) ->
       if !res
         resp hapi.Error.notFound()
       else

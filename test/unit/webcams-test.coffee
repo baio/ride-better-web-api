@@ -2,7 +2,7 @@ expect = require("chai").expect
 
 webcams = require "../../src/data-access/webcams"
 
-describe.only "test webcams api", ->
+describe "test webcams api", ->
 
   ###
   it "get latest webcam for spot 1936", (next) ->

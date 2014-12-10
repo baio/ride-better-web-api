@@ -1,4 +1,4 @@
-jarsigner="C:\Program Files (x86)\Java\jdk1.7.0_55\bin\jarsigner"
+arsigner="C:\Program Files (x86)\Java\jdk1.7.0_55\bin\jarsigner"
 keytool="C:\Program Files (x86)\Java\jdk1.7.0_55\bin\keytool"
 zipalign="C:\Users\max\AppData\Local\Android\android-sdk\build-tools\20.0.0\zipalign"
 

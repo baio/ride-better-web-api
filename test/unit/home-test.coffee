@@ -4,10 +4,10 @@ homeGet = require "../../src/api/home-get"
 
 describe "test home api", ->
 
-  it "get home for spot 1936 (service)", (next) ->
+  it.only "get home for spot 1936 (service)", (next) ->
     homeGet(spot : "1936", lang : "en", culture : "eu").then (res) ->
       console.log ">>>reports-test.coffee:9", res
-      #next()
+      next()
 
   it "get home for spot 1936", (next) ->
     @server.inject url : "/home/1936?lang=en", method: "get", (resp) ->
