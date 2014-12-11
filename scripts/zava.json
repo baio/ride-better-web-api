@@ -1,0 +1,48 @@
+{
+    "_id" : "1936",
+    "title" : "Завьялиха",
+    "webcams" : [
+        {
+            "index" : 0,
+            "title" : "Нижняя зона",
+            "meta" : {
+                "type" : "stream",
+                "src" : "http://ipeye.ru/ipeye_service/api/api.php?dev=m1G7dnol6Epo4CHLzYjAERqszxA4kz&amp;tupe=rtmp&amp;autoplay=0&amp;logo=1"
+            }
+        },
+        {
+            "index" : 1,
+            "title" : "Вершина, трасса 1"
+        },
+        {
+            "index" : 2,
+            "title" : "Вершина, трасса 5"
+        }
+    ],
+    "info" : {
+  "description" : "Расположен в живописном лесном месте, в 12 км от города Трёхгорный Челябинской обл. У нас есть всё для семейного отдыха! ГЛК «Завьялиха», г.Трехгорный создан в 1998 году. Принимает туристов с зимнего сезона 1999-2000 года и по настоящее время. Горнолыжный сезон, как правило, открывается в конце ноября и длится до середины апреля.",
+      "contacts" :
+      [
+        {"type" : "phone", "val" : "8 (35191) 481-00"},
+        {"type" : "phone", "val" : "8 (35191) 481-05"},
+        {"type" : "phone", "val" : "8 (35191) 481-65"},
+        {"type" : "site", "val" : "http://zavjalikha.net/"},
+        {"type" : "vk", "val" : "https://vk.com/welovezavjalikha"}
+      ],
+      "pros" :
+      [
+        "Классный лес", "Хороший подъемник", "Разнообразие трасс", "До новогодних праздников очень мало туристов"
+      ],
+      "cons" :
+      [
+        "Нет искуственного оснежения", "Мало развлечений помимо горы", "Очереди в новогодние праздники"
+      ],
+      "header" : "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTe-USrYKgB_PmBXMFkg9o70gCQ7Zg7V6rBRVBlXceJSOLTtqZHDg"
+    },
+    "imgs" : [
+      {
+        "src" : "http://turanet.ru/uploads/manual/europe/russia/chel/4/7.jpg",
+        "title" : "Завьялиха, вершина"
+      }
+    ]
+}

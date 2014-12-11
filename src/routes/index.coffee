@@ -11,4 +11,7 @@ module.exports = [
   require("./webcams/webcams-latest-get")
   require("./webcams/webcams-next-get")
   require("./webcams/webcams-prev-get")
+  require("./resorts/resorts-info-get")
+  require("./resorts/resorts-maps-get")
+  require("./resorts/resorts-prices-get")
 ]

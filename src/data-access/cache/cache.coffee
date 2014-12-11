@@ -39,3 +39,4 @@ exports.set = (collection, id, val, ttl) ->
 exports.remove = (collection, id) ->
   if DISABLE_CACHE then return Promise.resolve(undefined)
   catboxCache.dropAsync(getKey(collection + "_" + id))
+  
