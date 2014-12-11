@@ -7,6 +7,7 @@ module.exports = (opts) ->
   _.defaults opts, lang : "en", culture : "eu"
   fhist.getSnowHistory(opts.spot)
   .then (res) ->
-	  	summary : formatter.formatSnowHistory(opts.lang, opts.culture, res)
-	  	items : res	
+    if res
+      summary : formatter.formatSnowHistory(opts.lang, opts.culture, res)
+      items : res 
 

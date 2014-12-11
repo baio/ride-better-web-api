@@ -5,4 +5,5 @@ _ = require "underscore"
 
 exports.getSnowHistory = (spot) ->
   mongo.fhist.findOneAsync(_id : spot)
-  .then (res) -> res.value.amounts
+  .then (res) -> 
+    res?.value.amounts
