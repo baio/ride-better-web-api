@@ -45,3 +45,12 @@ exports.putResortContacts = (spot, contacts) ->
     ).then (res) ->
     if res
       exports.getResortInfo(spot)
+
+exports.putResortProsCons = (spot, proscons) ->
+  mongo.resorts.findAndModifyAsync(
+      query : {_id : spot}
+      update : {$set  : {"proscons" : proscons} }
+      upsert : false
+    ).then (res) ->
+    if res
+      exports.getResortInfo(spot)
