@@ -8,20 +8,21 @@ paramsValidationSchema =
   spot : joi.string().required()
 
 payloadValidationSchema =
-  title : joi.string().required()
-  description : joi.string().required()
-  geo : joi.array().includes(joi.number()).length(2)
+  contacts : joi.array().includes(
+    val :  joi.string().required()
+    type : joi.string().allow(["phone", "site", "vk"]).required()
+  )
 
 module.exports =
   method : "PUT"
-  path : "/resorts/{spot}/info"
+  path : "/resorts/{spot}/contacts"
   config :
     auth : false
     validate :
       params : paramsValidationSchema
       payload : payloadValidationSchema
   handler : (req, resp) ->
-    resorts.putResortInfoMain(req.params.spot, req.payload).then (res) ->
+    resorts.putResortContacts(req.params.spot, req.payload.contacts).then (res) ->
       if !res
         resp hapi.Error.notFound()
       else

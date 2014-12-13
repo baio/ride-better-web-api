@@ -2,8 +2,6 @@ Ride Better Web Api
 ===================
 
 ```
-AZURE_STORAGE_ACCOUNT=dataavail
-AZURE_STORAGE_ACCESS_KEY=rwdE+L8oCXMnuCPVbFudvRDt28fqEjl9KVKbA+ZzcbVGYZQ6OR7YyK95Pk+QSNGEsgb3k6ZL4wctZFz5bhl26A==
 ```
 
 ```

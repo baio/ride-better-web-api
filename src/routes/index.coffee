@@ -16,4 +16,5 @@ module.exports = [
   require("./resorts/resorts-prices-get")
   require("./resorts/resorts-info-main-put")
   require("./resorts/resorts-info-header-put")
+  require("./resorts/resorts-contacts-put")
 ]

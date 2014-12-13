@@ -2,11 +2,7 @@ mongo = require "./mongo"
 moment = require "moment"
 
 exports.getResortInfo = (spot) ->
-  mongo.resorts.findOneAsync({_id : spot}, {info  : 1, title : 1, geo : 1}).then (res) -> 
-    if res
-        spot : id : res._id, label : res.title
-        info : res.info
-        geo : res.geo
+  mongo.resorts.findOneAsync(_id : spot)
 
 exports.getResortMaps = (spot) ->
   mongo.resorts.findOneAsync({_id : spot}, {maps  : 1, title : 1}).then (res) -> 
@@ -26,7 +22,7 @@ exports.getResortPrices = (spot) ->
 exports.putResortInfoMain = (spot, data) ->
   mongo.resorts.findAndModifyAsync(
       query : {_id : spot}
-      update : {$set  : {title : data.title, "info.description" : data.description, geo : data.geo} }
+      update : {$set  : {title : data.title, description : data.description, geo : data.geo} }
       upsert : false
     ).then (res) ->
     if res
@@ -35,7 +31,16 @@ exports.putResortInfoMain = (spot, data) ->
 exports.putResortInfoHeader = (spot, headerUrl) ->
   mongo.resorts.findAndModifyAsync(
       query : {_id : spot}
-      update : {$set  : {"info.header" : headerUrl} }
+      update : {$set  : {"header" : headerUrl} }
+      upsert : false
+    ).then (res) ->
+    if res
+      exports.getResortInfo(spot)
+
+exports.putResortContacts = (spot, contacts) ->
+  mongo.resorts.findAndModifyAsync(
+      query : {_id : spot}
+      update : {$set  : {"contacts" : contacts} }
       upsert : false
     ).then (res) ->
     if res

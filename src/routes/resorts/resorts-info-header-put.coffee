@@ -15,7 +15,7 @@ paramsValidationSchema =
 
 module.exports =
   method : "PUT"
-  path : "/resorts/{spot}/info/header"
+  path : "/resorts/{spot}/header"
   config :
     auth : false
     validate :
