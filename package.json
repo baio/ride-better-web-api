@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "async": "^0.9.0",
+    "azure-storage": "^0.4.1",
     "bluebird": "^2.3.11",
     "catbox": "^3.4.2",
     "catbox-mongodb": "^1.0.5",
@@ -22,18 +23,18 @@
     "jsonwebtoken": "^1.1.2",
     "moment": "^2.8.1",
     "moment-timezone": "^0.2.2",
+    "mongo-uri": "^0.1.2",
+    "mongojs": "^0.17.0",
     "msw-api": "0.0.12",
     "nconf": "^0.6.9",
     "newrelic": "^1.13.2",
     "node-env-file": "^0.1.4",
     "q": "^1.0.1",
+    "request": "^2.48.0",
     "sinon": "^1.10.3",
     "stats-lite": "^1.0.3",
     "underscore": "^1.7.0",
-    "yaml-config": "^0.3.0",
-    "mongo-uri": "^0.1.2",
-    "request": "^2.48.0",
-    "mongojs": "^0.17.0"
+    "yaml-config": "^0.3.0"
   },
   "repository": {
     "type": "git",
