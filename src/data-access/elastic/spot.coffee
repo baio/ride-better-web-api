@@ -1,6 +1,21 @@
 Promise = require "bluebird"
 elastic = require "./elastic"
 
+exports.index = (spot, data) ->
+  q = 
+    index : "rspots"
+    type : "spot"
+    id : spot
+    body :
+      label : data.title
+
+  if data.geo
+    q.body.geo =
+      lat : data.geo[0]
+      lon : data.geo[1]
+  
+  elastic.index(q)
+
 exports.findSpots = (term, geo) ->
   console.log ">>>spot.coffee:9", term, geo
   if term

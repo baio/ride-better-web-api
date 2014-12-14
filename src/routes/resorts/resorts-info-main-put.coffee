@@ -1,7 +1,7 @@
 "use strict"
 
 joi = require "joi"
-resorts = require "../../data-access/mongo/resorts"
+updateResort = require "../../api/resorts-put"
 hapi = require "hapi"
 
 paramsValidationSchema =
@@ -21,7 +21,7 @@ module.exports =
       params : paramsValidationSchema
       payload : payloadValidationSchema
   handler : (req, resp) ->
-    resorts.putResortInfoMain(req.params.spot, req.payload).then (res) ->
+    updateResort(req.params.spot, req.payload).then (res) ->
       if !res
         resp hapi.Error.notFound()
       else
