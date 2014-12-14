@@ -22,4 +22,5 @@ module.exports = [
   require("./resorts/resorts-prices-put")
   require("./resorts/resorts-price-post")
   require("./resorts/resorts-webcams-put")
+  require("./resorts/resorts-post")
 ]
