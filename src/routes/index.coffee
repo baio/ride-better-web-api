@@ -21,4 +21,5 @@ module.exports = [
   require("./resorts/resorts-maps-put")
   require("./resorts/resorts-prices-put")
   require("./resorts/resorts-price-post")
+  require("./resorts/resorts-webcams-put")
 ]

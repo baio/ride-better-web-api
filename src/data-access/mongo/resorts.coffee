@@ -1,6 +1,15 @@
 mongo = require "./mongo"
 moment = require "moment"
 
+exports.putResortWebcams = (spot, webcams) ->
+  mongo.resorts.findAndModifyAsync(
+      query : {_id : spot}
+      update : {$set  : {"webcams" : webcams} }
+      upsert : false
+    ).then (res) ->
+    if res
+      exports.getResortInfo(spot)
+
 exports.putResortPrices = (spot, prices) ->
   mongo.resorts.findAndModifyAsync(
       query : {_id : spot}
