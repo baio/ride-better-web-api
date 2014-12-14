@@ -1,8 +1,30 @@
 mongo = require "./mongo"
 moment = require "moment"
 
+exports.putResortPrices = (spot, prices) ->
+  mongo.resorts.findAndModifyAsync(
+      query : {_id : spot}
+      update : {$set  : {"prices" : prices} }
+      upsert : false
+    ).then (res) ->
+    if res
+      exports.getResortInfo(spot)
+
+exports.postResortPrice = (spot, price) ->
+  price.created = new Date()
+  mongo.resorts.findAndModifyAsync(
+      query : {_id : spot}
+      update : $push : prices :  {$each : [price], $position : 0}
+      upsert : false
+  ).then (res) ->
+    if res
+      exports.getResortInfo(spot)
+
 exports.getResortInfo = (spot) ->
-  mongo.resorts.findOneAsync(_id : spot)
+  mongo.resorts.findOneAsync(_id : spot).then (res) ->
+    if res.prices
+      price.created = moment.utc(price.created).unix() for price in res.prices
+    res
 
 exports.getResortMaps = (spot) ->
   mongo.resorts.findOneAsync({_id : spot}, {maps  : 1, title : 1}).then (res) -> 
@@ -28,7 +50,7 @@ exports.putResortInfoMain = (spot, data) ->
     if res
       exports.getResortInfo(spot)
     
-exports.putResortInfoHeader = (spot, headerUrl) ->
+exports.postResortInfoHeader = (spot, headerUrl) ->
   mongo.resorts.findAndModifyAsync(
       query : {_id : spot}
       update : {$set  : {"header" : headerUrl} }
