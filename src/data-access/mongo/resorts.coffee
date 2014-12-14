@@ -54,3 +54,12 @@ exports.putResortProsCons = (spot, proscons) ->
     ).then (res) ->
     if res
       exports.getResortInfo(spot)
+
+exports.putResortMaps = (spot, maps) ->
+  mongo.resorts.findAndModifyAsync(
+      query : {_id : spot}
+      update : {$set  : {"maps" : maps} }
+      upsert : false
+    ).then (res) ->
+    if res
+      exports.getResortInfo(spot)
