@@ -9,6 +9,7 @@ module.exports = [
   require("./messages-get")
   require("./messages-delete")
   require("./webcams/webcams-latest-get")
+  require("./webcams/webcams-latest-noindex-get")
   require("./webcams/webcams-next-get")
   require("./webcams/webcams-prev-get")
   require("./resorts/resorts-info-get")

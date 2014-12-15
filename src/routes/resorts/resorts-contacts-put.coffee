@@ -10,7 +10,7 @@ paramsValidationSchema =
 payloadValidationSchema =
   contacts : joi.array().includes(
     val :  joi.string().required()
-    type : joi.string().allow(["phone", "site", "vk"]).required()
+    type : joi.string().allow(["phone", "site", "vk", "instagram", "mail"]).required()
   )
 
 module.exports =
