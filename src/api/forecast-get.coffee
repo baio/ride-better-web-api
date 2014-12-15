@@ -6,6 +6,7 @@ forecast = require "../data-access/forecastio/forecast"
 _ = require "underscore"
 
 request = (opts) ->
+  console.log "forecast-get.coffee:9 >>>", opts
   spots.getGeo(opts.spot)
   .then (geo) ->
     if geo 

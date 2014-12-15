@@ -4,6 +4,7 @@ config = require("../../config")
 forecast = Promise.promisifyAll new Forecast(APIKey: config("FORECASTIO_KEY"))
 
 exports.getForecast = (geo, opts) ->
+  console.log "forecast.coffee:7 >>>", geo
   units = opts.culture
   units = "si" if units = "eu"
   forecast.getAsync(geo.latitude, geo.longitude, {units : units, lang : opts.lang}).then (res) ->
