@@ -17,7 +17,7 @@ AZURE_STORAGE_ACCESS_KEY=rwdE+L8oCXMnuCPVbFudvRDt28fqEjl9KVKbA+ZzcbVGYZQ6OR7YyK9
 ###
 
 port = Number config("PORT")
-serverOpts = config("server").opts
+serverOpts = config("server")?.opts
 server = hapi.createServer port, serverOpts
 server.route routes
 auth(server, config("user"))

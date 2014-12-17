@@ -20,7 +20,6 @@ module.exports =
       params : paramsValidationSchema
       query : queryValidationSchema
   handler : (req, resp) ->
-    console.log ">>>messages-get.coffee:22", req.query
     spot = req.params.spot
     dailyMessageGet(spot, req.query).then (res) ->
       resp res

@@ -1,29 +1,29 @@
 mongo = require "./mongo"
 
-getThread = (msg) ->
-  msg.created = new Date()
-
+getThread = (user, msg) ->
   _id : mongo.ObjectId()
-  message : msg
+  created : new Date()
+  user : user
+  text : msg
+  replies : []
 
 exports.getThread = getThread
 
-exports.createThread = (boardId, msg) ->
-  thread = getThread msg
+exports.createThread = (user, tags, msg) ->
+  boardId = mongo.getBoardId(tags)
+  thread = getThread user, msg
   mongo.boards.updateAsync(
-    {_id : mongo.ObjectId(boardId)},
-    {$push : { threads : thread }},
-    {save : true}
+    {_id : boardId}
+    {$push : { threads : thread }}
   ).then (res) ->
     if res.n == 0
       throw new Error "Board #{boardId} not found"
     else
       thread
 
-exports.removeThread = (threadId, user) ->
-  console.log ">>>thread.coffee:24", threadId, user
+exports.removeThread = (userKey, threadId) ->
   mongo.boards.updateAsync(
-    {"threads._id" : mongo.ObjectId(threadId), "threads.message._user" : user},
+    {"threads._id" : mongo.ObjectId(threadId), "threads.user.key" : userKey},
     {$pull : { threads : {_id : mongo.ObjectId(threadId)} }},
     {save : true}
   ).then (res) ->
@@ -32,10 +32,23 @@ exports.removeThread = (threadId, user) ->
     else
       res
 
-exports.addReply = (threadId, reply) ->
-  replyId = mongo.ObjectId()
-  reply._id = replyId
-  reply.created = new Date()
+exports.updateThread = (userKey, threadId, msg) ->
+  mongo.boards.updateAsync(
+    {"threads._id" : mongo.ObjectId(threadId), "threads.user.key" : userKey},
+    {$set : { "threads.$.text" : msg }},
+    {save : true}
+  ).then (res, res1) ->
+    if res.n == 0
+      throw new Error "Thread #{threadId} not found"
+    else
+      res
+
+exports.createReply = (user, threadId, msg) ->
+  reply = 
+    _id: mongo.ObjectId()
+    created: new Date()
+    user : user
+    text : msg
   mongo.boards.updateAsync(
     {threads: { $elemMatch : { _id : mongo.ObjectId(threadId) } }},
     {$push : { "threads.$.replies" : {$each : [reply] , $position : 0} }},
@@ -44,4 +57,27 @@ exports.addReply = (threadId, reply) ->
     if res.n == 0
       throw new Error "Thread #{threadId} not found"
     else
-      replyId
+      reply
+
+exports.updateReply = (userKey, replyId, msg) ->
+  mongo.boards.updateAsync(
+    {"threads.replies" : {$elemMatch : {_id : mongo.ObjectId(replyId), "user.key" : userKey}}},
+    {$set : { "replies.$.text" : msg }},
+    {save : true}
+  ).then (res) ->
+    if res.n == 0
+      throw new Error "Reply #{replyId} not found"
+    else
+      res
+
+exports.removeReply = (userKey, replyId) ->
+  mongo.boards.updateAsync(
+    {"threads" : {$elemMatch : {"replies._id" : mongo.ObjectId(replyId), "replies.user.key" : userKey}}},
+    {$pull : { "threads.$.replies" : { _id : mongo.ObjectId(replyId) } } },
+    {save : true}
+  ).then (res) ->
+    if res.n == 0
+      throw new Error "Reply #{replyId} not found"
+    else
+      res
+

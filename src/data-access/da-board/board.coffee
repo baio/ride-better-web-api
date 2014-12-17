@@ -4,12 +4,16 @@ moment = require "moment"
 
 exports.createBoard = (board) ->
   board.threads = []
+  board._id = mongo.getBoardId(board.tags)
   board.created = new Date()
-  mongo.boards.saveAsync(board).then (res) -> res[0]
+  mongo.boards.insertAsync(board).then (res) -> res[0]
 
-exports.getBoard = (boardId, opts) ->
-  since = moment.utc(opts.since, "X").toDate() if opts.since
-  till = moment.utc(opts.till + 1, "X").toDate() if opts.till
+exports.removeBoard = (tags) ->
+  mongo.boards.removeAsync(_id : mongo.getBoardId(tags)).then (res) -> res[0]
+
+exports.getBoard = (tags, opts) ->
+  since = moment.utc(opts.since, "X").toDate() if opts?.since
+  till = moment.utc(opts.till + 1, "X").toDate() if opts?.till
   query = {}
   query.$lt = since if since
   query.$gt = till if till
@@ -18,7 +22,7 @@ exports.getBoard = (boardId, opts) ->
 
   mongo.boards.aggregateAsync(
     [
-      {$match : { _id : boardId}},
+      {$match : { _id : mongo.getBoardId(tags)}},
       {$unwind : "$threads"},
       if query then {$match : query} else undefined,
       {$limit: mongo.pageSize + 1}
@@ -31,10 +35,11 @@ exports.getBoard = (boardId, opts) ->
       board.threads = board.threads[0..mongo.pageSize - 1]
     board
 
-exports.upsertBoardAndThread = (board, threadMsg) ->
-  threadDoc =  thread.getThread(threadMsg)
+exports.upsertBoardAndThread = (user, board, threadMsg) ->
+  boardId = mongo.getBoardId(board.tags)
+  threadDoc =  thread.getThread(user, threadMsg)
   mongo.boards.updateAsync(
-    { _id : board._id },
+    { _id : boardId },
     {
       $setOnInsert: board
       $push : threads :  {$each : [threadDoc], $position : 0}

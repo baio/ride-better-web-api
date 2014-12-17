@@ -3,7 +3,7 @@ expect = require("chai").expect
 orgs = require "../../src/data-access/ads/orgs"
 ads = require "../../src/data-access/ads/ads"
 
-describe.only "test ads api", ->
+describe "test ads api", ->
 
   @user =
     key : "unk_baio"

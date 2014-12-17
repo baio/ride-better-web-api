@@ -4,6 +4,7 @@ jwt = require "jsonwebtoken"
 jwt_secret = require("./config")("JWT_SECRET")
 Promise = require "bluebird"
 
+
 getJWT = (headers) ->
   deferred = Promise.defer()
   authHeader = headers["authorization"]
