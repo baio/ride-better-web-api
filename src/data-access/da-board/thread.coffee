@@ -1,17 +1,17 @@
 mongo = require "./mongo"
 
-getThread = (user, msg) ->
+mapThread = (user, msg) ->
   _id : mongo.ObjectId()
   created : new Date()
   user : user
   text : msg
   replies : []
 
-exports.getThread = getThread
+exports.mapThread = mapThread
 
 exports.createThread = (user, tags, msg) ->
   boardId = mongo.getBoardId(tags)
-  thread = getThread user, msg
+  thread = mapThread user, msg
   mongo.boards.updateAsync(
     {_id : boardId}
     {$push : { threads : thread }}
@@ -20,6 +20,34 @@ exports.createThread = (user, tags, msg) ->
       throw new Error "Board #{boardId} not found"
     else
       thread
+
+exports.getThread = (threadId, opts) ->
+  since = moment.utc(opts.since, "X").toDate() if opts?.since
+  till = moment.utc(opts.till + 1, "X").toDate() if opts?.till
+  query = {}
+  query.$lt = since if since
+  query.$gt = till if till
+  if query.$lt or query.$gt
+    query = "threads.message.created" : query
+
+  id = mongo.getBoardId(tags)
+
+  mongo.boards.aggregateAsync(
+    [
+      {$match : { _id : id}},
+      {$unwind : "$threads"},
+      {$match : if query then query else {}},
+      {$limit: mongo.pageSize + 1},
+      {$group: { _id: "$_id", threads : { $push : "$threads" } }}
+    ]
+  ).then (res) ->
+    board = res[0]
+    if board
+      board.hasMore = board.threads.length == mongo.pageSize + 1
+      board.threads = board.threads[0..mongo.pageSize - 1]
+      thrd.created = moment.utc(thrd.created).unix() for thrd in board.threads
+    board
+
 
 exports.removeThread = (userKey, threadId) ->
   mongo.boards.updateAsync(

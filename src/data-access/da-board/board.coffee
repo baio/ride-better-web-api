@@ -20,19 +20,22 @@ exports.getBoard = (tags, opts) ->
   if query.$lt or query.$gt
     query = "threads.message.created" : query
 
+  id = mongo.getBoardId(tags)
+
   mongo.boards.aggregateAsync(
     [
-      {$match : { _id : mongo.getBoardId(tags)}},
+      {$match : { _id : id}},
       {$unwind : "$threads"},
-      if query then {$match : query} else undefined,
-      {$limit: mongo.pageSize + 1}
-      {$group: { _id: "$_id", threads : { $push : "$threads" } }},
+      {$match : if query then query else {}},
+      {$limit: mongo.pageSize + 1},
+      {$group: { _id: "$_id", threads : { $push : "$threads" } }}
     ]
   ).then (res) ->
     board = res[0]
     if board
       board.hasMore = board.threads.length == mongo.pageSize + 1
       board.threads = board.threads[0..mongo.pageSize - 1]
+      thrd.created = moment.utc(thrd.created).unix() for thrd in board.threads
     board
 
 exports.upsertBoardAndThread = (user, board, threadMsg) ->

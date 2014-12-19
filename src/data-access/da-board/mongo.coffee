@@ -10,7 +10,7 @@ exports.ObjectId = mongojs.ObjectId
 exports.pageSize = 25
 
 exports.getBoardId = (tags) -> 
-  _.sortBy(tags)
+  tags = _.sortBy(tags)
   tags.join("-")
 
 #exports.boards.ensureIndex({"tags" : 1}, {unique : true})

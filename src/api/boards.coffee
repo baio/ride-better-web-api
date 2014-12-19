@@ -17,8 +17,8 @@ exports.createReply = (user, threadId, msg) ->
 exports.upadteReply = (user, replyId, msg) ->
   threadDA.updateReply(user, replyId, msg)
 
-exports.getBoard = (user, spot) ->
-  boardDA.getBoard([spot, user])
+exports.getBoard = (user, spot, opts) ->
+  boardDA.getBoard([spot, user], opts)
 
 exports.removeReply = (user, replyId) ->
   threadDA.removeReply(user.key, replyId)

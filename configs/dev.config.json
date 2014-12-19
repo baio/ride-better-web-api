@@ -1,6 +1,9 @@
 {
-	"user": 
-	{
-			"key" : "unk_baio", "id" : "baio", "name" : "baio", "provider" : "unk", "avatar" : null 
-	}
+  "server": {
+    "opts": {
+      "cors": {
+        "headers": ["authorization", "Content-Type"]
+      }
+    }
+  }
 }
