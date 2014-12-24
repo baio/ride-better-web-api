@@ -25,6 +25,7 @@ module.exports = [
   require("./resorts/resorts-webcams-put")
   require("./resorts/resorts-post")
   require("./boards/boards-get")
+  require("./boards/threads-get")
   require("./boards/replies-delete")
   require("./boards/replies-post")
   require("./boards/replies-put")

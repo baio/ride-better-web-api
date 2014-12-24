@@ -18,7 +18,7 @@ exports.getBoard = (tags, opts) ->
   query.$lt = since if since
   query.$gt = till if till
   if query.$lt or query.$gt
-    query = "threads.message.created" : query
+    query = "threads.created" : query
 
   id = mongo.getBoardId(tags)
 
@@ -40,7 +40,7 @@ exports.getBoard = (tags, opts) ->
 
 exports.upsertBoardAndThread = (user, board, threadMsg) ->
   boardId = mongo.getBoardId(board.tags)
-  threadDoc =  thread.getThread(user, threadMsg)
+  threadDoc =  thread.mapThread(user, threadMsg)
   mongo.boards.updateAsync(
     { _id : boardId },
     {

@@ -1,4 +1,5 @@
 mongo = require "./mongo"
+moment = require "moment"
 
 mapThread = (user, msg) ->
   _id : mongo.ObjectId()
@@ -28,26 +29,41 @@ exports.getThread = (threadId, opts) ->
   query.$lt = since if since
   query.$gt = till if till
   if query.$lt or query.$gt
-    query = "threads.message.created" : query
-
-  id = mongo.getBoardId(tags)
-
+    query = "threads.replies.created" : query
   mongo.boards.aggregateAsync(
     [
-      {$match : { _id : id}},
+      {$match : { "threads._id" : mongo.ObjectId threadId}},
       {$unwind : "$threads"},
+      {$unwind : "$threads.replies"},
       {$match : if query then query else {}},
       {$limit: mongo.pageSize + 1},
-      {$group: { _id: "$_id", threads : { $push : "$threads" } }}
+      {$group: { _id: null, items : 
+        { $push : {thread : {_id : "$threads._id", text : "$threads.text", user : "$threads.user", created : "$threads.created"}, replies : "$threads.replies"} } 
+      }}
     ]
-  ).then (res) ->
-    board = res[0]
-    if board
-      board.hasMore = board.threads.length == mongo.pageSize + 1
-      board.threads = board.threads[0..mongo.pageSize - 1]
-      thrd.created = moment.utc(thrd.created).unix() for thrd in board.threads
-    board
-
+  ).then( (res) ->
+    if !res.length 
+      mongo.boards.aggregateAsync(
+        [
+          {$match : { "threads._id" : mongo.ObjectId threadId}},
+          {$unwind : "$threads"},
+          {$group: { _id: null, items : 
+            { $push : {thread : {_id : "$threads._id", text : "$threads.text", user : "$threads.user", created : "$threads.created"} } } 
+          }}
+        ])
+    else
+      res
+  ).then (res) ->  
+    res = res[0]
+    if res
+      ret =
+        hasMore : res.items.length == mongo.pageSize + 1
+        thread : res.items[0].thread
+        replies : res.items.map (m) -> m.replies      
+      ret.thread.created = moment.utc(ret.thread.created).unix()
+      ret.replies = ret.replies.filter (f) -> f
+      ret.replies.forEach (m) -> m.created = moment.utc(m.created).unix()
+      ret
 
 exports.removeThread = (userKey, threadId) ->
   mongo.boards.updateAsync(
@@ -65,7 +81,7 @@ exports.updateThread = (userKey, threadId, msg) ->
     {"threads._id" : mongo.ObjectId(threadId), "threads.user.key" : userKey},
     {$set : { "threads.$.text" : msg }},
     {save : true}
-  ).then (res, res1) ->
+  ).then (res) ->    
     if res.n == 0
       throw new Error "Thread #{threadId} not found"
     else
@@ -85,6 +101,7 @@ exports.createReply = (user, threadId, msg) ->
     if res.n == 0
       throw new Error "Thread #{threadId} not found"
     else
+      reply.created = moment.utc(reply.created).unix()
       reply
 
 exports.updateReply = (userKey, replyId, msg) ->

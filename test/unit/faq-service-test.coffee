@@ -22,13 +22,13 @@ describe.only "test faq service api", ->
     , next
 
   it "create reply", (next) ->
-    @server.inject url : "/spots/boards/threads/#{@threadId}/replies", method: "post", payload : {message : "test !!!"}, credentials : @user, (resp) =>
+    @server.inject url : "/spots/boards/threads/#{@threadId}/replies", method: "post", payload : {message : "test"}, credentials : @user, (resp) =>
       @replyId = resp.result._id
       next()
     , next
 
   it "update reply", (next) ->
-    @server.inject url : "/spots/boards/threads/replies/#{@replyId}", method: "put", payload : {message : "test !!!"}, credentials : @user, (resp) =>
+    @server.inject url : "/spots/boards/threads/replies/#{@replyId}", method: "put", payload : {message : "test xxxx"}, credentials : @user, (resp) =>
       next()
     , next
 
@@ -37,12 +37,18 @@ describe.only "test faq service api", ->
       next()
     , next
 
-  it "delete reply", (next) ->
+  it "get thread", (next) ->
+    @server.inject url : "/spots/boards/threads/#{@threadId}", method: "get", (resp) =>
+      console.log "faq-service-test.coffee:42 >>>", resp.result
+      next()
+    , next
+
+  it.skip "delete reply", (next) ->
     @server.inject url : "/spots/boards/threads/replies/#{@replyId}", method: "delete", credentials : @user, (resp) =>
       next()
     , next
 
-  it "delete thread", (next) ->
+  it.skip "delete thread", (next) ->
     @server.inject url : "/spots/boards/threads/#{@threadId}", method: "delete", credentials : @user, (resp) =>
       next()
     , next

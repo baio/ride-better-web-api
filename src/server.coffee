@@ -1,4 +1,3 @@
-require "newrelic"
 hapi = require "hapi"
 routes = require "./routes"
 auth = require "./server-auth"

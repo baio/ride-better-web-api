@@ -25,3 +25,6 @@ exports.removeReply = (user, replyId) ->
 
 exports.removeThread = (user, threadId) ->
   threadDA.removeThread(user.key, threadId)
+
+exports.getThread = (threadId, opts) ->
+  threadDA.getThread(threadId, opts)
