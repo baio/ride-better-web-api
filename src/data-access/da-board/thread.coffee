@@ -1,18 +1,20 @@
 mongo = require "./mongo"
 moment = require "moment"
 
-mapThread = (user, msg) ->
+mapThread = (user, data) ->
   _id : mongo.ObjectId()
   created : new Date()
   user : user
-  text : msg
+  text : data.text
+  validThru : data.validThru
+  meta : data.meta
   replies : []
 
 exports.mapThread = mapThread
 
 exports.createThread = (user, tags, msg) ->
   boardId = mongo.getBoardId(tags)
-  thread = mapThread user, msg
+  thread = mapThread user, text : msg
   mongo.boards.updateAsync(
     {_id : boardId}
     {$push : { threads : thread }}
@@ -20,6 +22,7 @@ exports.createThread = (user, tags, msg) ->
     if res.n == 0
       throw new Error "Board #{boardId} not found"
     else
+      thread.created = moment(thread.created).utc().unix()
       thread
 
 exports.getThread = (threadId, opts) ->
@@ -61,6 +64,7 @@ exports.getThread = (threadId, opts) ->
         thread : res.items[0].thread
         replies : res.items.map (m) -> m.replies      
       ret.thread.created = moment.utc(ret.thread.created).unix()
+      ret.thread.validThru = moment.utc(ret.thread.validThru).unix() if ret.thread.validThru
       ret.replies = ret.replies.filter (f) -> f
       ret.replies.forEach (m) -> m.created = moment.utc(m.created).unix()
       ret
@@ -76,10 +80,10 @@ exports.removeThread = (userKey, threadId) ->
     else
       res
 
-exports.updateThread = (userKey, threadId, msg) ->
+exports.updateThread = (userKey, threadId, data) ->
   mongo.boards.updateAsync(
     {"threads._id" : mongo.ObjectId(threadId), "threads.user.key" : userKey},
-    {$set : { "threads.$.text" : msg }},
+    {$set : { "threads.$.text" : data.text,  "threads.$.validThru" : data.validThru, "threads.$.meta" : data.meta}},
     {save : true}
   ).then (res) ->    
     if res.n == 0

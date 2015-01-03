@@ -38,9 +38,9 @@ exports.getBoard = (tags, opts) ->
       thrd.created = moment.utc(thrd.created).unix() for thrd in board.threads
     board
 
-exports.upsertBoardAndThread = (user, board, threadMsg) ->
+exports.upsertBoardAndThread = (user, board, data) ->
   boardId = mongo.getBoardId(board.tags)
-  threadDoc =  thread.mapThread(user, threadMsg)
+  threadDoc =  thread.mapThread(user, data)
   mongo.boards.updateAsync(
     { _id : boardId },
     {
@@ -49,5 +49,6 @@ exports.upsertBoardAndThread = (user, board, threadMsg) ->
     },
     upsert : true
   ).then (res) ->
+    threadDoc.created = moment(threadDoc.created).utc().unix()
     threadDoc
 

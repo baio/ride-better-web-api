@@ -1,7 +1,7 @@
 "use strict"
 
 module.exports = [
-  require("./spots-get")
+  require("./spots-find")
   require("./home-get")
   require("./reports-post")
   require("./nearest-spot-get")
@@ -24,6 +24,7 @@ module.exports = [
   require("./resorts/resorts-price-post")
   require("./resorts/resorts-webcams-put")
   require("./resorts/resorts-post")
+  require("./resorts/resorts-spot-get")
   require("./boards/boards-get")
   require("./boards/threads-get")
   require("./boards/replies-delete")

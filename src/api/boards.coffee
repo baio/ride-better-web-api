@@ -1,15 +1,15 @@
 boardDA = require "../data-access/da-board/board"
 threadDA = require "../data-access/da-board/thread"
 
-exports.createThread = (user, spot, board, msg) ->
+exports.createThread = (user, spot, board, msg, meta) ->
   bd = 
       spot : spot
       title : board
-      tags : [spot, board]   
-  boardDA.upsertBoardAndThread(user, bd, msg)
+      tags : [spot, board]         
+  boardDA.upsertBoardAndThread(user, bd, msg, meta)
 
-exports.updateThread = (user, threadId, msg) ->
-  threadDA.updateThread(user.key, threadId, msg)
+exports.updateThread = (user, threadId, data) ->
+  threadDA.updateThread(user.key, threadId, data)
 
 exports.createReply = (user, threadId, msg) ->
   threadDA.createReply(user, threadId, msg)

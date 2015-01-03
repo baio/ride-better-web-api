@@ -3,12 +3,15 @@
 joi = require "joi"
 hapi = require "hapi"
 boardApi = require "../../api/boards"
+moment = require "moment"
 
 paramsValidationSchema =
   threadId : joi.string().required()
 
 payloadValidationSchema =
   message : joi.string().required()
+  validThru: joi.number()
+  meta : joi.object()
 
 module.exports =
   method : "PUT"
@@ -20,7 +23,11 @@ module.exports =
   handler : (req, resp) ->
     user = req.auth.credentials
     threadId = req.params.threadId
-    boardApi.updateThread(user, threadId, req.payload.message).then (res) ->
+    data = 
+      text : req.payload.message
+      validThru : moment.utc(req.payload.validThru, "X").toDate()
+      meta : req.payload.meta    
+    boardApi.updateThread(user, threadId, data).then (res) ->
       resp res
     , (err) ->
       resp hapi.Error.badRequest err
