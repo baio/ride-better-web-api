@@ -41,7 +41,7 @@ exports.getThread = (threadId, opts) ->
       {$match : if query then query else {}},
       {$limit: mongo.pageSize + 1},
       {$group: { _id: null, items : 
-        { $push : {thread : {_id : "$threads._id", text : "$threads.text", user : "$threads.user", created : "$threads.created"}, replies : "$threads.replies"} } 
+        { $push : {thread : {_id : "$threads._id", text : "$threads.text", user : "$threads.user", created : "$threads.created", validThru : "$threads.validThru", meta : "$threads.meta"}, replies : "$threads.replies"} } 
       }}
     ]
   ).then( (res) ->
@@ -51,7 +51,7 @@ exports.getThread = (threadId, opts) ->
           {$match : { "threads._id" : mongo.ObjectId threadId}},
           {$unwind : "$threads"},
           {$group: { _id: null, items : 
-            { $push : {thread : {_id : "$threads._id", text : "$threads.text", user : "$threads.user", created : "$threads.created"} } } 
+            { $push : {thread : {_id : "$threads._id", text : "$threads.text", user : "$threads.user", created : "$threads.created", validThru : "$threads.validThru", meta : "$threads.meta"} } } 
           }}
         ])
     else
