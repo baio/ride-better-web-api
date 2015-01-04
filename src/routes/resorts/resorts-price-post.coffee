@@ -12,6 +12,14 @@ path = require "path"
 paramsValidationSchema =
   spot : joi.string().required()
 
+payloadValidationSchema =
+  prices : joi.array().includes(
+    file :  joi.object()
+    title : joi.string().required()
+    tag : joi.string().required()
+  )
+
+
 module.exports =
   method : "POST"
   path : "/resorts/{spot}/price"
@@ -32,7 +40,7 @@ module.exports =
       key = "rb-resort-price-" + uname + path.extname(fileName)
       blob.upload("ride-better-resorts", key, filePath)
       .then (res) ->
-        resorts.postResortPrice spot, {src : res.url, title : data.title}
+        resorts.postResortPrice spot, {src : res.url, title : data.title, tag : data.tag}
       .then (res) ->
         resp res
       .error (err) ->

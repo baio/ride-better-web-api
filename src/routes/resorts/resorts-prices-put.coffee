@@ -12,6 +12,7 @@ payloadValidationSchema =
     src :  joi.string().regex(/(http|ftp|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/).required()
     title : joi.string().required()
     created : joi.number().required()
+    tag : joi.string().required()
   )
 
 module.exports =

@@ -9,7 +9,7 @@ paramsValidationSchema =
   threadId : joi.string().required()
 
 payloadValidationSchema =
-  message : joi.string().required()
+  message : joi.string().allow(['', null])
   validThru: joi.number()
   meta : joi.object()
 

@@ -38,6 +38,7 @@ exports.getThread = (threadId, opts) ->
       {$match : { "threads._id" : mongo.ObjectId threadId}},
       {$unwind : "$threads"},
       {$unwind : "$threads.replies"},
+      {$match : { "threads._id" : mongo.ObjectId threadId}},  
       {$match : if query then query else {}},
       {$limit: mongo.pageSize + 1},
       {$group: { _id: null, items : 
@@ -50,6 +51,7 @@ exports.getThread = (threadId, opts) ->
         [
           {$match : { "threads._id" : mongo.ObjectId threadId}},
           {$unwind : "$threads"},
+          {$match : { "threads._id" : mongo.ObjectId threadId}},
           {$group: { _id: null, items : 
             { $push : {thread : {_id : "$threads._id", text : "$threads.text", user : "$threads.user", created : "$threads.created", validThru : "$threads.validThru", meta : "$threads.meta"} } } 
           }}
