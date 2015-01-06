@@ -12,8 +12,8 @@ exports.putResortWebcams = (spot, webcams) ->
       update : {$set  : {"webcams" : webcams} }
       upsert : false
     ).then (res) ->
-    if res
-      exports.getResortInfo(spot)
+      if res
+        exports.getResortInfo(spot)
 
 exports.putResortPrices = (spot, prices) ->
   mongo.resorts.findAndModifyAsync(
@@ -21,8 +21,8 @@ exports.putResortPrices = (spot, prices) ->
       update : {$set  : {"prices" : prices} }
       upsert : false
     ).then (res) ->
-    if res
-      exports.getResortInfo(spot)
+      if res
+        exports.getResortInfo(spot)
 
 exports.postResortPrice = (spot, price) ->
   price.created = new Date()
@@ -38,6 +38,11 @@ exports.getResortInfo = (spot) ->
   mongo.resorts.findOneAsync(_id : spot).then (res) ->
     if res.prices
       price.created = moment.utc(price.created).unix() for price in res.prices
+    res.contacts = [] if ! res.contacts
+    res.imgs = [] if ! res.imgs
+    res.maps = [] if ! res.maps
+    res.prices = [] if ! res.prices
+    res.proscons = [] if ! res.proscons
     res
 
 exports.getResortMaps = (spot) ->
@@ -61,8 +66,8 @@ exports.putResortInfoMain = (spot, data) ->
       update : {$set  : {title : data.title, description : data.description, geo : data.geo} }
       upsert : false
     ).then (res) ->
-    if res
-      exports.getResortInfo(spot)
+      if res
+        exports.getResortInfo(spot)
     
 exports.postResortInfoHeader = (spot, headerUrl) ->
   mongo.resorts.findAndModifyAsync(
@@ -70,8 +75,8 @@ exports.postResortInfoHeader = (spot, headerUrl) ->
       update : {$set  : {"header" : headerUrl} }
       upsert : false
     ).then (res) ->
-    if res
-      exports.getResortInfo(spot)
+      if res
+        exports.getResortInfo(spot)
 
 exports.putResortContacts = (spot, contacts) ->
   mongo.resorts.findAndModifyAsync(
@@ -79,8 +84,8 @@ exports.putResortContacts = (spot, contacts) ->
       update : {$set  : {"contacts" : contacts} }
       upsert : false
     ).then (res) ->
-    if res
-      exports.getResortInfo(spot)
+      if res
+        exports.getResortInfo(spot)
 
 exports.putResortProsCons = (spot, proscons) ->
   mongo.resorts.findAndModifyAsync(
@@ -88,8 +93,8 @@ exports.putResortProsCons = (spot, proscons) ->
       update : {$set  : {"proscons" : proscons} }
       upsert : false
     ).then (res) ->
-    if res
-      exports.getResortInfo(spot)
+      if res
+        exports.getResortInfo(spot)
 
 exports.putResortMaps = (spot, maps) ->
   mongo.resorts.findAndModifyAsync(
@@ -97,5 +102,5 @@ exports.putResortMaps = (spot, maps) ->
       update : {$set  : {"maps" : maps} }
       upsert : false
     ).then (res) ->
-    if res
-      exports.getResortInfo(spot)
+      if res
+        exports.getResortInfo(spot)
