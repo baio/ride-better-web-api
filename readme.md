@@ -49,6 +49,8 @@ heroku config:push --overwrite --interactive
 
 ```
 mongodump --db ride-better-dev --out C:/bkp/mongo/ride-better/v2
+
+mongodump --host ds053080.mongolab.com --port 53080 --db heroku_app31445045 -u baio -p 123 --out C:/bkp/mongo/ride-better/07012015
 ```
 
 ## Usefull exports

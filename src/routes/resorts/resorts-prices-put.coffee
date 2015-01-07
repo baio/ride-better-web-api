@@ -13,6 +13,7 @@ payloadValidationSchema =
     title : joi.string().required()
     created : joi.number().required()
     tag : joi.string().required()
+    href : joi.string()
   )
 
 module.exports =

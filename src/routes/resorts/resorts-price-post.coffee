@@ -17,6 +17,7 @@ payloadValidationSchema =
     file :  joi.object()
     title : joi.string().required()
     tag : joi.string().required()
+    href : joi.string()
   )
 
 
