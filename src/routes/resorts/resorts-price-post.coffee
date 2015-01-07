@@ -27,7 +27,8 @@ module.exports =
     auth : false
     validate :
       params : paramsValidationSchema
-    payload: 
+    payload:
+      maxBytes: 524288000
       output: 'file'
       parse: true
       uploads : "./tmp"
