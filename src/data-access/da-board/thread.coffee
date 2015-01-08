@@ -43,7 +43,7 @@ exports.getThread = (threadId, opts) ->
       {$match : if query then query else {}},
       {$limit: mongo.pageSize + 1},
       {$group: { _id: null, items : 
-        { $push : {thread : {_id : "$threads._id", text : "$threads.text", user : "$threads.user", created : "$threads.created", validThru : "$threads.validThru", meta : "$threads.meta"}, replies : "$threads.replies"} } 
+        { $push : {thread : {_id : "$threads._id", text : "$threads.text", img : "$threads.img", user : "$threads.user", created : "$threads.created", validThru : "$threads.validThru", meta : "$threads.meta"}, replies : "$threads.replies"} } 
       }}
     ]
   ).then( (res) ->
@@ -54,7 +54,7 @@ exports.getThread = (threadId, opts) ->
           {$unwind : "$threads"},
           {$match : { "threads._id" : mongo.ObjectId threadId}},
           {$group: { _id: null, items : 
-            { $push : {thread : {_id : "$threads._id", text : "$threads.text", user : "$threads.user", created : "$threads.created", validThru : "$threads.validThru", meta : "$threads.meta"} } } 
+            { $push : {thread : {_id : "$threads._id", img : "$threads.img", text : "$threads.text", user : "$threads.user", created : "$threads.created", validThru : "$threads.validThru", meta : "$threads.meta"} } } 
           }}
         ])
     else
@@ -85,6 +85,7 @@ exports.removeThread = (userKey, threadId) ->
       res
 
 exports.updateThread = (userKey, threadId, data) ->
+  console.log "thread.coffee:88 >>>", data.text
   mongo.boards.updateAsync(
     {"threads._id" : mongo.ObjectId(threadId), "threads.user.key" : userKey},
     {$set : { "threads.$.img" : data.img, "threads.$.text" : data.text,  "threads.$.validThru" : data.validThru, "threads.$.meta" : data.meta}},
@@ -93,6 +94,7 @@ exports.updateThread = (userKey, threadId, data) ->
     if res.n == 0
       throw new Error "Thread #{threadId} not found"
     else
+      console.log "thread.coffee:96 >>>", res
       res
 
 exports.createReply = (user, threadId, msg) ->
