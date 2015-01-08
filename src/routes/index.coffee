@@ -33,4 +33,5 @@ module.exports = [
   require("./boards/threads-delete")
   require("./boards/threads-post")
   require("./boards/threads-put")  
+  require("./logs/logs-get")  
 ]

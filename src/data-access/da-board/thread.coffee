@@ -80,6 +80,7 @@ exports.removeThread = (userKey, threadId) ->
     if res.n == 0
       throw new Error "Thread #{threadId} not found"
     else
+      console.log "thread.coffee:83 >>>", res
       res
 
 exports.updateThread = (userKey, threadId, data) ->
