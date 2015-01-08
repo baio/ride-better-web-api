@@ -1,7 +1,6 @@
 mongo = require "./mongo"
 thread = require "./thread"
 moment = require "moment"
-logs = require "../mongo/logs"
 
 exports.createBoard = (board) ->
   board.threads = []
@@ -50,7 +49,6 @@ exports.upsertBoardAndThread = (user, board, data) ->
     },
     upsert : true
   ).then (res) ->
-    logs.write(spot : board.spot, tag : "log", doc : { user : user, _id : res._id, coll : "threads", type : board.tags[1], oper : "create" } )            
     threadDoc.created = moment(threadDoc.created).utc().unix()
     threadDoc
 

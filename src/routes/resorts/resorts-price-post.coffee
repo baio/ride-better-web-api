@@ -3,22 +3,17 @@
 joi = require "joi"
 hapi = require "hapi"
 resorts = require "../../data-access/mongo/resorts"
-blob = require "../../data-access/blob/azure"
+storeFile = require "../helpers/store-file"
 
-Promise = require "bluebird"
-fs = Promise.promisifyAll require "fs"
-path = require "path"
 
 paramsValidationSchema =
   spot : joi.string().required()
 
 payloadValidationSchema =
-  prices : joi.array().includes(
-    file :  joi.object()
-    title : joi.string().required()
-    tag : joi.string().required()
-    href : joi.string()
-  )
+  file :  joi.object()
+  title : joi.string().required()
+  tag : joi.string().required()
+  href : joi.string()
 
 
 module.exports =
@@ -28,6 +23,7 @@ module.exports =
     auth : false
     validate :
       params : paramsValidationSchema
+      payload : payloadValidationSchema
     payload:
       maxBytes: 524288000
       output: 'file'
@@ -35,19 +31,12 @@ module.exports =
       uploads : "./tmp"
     handler : (req, resp) ->
       data = req.payload
-      filePath =  data.file.path
-      fileName = data.file.filename
       spot = req.params.spot
-      uname = filePath.substr(filePath.lastIndexOf('/') + 1)
-      key = "rb-resort-price-" + uname + path.extname(fileName)
-      blob.upload("ride-better-resorts", key, filePath)
+      storeFile("rb-resort-price", "ride-better-resorts", key, data.file)
       .then (res) ->
         resorts.postResortPrice spot, {src : res.url, title : data.title, tag : data.tag}
       .then (res) ->
         resp res
       .error (err) ->
         resp hapi.Error.badRequest err
-      .finally ->
-        fs.unlinkAsync filePath
-
 

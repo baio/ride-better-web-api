@@ -6,6 +6,7 @@ mapThread = (user, data) ->
   created : new Date()
   user : user
   text : data.text
+  img : data.img
   validThru : data.validThru
   meta : data.meta
   replies : []
@@ -86,7 +87,7 @@ exports.removeThread = (userKey, threadId) ->
 exports.updateThread = (userKey, threadId, data) ->
   mongo.boards.updateAsync(
     {"threads._id" : mongo.ObjectId(threadId), "threads.user.key" : userKey},
-    {$set : { "threads.$.text" : data.text,  "threads.$.validThru" : data.validThru, "threads.$.meta" : data.meta}},
+    {$set : { "threads.$.img" : data.img, "threads.$.text" : data.text,  "threads.$.validThru" : data.validThru, "threads.$.meta" : data.meta}},
     {save : true}
   ).then (res) ->    
     if res.n == 0

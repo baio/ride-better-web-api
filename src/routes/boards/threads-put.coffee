@@ -10,6 +10,7 @@ paramsValidationSchema =
 
 payloadValidationSchema =
   message : joi.string().allow(['', null])
+  img : joi.string().allow(['', null])
   validThru: joi.number()
   meta : joi.object()
 
@@ -25,6 +26,7 @@ module.exports =
     threadId = req.params.threadId
     data = 
       text : req.payload.message
+      img : req.payload.img
       validThru : moment.utc(req.payload.validThru, "X").toDate()
       meta : req.payload.meta    
     boardApi.updateThread(user, threadId, data).then (res) ->
