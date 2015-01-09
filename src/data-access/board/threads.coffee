@@ -12,6 +12,12 @@ mapThread = (user, tags, data) ->
     validThru : moment.utc(data.validThru, "X").toDate() if data.validThru
     meta : data.meta
 
+mapReply = (user, data) ->    
+  created : new Date()
+  user : user
+  data :
+    text : data.text
+
 doc2thread = (doc) ->
   res = 
     _id : doc._id
@@ -23,9 +29,10 @@ doc2thread = (doc) ->
   res
 
 doc2reply = (doc) ->
+  _id : doc._id
   user : doc.user
-  message : doc.message
   created : moment(doc.created).utc().unix()
+  data : doc.data
 
 exports.createThread = (user, tags, msg) ->
   thread = mapThread user, tags, msg
@@ -43,7 +50,7 @@ exports.updateThread = (user, threadId, data) ->
     update : $set : data : thread.data
     new : true
     upsert : false
-    fields : created : 1, user : 1, data : 1
+    fields : created : 1, user : 1, data : 1, replies : 1
   ).then (res) ->    
     if !res[0]
       throw new Error "Thread #{threadId} not found"
@@ -58,11 +65,11 @@ exports.removeThread = (user, threadId) ->
     res
 
 exports.getThread = (threadId, opts) ->
-  mongo.threads.findOneAsync(_id : threadId).then (res) ->
+  mongo.threads.findOneAsync(_id : mongo.ObjectId(threadId)).then (res) ->
     doc2thread res
 
 exports.createReply = (user, threadId, msg) ->
-  reply = mapThread user, undefined, msg
+  reply = mapReply user, msg
   reply._id = mongo.ObjectId()
   mongo.threads.findAndModifyAsync(
     query : {_id : mongo.ObjectId(threadId), "user.key" : user.key}
@@ -76,11 +83,11 @@ exports.createReply = (user, threadId, msg) ->
     else
       doc2reply reply
 
-exports.upadteReply = (user, replyId, msg) ->
-  reply = mapThread user, undefined, msg
+exports.updateReply = (user, replyId, msg) ->
+  reply = mapReply user, msg
   mongo.threads.findAndModifyAsync(
     query : {"replies._id" : mongo.ObjectId(replyId), "user.key" : user.key}
-    update : "replies.$.data" : $set : reply.data
+    update : $set : "replies.$.data" :  reply.data
     new : false
     upsert : false
     fields : _id : 1
@@ -92,12 +99,11 @@ exports.upadteReply = (user, replyId, msg) ->
 
 exports.removeReply = (user, replyId) ->
   mongo.threads.updateAsync(
-    "replies._id" : mongo.ObjectId(replyId), "replies.user.key" : user.key
-    $pull : replies : _id : mongo.ObjectId(replyId)
-    save : true
+    { "replies._id" : mongo.ObjectId(replyId), "replies.user.key" : user.key},
+    {$pull : replies : _id : mongo.ObjectId(replyId)},
+    {save : true}
   ).then (res) ->
     if res.n == 0
       throw new Error "Reply #{replyId} not found"
     else
-      console.log "thread.coffee:83 >>>", res
       res

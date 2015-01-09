@@ -18,7 +18,7 @@ exports.getThread = (threadId, opts) ->
 exports.createReply = (user, threadId, msg) ->
   threadsDA.createReply(user, threadId, msg)
 
-exports.upadteReply = (user, replyId, msg) ->
+exports.updateReply = (user, replyId, msg) ->
   threadsDA.updateReply(user, replyId, msg)
 
 exports.removeReply = (user, replyId) ->

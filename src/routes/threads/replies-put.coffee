@@ -20,7 +20,7 @@ module.exports =
   handler : (req, resp) ->
     user = req.auth.credentials
     replyId = req.params.replyId
-    threadsApi.updateThread(user, replyId, text : req.payload.message).then (res) ->
+    threadsApi.updateReply(user, replyId, text : req.payload.message).then (res) ->
       resp res
     , (err) ->
       resp hapi.Error.badRequest err
