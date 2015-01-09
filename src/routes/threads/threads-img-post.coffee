@@ -2,12 +2,13 @@
 
 joi = require "joi"
 hapi = require "hapi"
-boardApi = require "../../api/boards"
+threadsApi = require "../../api/threads"
 moment = require "moment"
 storeFile = require "../helpers/store-file"
 
 paramsValidationSchema =
-  threadId : joi.string().required()
+  board : joi.string().required()
+  spot : joi.string().required()
 
 payloadValidationSchema =
   message : joi.string().allow(['', null])
@@ -16,8 +17,8 @@ payloadValidationSchema =
   file : joi.object()
 
 module.exports =
-  method : "PUT"
-  path : "/spots/boards/threads/{threadId}/img"
+  method : "POST"
+  path : "/spots/{spot}/boards/{board}/threads/img"
   config :
     validate :
       params : paramsValidationSchema
@@ -30,16 +31,17 @@ module.exports =
   handler : (req, resp) ->
     user = req.auth.credentials
     data = req.payload
-    threadId = req.params.threadId
+    spot = req.params.spot
+    board = req.params.board
     storeFile("rb-message", "ride-better-messages", data.file)
     .then (res) ->
-      console.log "threads-img-put.coffee:38 >>>", res
+      console.log "threads-img-post.coffee:38 >>>", res      
       msg =           
-        text : data.message
+        text : req.payload.message
         img : res.url
-        validThru : moment.utc(data.validThru, "X").toDate() if data.validThru
-        meta : data.meta
-      boardApi.updateThread(user, threadId, msg)
+        validThru : moment.utc(req.payload.validThru, "X").toDate() if req.payload.validThru
+        meta : req.payload.meta
+      threadsApi.createThread(user, [spot, board], msg)
     .then (res) ->
       resp res
     .error (err) ->

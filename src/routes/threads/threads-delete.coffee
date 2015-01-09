@@ -2,25 +2,21 @@
 
 joi = require "joi"
 hapi = require "hapi"
-threadApi = require "../../api/boards"
+threadsApi = require "../../api/threads"
 
 paramsValidationSchema =
   threadId : joi.string().required()
 
-payloadValidationSchema =
-  message : joi.string().required()
-
 module.exports =
-  method : "POST"
-  path : "/spots/boards/threads/{threadId}/replies"
+  method : "DELETE"
+  path : "/spots/boards/threads/{threadId}"
   config :
     validate :
       params : paramsValidationSchema
-      payload : payloadValidationSchema
   handler : (req, resp) ->
     user = req.auth.credentials
     threadId = req.params.threadId
-    threadApi.createReply(user, threadId, req.payload.message).then (res) ->
+    threadsApi.removeThread(user, threadId).then (res) ->
       resp res
     , (err) ->
       resp hapi.Error.badRequest err

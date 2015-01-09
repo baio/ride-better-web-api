@@ -2,7 +2,7 @@
 
 joi = require "joi"
 hapi = require "hapi"
-boardApi = require "../../api/boards"
+threadsApi = require "../../api/threads"
 
 paramsValidationSchema =
   replyId : joi.string().required()
@@ -16,7 +16,7 @@ module.exports =
   handler : (req, resp) ->
     user = req.auth.credentials
     replyId = req.params.replyId
-    boardApi.removeReply(user, replyId).then (res) ->
+    threadsApi.removeReply(user, replyId).then (res) ->
       resp res
     , (err) ->
       resp hapi.Error.badRequest err

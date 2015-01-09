@@ -2,7 +2,7 @@
 
 joi = require "joi"
 hapi = require "hapi"
-threadApi = require "../../api/boards"
+threadsApi = require "../../api/threads"
 
 paramsValidationSchema =
   replyId : joi.string().required()
@@ -20,7 +20,7 @@ module.exports =
   handler : (req, resp) ->
     user = req.auth.credentials
     replyId = req.params.replyId
-    threadApi.updateThread(user, replyId, req.payload.message).then (res) ->
+    threadsApi.updateThread(user, replyId, text : req.payload.message).then (res) ->
       resp res
     , (err) ->
       resp hapi.Error.badRequest err

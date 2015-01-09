@@ -2,10 +2,11 @@
 
 joi = require "joi"
 hapi = require "hapi"
-boardApi = require "../../api/boards"
+threadsApi = require "../../api/threads"
 
 paramsValidationSchema =
-  threadId : joi.string().required()
+  board : joi.string().required()
+  spot : joi.string().required()
 
 queryValidationSchema =
   since : joi.number().allow("")
@@ -13,18 +14,16 @@ queryValidationSchema =
 
 module.exports =
   method : "GET"
-  path : "/spots/boards/threads/{threadId}"
+  path : "/spots/{spot}/boards/{board}"
   config :
     auth : false
     validate :
       params : paramsValidationSchema
       query : queryValidationSchema
   handler : (req, resp) ->
-    threadId = req.params.threadId
-    boardApi.getThread(threadId).then (res) ->
-      if res
-        resp res
-      else
-        resp hapi.Error.notFound()  
+    spot = req.params.spot
+    board = req.params.board
+    threadsApi.getThreads([spot, board]).then (res) ->
+      resp if res then res else []
     , (err) ->
       resp hapi.Error.badRequest err
