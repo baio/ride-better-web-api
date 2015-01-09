@@ -21,6 +21,7 @@ mapReply = (user, data) ->
 doc2thread = (doc) ->
   res = 
     _id : doc._id
+    tags : doc.tags
     user : doc.user
     created : moment(doc.created).utc().unix()
     data : doc.data
@@ -40,7 +41,9 @@ exports.createThread = (user, tags, msg) ->
     doc2thread res[0]
 
 exports.getThreads = (tags, opts) ->
-  mongo.threads.findAsync(tags : tags).then (res) ->
+  tags = tags.filter (f) -> f
+  q = if tags.length == 1 then tags : $in : tags else tags : tags
+  mongo.threads.findAsync(q).then (res) ->
     res.map doc2thread
 
 exports.updateThread = (user, threadId, data) ->
@@ -50,7 +53,7 @@ exports.updateThread = (user, threadId, data) ->
     update : $set : data : thread.data
     new : true
     upsert : false
-    fields : created : 1, user : 1, data : 1, replies : 1
+    fields : created : 1, user : 1, data : 1, replies : 1, tags : 1
   ).then (res) ->    
     if !res[0]
       throw new Error "Thread #{threadId} not found"

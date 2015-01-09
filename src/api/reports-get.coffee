@@ -9,14 +9,13 @@ module.exports = (opts) ->
   _.defaults opts, lang : "en", culture : "eu"
   threads.getThreads([opts.spot, "report"]).then (res) ->
     res.map (r) ->
-      if r.meta.operate?.openDate
-        r.meta.operate.openDate = moment.utc(r.meta.operate.openDate).unix()
-      if r.meta.conditions
-        summary = summaryFormatter.summary(opts.lang, r.meta.conditions)
-      else if r.meta.operate
-        summary = summaryFormatter.notOperate(opts.lang, r.meta.operate)
+      if r.data.meta.operate?.openDate
+        r.data.meta.operate.openDate = moment.utc(r.data.meta.operate.openDate).unix()
+      if r.data.meta.conditions
+        summary = summaryFormatter.summary(opts.lang, r.data.meta.conditions)
+      else if r.data.meta.operate
+        summary = summaryFormatter.notOperate(opts.lang, r.data.meta.operate)
 
-      r.summary = summary
-      r.time = moment.utc(r.time).unix()
+      r.data.meta.summary = summary
       r
 

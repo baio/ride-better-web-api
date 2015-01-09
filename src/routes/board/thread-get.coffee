@@ -20,8 +20,11 @@ module.exports =
       params : paramsValidationSchema
       query : queryValidationSchema
   handler : (req, resp) ->
+    query = req.query
+    opts =
+      lang : if query.lang then query.lang else "en"
     threadId = req.params.threadId
-    threadsApi.getThread(threadId).then (res) ->
+    threadsApi.getThread(threadId, opts).then (res) ->
       if res
         resp res
       else

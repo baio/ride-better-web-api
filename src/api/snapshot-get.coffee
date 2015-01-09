@@ -11,14 +11,14 @@ module.exports = (opts, reports, forecast) ->
   from = moment.utc().add(-1, "d").startOf("d").unix()
   to = moment.utc().unix()
   latestNotClosedReports = reports.filter((f) ->
-    (!f.operate or f.operate.status == "open") and f.time >= from and f.time <= to
+    (!f.data.meta.operate or f.data.meta.operate.status == "open") and f.data.created >= from and f.data.created <= to
   )
-  isFirstReportSuggestClosed = reports[0]?.operate?.status and reports[0].operate.status != "open"
+  isFirstReportSuggestClosed = reports[0]?.data.meta.operate?.status and reports[0].data.meta.operate.status != "open"
   if !isFirstReportSuggestClosed and latestNotClosedReports.length
     #Aggregate reports info here
-    snowing = latestNotClosedReports.map (m) -> m.conditions.snowing if m.conditions
-    tracks = latestNotClosedReports.map (m) -> m.conditions.tracks if m.conditions
-    crowd = latestNotClosedReports.map (m) -> m.conditions.crowd if m.conditions
+    snowing = latestNotClosedReports.map (m) -> m.data.meta.conditions.snowing if m.data.meta.conditions
+    tracks = latestNotClosedReports.map (m) -> m.data.meta.conditions.tracks if m.data.meta.conditions
+    crowd = latestNotClosedReports.map (m) -> m.data.meta.conditions.crowd if m.data.meta.conditions
     mSnowing = stats.median snowing
     mTracks = stats.median tracks
     mCrowd = stats.median crowd
@@ -48,13 +48,13 @@ module.exports = (opts, reports, forecast) ->
   else if reports[0]
     #tehere is no operational reports, just get first one
     if isFirstReportSuggestClosed
-      summary = summaryFormatter.notOperate opts.lang, reports[0].operate
+      summary = summaryFormatter.notOperate opts.lang, reports[0].data.meta.operate
     else
-      conditions = reports[0]?.conditions
+      conditions = reports[0]?.data.meta.conditions
       if conditions and (conditions.snowing or conditions.tracks or conditions.crowd)
         summary = summaryFormatter.summary opts.lang, conditions
       else
-        summary = reports[0].comment
+        summary = reports[0].data.text
   else
     summary = summaryFormatter.noReports opts.lang
 
