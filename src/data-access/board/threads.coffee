@@ -5,7 +5,8 @@ mapThread = (user, tags, data) ->
   tags : tags
   created : new Date()
   user : user
-  replies : []
+  spot : data.spot
+  replies : []  
   data :
     text : data.text
     img : data.img
@@ -23,6 +24,7 @@ doc2thread = (doc) ->
     _id : doc._id
     tags : doc.tags
     user : doc.user
+    spot : doc.spot
     created : moment(doc.created).utc().unix()
     data : doc.data
     replies : (if doc.replies  then doc.replies else []).map doc2reply
@@ -35,8 +37,8 @@ doc2reply = (doc) ->
   created : moment(doc.created).utc().unix()
   data : doc.data
 
-exports.createThread = (user, tags, msg) ->
-  thread = mapThread user, tags, msg
+exports.createThread = (user, prms, msg) ->
+  thread = mapThread user, [prms.spot, prms.board], msg
   mongo.threads.insertAsync(thread).then (res) ->
     doc2thread res[0]
 

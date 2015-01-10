@@ -10,6 +10,7 @@ paramsValidationSchema =
 queryValidationSchema =
   since : joi.number().allow("")
   till : joi.number().allow("")
+  culture : joi.string().allow("")
 
 module.exports =
   method : "GET"
@@ -22,7 +23,7 @@ module.exports =
   handler : (req, resp) ->
     query = req.query
     opts =
-      lang : if query.lang then query.lang else "en"
+      culture : query.culture
     threadId = req.params.threadId
     threadsApi.getThread(threadId, opts).then (res) ->
       if res

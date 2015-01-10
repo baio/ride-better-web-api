@@ -24,12 +24,12 @@ module.exports =
   handler : (req, resp) ->
     user = req.auth.credentials
     spot = req.params.spot
-    board = req.params.board
+    board = req.params.board    
     data = 
       text : req.payload.message
       validThru : moment.utc(req.payload.validThru, "X").toDate() if req.payload.validThru
       meta : req.payload.meta
-    threadsApi.createThread(user, [spot, board], data).then (res) ->
+    threadsApi.createThread(user, {spot : spot, board : board}, data).then (res) ->
       resp res
     , (err) ->
       resp hapi.Error.badRequest err

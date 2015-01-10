@@ -1,14 +1,20 @@
 threadsDA = require "../data-access/board/threads"
+spotsDA = require "../data-access/mongo/spots"
 summaryFormatter = require "./summaryFormatter"
 
 mapThread = (thread, opts) ->
   if thread.tags.indexOf("report") != -1
     if thread.data.meta?.conditions
-      thread.data.meta.summary = summaryFormatter.summary(opts.lang, thread.data.meta.conditions)
+      culture = opts.culture
+      culture ?= "en-eu"
+      spts = culture.split("-")      
+      thread.data.meta.summary = summaryFormatter.summary(spts[0], thread.data.meta.conditions)
   thread
 
-exports.createThread = (user, tags, msg) ->
-  threadsDA.createThread(user, tags, msg)
+exports.createThread = (user, prms, msg) ->
+  spotsDA.getSpot(prms.spot).then (spot) ->
+    msg.spot = spot
+    threadsDA.createThread(user, prms, msg)
 
 exports.getThreads = (tags, opts) ->
   threadsDA.getThreads(tags, opts)

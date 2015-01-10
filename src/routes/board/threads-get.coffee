@@ -11,6 +11,7 @@ paramsValidationSchema =
 queryValidationSchema =
   since : joi.number().allow("")
   till : joi.number().allow("")
+  culture : joi.string().allow("")
 
 module.exports =
   method : "GET"
@@ -23,7 +24,7 @@ module.exports =
   handler : (req, resp) ->
     query = req.query
     opts =
-      lang : if query.lang then query.lang else "en"
+      culture : req.query.culture
     spot = req.params.spot
     board = req.params.board
     query = 
