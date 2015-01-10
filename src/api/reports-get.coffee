@@ -7,7 +7,7 @@ _ = require "underscore"
 
 module.exports = (opts) ->
   _.defaults opts, lang : "en", culture : "eu"
-  threads.getThreads([opts.spot, "report"]).then (res) ->
+  threads.getThreads(spots : [opts.spot], board : "report").then (res) ->
     res.map (r) ->
       if r.data.meta.operate?.openDate
         r.data.meta.operate.openDate = moment.utc(r.data.meta.operate.openDate).unix()

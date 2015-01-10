@@ -2,7 +2,6 @@ threadsDA = require "../data-access/board/threads"
 summaryFormatter = require "./summaryFormatter"
 
 mapThread = (thread, opts) ->
-  console.log "threads.coffee:5 >>>", thread
   if thread.tags.indexOf("report") != -1
     if thread.data.meta?.conditions
       thread.data.meta.summary = summaryFormatter.summary(opts.lang, thread.data.meta.conditions)

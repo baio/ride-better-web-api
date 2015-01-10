@@ -24,10 +24,14 @@ module.exports =
     query = req.query
     opts =
       lang : if query.lang then query.lang else "en"
-
     spot = req.params.spot
     board = req.params.board
-    threadsApi.getThreads([spot, board], opts).then (res) ->
+    query = 
+      since : query.since
+      till : query.till
+      spots : spot.split("-").filter (f) -> f
+      board :  board
+    threadsApi.getThreads(query, opts).then (res) ->
       resp if res then res else []
     , (err) ->
       resp hapi.Error.badRequest err

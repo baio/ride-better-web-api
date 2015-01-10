@@ -40,10 +40,37 @@ exports.createThread = (user, tags, msg) ->
   mongo.threads.insertAsync(thread).then (res) ->
     doc2thread res[0]
 
-exports.getThreads = (tags, opts) ->
-  tags = tags.filter (f) -> f
-  q = if tags.length == 1 then tags : $in : tags else tags : tags
-  mongo.threads.findAsync(q).then (res) ->
+###
+since : query.since
+till : query.till
+spots : spot.split("-")
+board :  board
+###
+exports.getThreads = (q, opts) ->
+  since = moment.utc(q.since, "X").toDate() if q?.since
+  till = moment.utc(q.till + 1, "X").toDate() if q?.till
+
+  query = {}
+  spotTags = []
+
+  #console.log "threads.coffee:56 >>>", q
+
+  query = $and : []
+
+  if q.board
+    query.$and.push tags : $in : [q.board]
+  if q.spots.length
+    query.$and.push tags : $in : q.spots        
+  if since 
+    query.$and.push created : $lt : since
+  if till
+    query.$and.push created : $gt : till
+
+  #console.log "threads.coffee:72 >>>", query.$and[0], query.$and[1]
+
+  query = undefined if !query.$and.length 
+
+  mongo.find("ths", query, created : -1).then (res) ->
     res.map doc2thread
 
 exports.updateThread = (user, threadId, data) ->
