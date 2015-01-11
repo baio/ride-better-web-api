@@ -13,7 +13,7 @@ desiredState:
         containers: 
           - 
             name: "web-api"
-            image: "baio/ride-better-web-api"
+            image: "google/baio/ride-better-web-api"
             cpu: 1000
             ports: 
               - 
