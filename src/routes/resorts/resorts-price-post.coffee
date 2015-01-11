@@ -32,7 +32,7 @@ module.exports =
     handler : (req, resp) ->
       data = req.payload
       spot = req.params.spot
-      storeFile("rb-resort-price", "ride-better-resorts", key, data.file)
+      storeFile("rb-resort-price", "ride-better-resorts", data.file)
       .then (res) ->
         resorts.postResortPrice spot, {src : res.url, title : data.title, tag : data.tag}
       .then (res) ->
