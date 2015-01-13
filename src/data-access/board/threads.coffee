@@ -46,7 +46,7 @@ exports.createThread = (user, prms, msg) ->
 since : query.since
 till : query.till
 spots : spot.split("-")
-board :  board
+boards :  board
 ###
 exports.getThreads = (q, opts) ->
   since = moment.utc(q.since, "X").toDate() if q?.since
@@ -59,8 +59,8 @@ exports.getThreads = (q, opts) ->
 
   query = $and : []
 
-  if q.board
-    query.$and.push tags : $in : [q.board]
+  if q.boards
+    query.$and.push tags : $in : q.boards
   if q.spots.length
     query.$and.push tags : $in : q.spots        
   if since 

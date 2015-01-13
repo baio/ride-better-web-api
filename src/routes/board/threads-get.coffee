@@ -31,7 +31,7 @@ module.exports =
       since : query.since
       till : query.till
       spots : spot.split("-").filter (f) -> f
-      board :  board
+      boards :  if board then board.split("-").filter((f) -> f) else undefined
     threadsApi.getThreads(query, opts).then (res) ->
       resp if res then res else []
     , (err) ->
