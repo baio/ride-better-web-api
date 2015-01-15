@@ -5,7 +5,7 @@ summaryFormatter = require "./summaryFormatter"
 reportsGet = require "./reports-get"
 forecastGet = require "./forecast-get"
 snapshotGet = require "./snapshot-get"
-snowfallHistoryGet = require "./snowfall-history-get"
+snowfallHistory = require "./snowfall-history"
 spots = require "../data-access/mongo/spots"
 Promise = require "bluebird"
 
@@ -16,7 +16,7 @@ unitNames =
 
 
 module.exports = (opts) ->
-  Promise.join spots.getSpot(opts.spot), reportsGet(opts), forecastGet(opts), snowfallHistoryGet(opts), (spot, reports, forecast, snowfallHistory) ->    
+  Promise.join spots.getSpot(opts.spot), reportsGet(opts), forecastGet(opts), snowfallHistory.getSummary(opts), (spot, reports, forecast, snowfallHistory) ->    
     snapshot = snapshotGet(opts, reports, forecast)
     spot : spot
     culture :

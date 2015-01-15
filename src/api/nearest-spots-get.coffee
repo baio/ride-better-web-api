@@ -2,4 +2,4 @@
 
 spot = require "../data-access/elastic/spot"
 
-module.exports = spot.nearestSpot
+module.exports = spot.nearestSpots

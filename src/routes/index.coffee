@@ -1,10 +1,10 @@
 "use strict"
 
 module.exports = [
-  require("./spots-find")
+  require("./spots/spots-find")
   require("./home-get")
   require("./reports-post")
-  require("./nearest-spot-get")
+  require("./spots/nearest-spots-get")
   require("./webcams/webcams-latest-get")
   require("./webcams/webcams-latest-noindex-get")
   require("./webcams/webcams-next-get")
@@ -32,4 +32,5 @@ module.exports = [
   require("./board/threads-img-post")
   require("./board/threads-put")  
   require("./board/threads-img-put")  
+  require("./history/snowfall-history")  
 ]

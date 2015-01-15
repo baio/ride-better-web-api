@@ -6,4 +6,7 @@ db = mongojs(config("REDUCED_MONGO_URI"), ["fhist_reduced"])
 
 exports.fhist = Promise.promisifyAll db.fhist_reduced
 
+exports.find = (query) -> 
+  Promise.promisifyAll(db.fhist_reduced.find(query)).toArrayAsync()
+
 

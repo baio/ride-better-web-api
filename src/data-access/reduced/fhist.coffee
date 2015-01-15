@@ -3,7 +3,9 @@ moment = require "moment"
 _ = require "underscore"
 
 
-exports.getSnowHistory = (spot) ->
-  mongo.fhist.findOneAsync(_id : spot)
+exports.getSnowHistory = (spots) ->
+  mongo.find(_id : $in : spots)
   .then (res) -> 
-    res?.value.amounts
+    res.map (m) -> 
+      spot : m._id
+      items : m.value.amounts

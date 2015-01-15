@@ -2,7 +2,7 @@
 
 hapi = require "hapi"
 joi = require "joi"
-nearestSpotGet = require "../api/nearest-spot-get"
+nearestSpotsGet = require "../../api/nearest-spots-get"
 
 queryValidationSchema =
 #TODO : regex for geo
@@ -10,10 +10,10 @@ queryValidationSchema =
 
 module.exports =
   method : "GET"
-  path : "/nearest-spot"
+  path : "/nearest-spots"
   config :
     auth : false
     validate : query : queryValidationSchema
   handler : (req, resp) ->
     geo = req.query.geo.split(",").map (m) -> parseFloat m
-    nearestSpotGet(geo).then resp, (err) -> resp hapi.Error.badRequest err
+    nearestSpotsGet(geo).then resp, (err) -> resp hapi.Error.badRequest err

@@ -2,7 +2,7 @@
 
 hapi = require "hapi"
 joi = require "joi"
-spotsGet = require "../api/spots-find"
+spotsGet = require "../../api/spots-find"
 
 queryValidationSchema =
   #TODO : regex for geo

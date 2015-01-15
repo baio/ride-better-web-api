@@ -65,8 +65,7 @@ exports.findSpots = (term, geo) ->
     Promise.resolve []
 
 
-exports.nearestSpot = (geo) ->
-  console.log ">>>spot.coffee:9", geo
+exports.nearestSpots = (geo) ->
   q =
     sort : [
       "_score",
@@ -78,14 +77,14 @@ exports.nearestSpot = (geo) ->
           order : "asc",
           unit : "km"
       }],
-    size : 1
+    size : 5
   s =
     index: "rspots"
     type: "spot"
     body : q
   elastic.search(s).then (res) ->
-    res.hits.hits.map((m) ->
+    res.hits.hits.map (m) ->
       r = m._source
       r.code = m._id
       r.dist = Math.round m.sort[1]
-      r)[0]
+      r
