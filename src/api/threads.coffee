@@ -40,3 +40,11 @@ exports.updateReply = (user, replyId, msg) ->
 exports.removeReply = (user, replyId) ->
   threadsDA.removeReply(user, replyId)
 
+exports.createTransferRequest = (user, threadId) ->
+  threadsDA.createTransferRequest(user, threadId)
+
+exports.removeTransferRequest = (user, threadId) ->
+  threadsDA.removeTransferRequest(user, threadId)
+
+exports.acceptTransferRequest = (user, threadId, requestUerKey, isAccept) ->
+  threadsDA.acceptTransferRequest(user, threadId, requestUerKey, isAccept)

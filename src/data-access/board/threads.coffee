@@ -19,6 +19,7 @@ mapReply = (user, data) ->
   data :
     text : data.text
 
+
 doc2thread = (doc) ->
   res = 
     _id : doc._id
@@ -27,7 +28,9 @@ doc2thread = (doc) ->
     spot : doc.spot
     created : moment(doc.created).utc().unix()
     data : doc.data
-    replies : (if doc.replies  then doc.replies else []).map doc2reply
+    replies : (if doc.replies then doc.replies else []).map doc2reply
+  if doc.tags.indexOf("transfer") != -1
+    res.requests = if doc.requests then doc.requests else []
   res.data.validThru = moment(doc.data.validThru).utc().unix() if doc.data.validThru
   res
 
@@ -139,3 +142,38 @@ exports.removeReply = (user, replyId) ->
       throw new Error "Reply #{replyId} not found"
     else
       res
+
+exports.createTransferRequest = (user, threadId) ->      
+  console.log "threads.coffee:144 >>>", user, threadId
+  mongo.threads.updateAsync(
+    { "_id" : mongo.ObjectId(threadId), "requests.user.key" : {"$ne" : user.key}},
+    {$push : {requests : { user : user }}},
+    {save : true, upsert : true}
+  ).then (res) ->
+    if res.n == 0
+      throw new Error "Transfer #{threadId} not found"
+    else
+      user : user
+
+exports.removeTransferRequest = (user, threadId) ->      
+  mongo.threads.updateAsync(
+    { "_id" : mongo.ObjectId(threadId) },
+    {$pull : requests : {"user.key" : user.key}},
+    {save : true}
+  ).then (res) ->
+    if res.n == 0
+      throw new Error "Transfer #{threadId} not found"
+    else
+      user : user
+
+exports.acceptTransferRequest = (user, threadId, requestUserKey, isAccept) ->      
+  mongo.threads.updateAsync(
+    { "_id" : mongo.ObjectId(threadId), "user.key" : user.key, "requests.user.key" : requestUserKey},
+    {$set : "requests.$.accepted" : isAccept },
+    {save : true}
+  ).then (res) ->
+    if res.n == 0
+      throw new Error "Transfer #{threadId} not found"
+    else
+      res
+

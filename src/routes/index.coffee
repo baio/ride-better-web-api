@@ -32,5 +32,8 @@ module.exports = [
   require("./board/threads-img-post")
   require("./board/threads-put")  
   require("./board/threads-img-put")  
+  require("./board/transfers/transfer-request-post")  
+  require("./board/transfers/transfer-request-delete")  
+  require("./board/transfers/transfer-accept-request-put")  
   require("./history/snowfall-history")  
 ]
