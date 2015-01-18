@@ -7,7 +7,7 @@ db = mongojs(config("MONGO_URI"), ["ths"])
 
 exports.threads = Promise.promisifyAll db.ths
 exports.ObjectId = mongojs.ObjectId
-exports.pageSize = 25
+exports.pageSize = 50
 
 exports.threads.ensureIndex({"tags" : 1})
 

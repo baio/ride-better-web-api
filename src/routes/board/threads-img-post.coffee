@@ -35,7 +35,6 @@ module.exports =
     board = req.params.board
     storeFile("rb-message", "ride-better-messages", data.file)
     .then (res) ->
-      console.log "threads-img-post.coffee:38 >>>", res      
       msg =           
         text : req.payload.message
         img : res.url
