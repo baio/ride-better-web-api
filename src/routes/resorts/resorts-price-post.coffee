@@ -34,7 +34,7 @@ module.exports =
       spot = req.params.spot
       storeFile("rb-resort-price", "ride-better-resorts", data.file)
       .then (res) ->
-        resorts.postResortPrice spot, {src : res.url, title : data.title, tag : data.tag}
+        resorts.postResortPrice(spot, {src : res.url, title : data.title, tag : data.tag})
       .then (res) ->
         resp res
       .error (err) ->

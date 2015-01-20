@@ -25,7 +25,6 @@ module.exports = (namePrefix, container, file) ->
     transloadit.addFile(key, filePath)    
     transloadit.createAssemblyAsync(transloaditPrms)
   .then (res) ->
-    console.log "store-file.coffee:26 >>>", res
     key = res.uploads[0].field
     tmpUrl = res.uploads[0].url
     key : key
