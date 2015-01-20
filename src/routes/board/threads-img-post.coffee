@@ -41,7 +41,7 @@ module.exports =
         validThru : moment.utc(req.payload.validThru, "X").toDate() if req.payload.validThru
         meta : req.payload.meta
       threadsApi.createThread(user, {spot : spot, board : board}, msg).then (res1) ->
-        res1.data.img = res.tmpUrl if res.tmpUrl
+        res1.tmpImg = res.tmpUrl
         res1      
     .then (res) ->
       resp res
