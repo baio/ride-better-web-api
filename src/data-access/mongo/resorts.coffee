@@ -63,12 +63,13 @@ exports.getResortPrices = (spot) ->
 exports.putResortInfoMain = (spot, data) ->
   mongo.resorts.findAndModifyAsync(
       query : {_id : spot}
-      update : {$set  : {title : data.title, description : data.description, geo : data.geo} }
+      update : {$set  : {title : data.title, description : data.description, geo : data.geo, header : data.header} }
       upsert : false
     ).then (res) ->
       if res
         exports.getResortInfo(spot)
     
+###    
 exports.postResortInfoHeader = (spot, headerUrl) ->
   mongo.resorts.findAndModifyAsync(
       query : {_id : spot}
@@ -77,6 +78,7 @@ exports.postResortInfoHeader = (spot, headerUrl) ->
     ).then (res) ->
       if res
         exports.getResortInfo(spot)
+###
 
 exports.putResortContacts = (spot, contacts) ->
   mongo.resorts.findAndModifyAsync(

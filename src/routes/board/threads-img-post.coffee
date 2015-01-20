@@ -33,7 +33,7 @@ module.exports =
     data = req.payload
     spot = req.params.spot
     board = req.params.board
-    storeFile("rb-message", "ride-better-messages", data.file)
+    storeFile("rb-message", "board", data.file)
     .then (res) ->
       msg =           
         text : req.payload.message
