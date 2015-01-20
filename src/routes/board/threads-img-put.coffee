@@ -33,13 +33,14 @@ module.exports =
     threadId = req.params.threadId
     storeFile("rb-message", "ride-better-messages", data.file)
     .then (res) ->
-      console.log "threads-img-put.coffee:38 >>>", res
       msg =           
         text : data.message
         img : res.url
         validThru : moment.utc(data.validThru, "X").toDate() if data.validThru
         meta : data.meta
-      threadsApi.updateThread(user, threadId, msg)
+      threadsApi.updateThread(user, threadId, msg).then (res1) ->
+        res1.data.img = res.tmpUrl if res.tmpUrl
+        res1      
     .then (res) ->
       resp res
     .error (err) ->
