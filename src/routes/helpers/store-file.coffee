@@ -18,7 +18,7 @@ transloaditPrms = params : template_id : null
 templatesList = 
   board : "39f8c160a00211e49a8635241991b365"
   header : "60466540a0d211e4bf90872d7005f5da"
-  price : "39f8c160a00211e49a8635241991b365"
+  price : "72090d90a0dd11e48ae07512ac9181e0"
   map : "39f8c160a00211e49a8635241991b365"
 
 module.exports = (namePrefix, template, file) ->

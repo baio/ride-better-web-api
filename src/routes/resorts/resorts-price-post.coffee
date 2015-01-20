@@ -15,7 +15,6 @@ payloadValidationSchema =
   tag : joi.string().required()
   href : joi.string()
 
-
 module.exports =
   method : "POST"
   path : "/resorts/{spot}/price"
@@ -30,11 +29,13 @@ module.exports =
       parse: true
       uploads : "./tmp"
     handler : (req, resp) ->
-      data = req.payload
+      payload = req.payload
       spot = req.params.spot
-      storeFile("rb-resort-price", "ride-better-resorts", data.file)
+      storeFile("rb-price-#{spot}", "price", payload.file)
       .then (res) ->
-        resorts.postResortPrice(spot, {src : res.url, title : data.title, tag : data.tag})
+        resorts.postResortPrice(spot, {src : res.url, title : payload.title, tag : payload.tag, href : payload.href}).then (res1) ->
+          res1.tmpSrc = res.tmpUrl
+          res1
       .then (res) ->
         resp res
       .error (err) ->
