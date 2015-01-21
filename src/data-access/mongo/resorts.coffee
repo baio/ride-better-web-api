@@ -69,17 +69,6 @@ exports.putResortInfoMain = (spot, data) ->
       if res
         exports.getResortInfo(spot)
     
-###    
-exports.postResortInfoHeader = (spot, headerUrl) ->
-  mongo.resorts.findAndModifyAsync(
-      query : {_id : spot}
-      update : {$set  : {"header" : headerUrl} }
-      upsert : false
-    ).then (res) ->
-      if res
-        exports.getResortInfo(spot)
-###
-
 exports.putResortContacts = (spot, contacts) ->
   mongo.resorts.findAndModifyAsync(
       query : {_id : spot}
@@ -98,11 +87,19 @@ exports.putResortProsCons = (spot, proscons) ->
       if res
         exports.getResortInfo(spot)
 
-exports.putResortMaps = (spot, maps) ->
+exports.postResortMap = (spot, map) ->
   mongo.resorts.findAndModifyAsync(
       query : {_id : spot}
-      update : {$set  : {"maps" : maps} }
+      update : { $push  : maps : map }
       upsert : false
+    ).then (res) ->
+      if res
+        exports.getResortInfo(spot)
+
+exports.deleteResortMap = (spot, src) ->
+  mongo.resorts.findAndModifyAsync(
+      query : {_id : spot}
+      update : { $pull  : maps : src :  src}
     ).then (res) ->
       if res
         exports.getResortInfo(spot)

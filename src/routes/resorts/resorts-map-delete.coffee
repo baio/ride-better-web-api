@@ -8,25 +8,24 @@ hapi = require "hapi"
 
 paramsValidationSchema =
   spot : joi.string().required()
+  src : joi.string().required()
 
-payloadValidationSchema =
-  maps : joi.array().includes(
-    src :  joi.string().regex(/(http|ftp|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/).required()
-  )
 
 module.exports =
-  method : "PUT"
-  path : "/resorts/{spot}/maps"
+  method : "DELETE"
+  path : "/resorts/{spot}/maps/{src}"
   config :
     auth : false
     validate :
       params : paramsValidationSchema
-      payload : payloadValidationSchema
   handler : (req, resp) ->
-    resorts.putResortMaps(req.params.spot, req.payload.maps).then (res) ->
+    spot = req.params.spot
+    src = decodeURIComponent req.params.src
+    resorts.deleteResortMap(spot, src)
+    .then (res) ->
       if !res
         resp hapi.Error.notFound()
       else
-        resp res
+        resp ok : true
     , (err) ->
         resp hapi.Error.badRequest err

@@ -2,29 +2,32 @@
 
 joi = require "joi"
 resorts = require "../../data-access/mongo/resorts"
+storeFile = require "../helpers/store-file"
 hapi = require "hapi"
+
+
 
 paramsValidationSchema =
   spot : joi.string().required()
 
 payloadValidationSchema =
-  prices : joi.array().includes(
-    src :  joi.string().regex(/(http|ftp|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/).required()
-    title : joi.string().required()
-    tag : joi.string().required()
-    href : joi.string()
-  )
+  src : joi.string().regex(/(http|ftp|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/).required()
 
 module.exports =
-  method : "PUT"
-  path : "/resorts/{spot}/prices"
+  method : "POST"
+  path : "/resorts/{spot}/map"
   config :
     auth : false
     validate :
       params : paramsValidationSchema
       payload : payloadValidationSchema
   handler : (req, resp) ->
-    resorts.putResortPrices(req.params.spot, req.payload.prices).then (res) ->
+    spot = req.params.spot
+    payload = req.payload
+    storeFile.storeUrl("rb-map-#{spot}", "map", payload.src)
+    .then (res) ->
+      resorts.postResortMap(spot, src : res.url)
+    .then (res) ->
       if !res
         resp hapi.Error.notFound()
       else
