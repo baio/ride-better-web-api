@@ -7,6 +7,7 @@ forecastGet = require "./forecast-get"
 snapshotGet = require "./snapshot-get"
 snowfallHistory = require "./snowfall-history"
 spots = require "../data-access/mongo/spots"
+threads = require "./threads"
 Promise = require "bluebird"
 
 unitNames =
@@ -16,8 +17,10 @@ unitNames =
 
 
 module.exports = (opts) ->
-  Promise.join spots.getSpot(opts.spot), reportsGet(opts), forecastGet(opts), snowfallHistory.getSummary(opts), (spot, reports, forecast, snowfallHistory) ->    
-    snapshot = snapshotGet(opts, reports, forecast)
+  Promise.join spots.getSpot(opts.spot), reportsGet(opts), forecastGet(opts),
+    snowfallHistory.getSummary(opts), threads.getLatestImportantMessages(opts.spot)
+  , (spot, reports, forecast, snowfallHistory, latestImportant) ->    
+    snapshot = snapshotGet(opts, reports, forecast, latestImportant)
     spot : spot
     culture :
       lang : opts.lang
@@ -30,5 +33,6 @@ module.exports = (opts) ->
       code : opts.lang + "-" + opts.culture
     reports : reports
     forecast : forecast
-    snapshot : snapshot
+    latestImportant : latestImportant       
+    snapshot : snapshot    
     snowfallHistory : snowfallHistory

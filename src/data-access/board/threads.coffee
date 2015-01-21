@@ -49,9 +49,10 @@ exports.createThread = (user, prms, msg) ->
 since : query.since
 till : query.till
 spots : spot.split("-")
+priority
 boards :  board
 ###
-exports.getThreads = (q, opts) ->
+exports.getThreads = (q) ->
   since = moment.utc(q.since, "X").toDate() if q?.since
   till = moment.utc(q.till + 1, "X").toDate() if q?.till
 
@@ -70,6 +71,8 @@ exports.getThreads = (q, opts) ->
     query.$and.push created : $lt : since
   if till
     query.$and.push created : $gt : till
+  if q.priority
+    query.$and.push "data.meta.priority" : q.priority
 
   #console.log "threads.coffee:72 >>>", query.$and[0], query.$and[1]
 
@@ -102,6 +105,11 @@ exports.removeThread = (user, threadId) ->
 exports.getThread = (threadId, opts) ->
   mongo.threads.findOneAsync(_id : mongo.ObjectId(threadId)).then (res) ->
     doc2thread res
+
+exports.getLatestImportantMessages = (spot) ->
+  query = tags : [spot, "message"], "data.meta.priority" : "important"
+  mongo.find("ths", query, created : -1, 5).then (res) ->
+    res.map doc2thread    
 
 exports.createReply = (user, threadId, msg) ->
   reply = mapReply user, msg

@@ -6,7 +6,7 @@ summaryFormatter = require "./summaryFormatter"
 bluebird = require "bluebird"
 moment = require "moment"
 
-module.exports = (opts, reports, forecast) ->
+module.exports = (opts, reports, forecast, latestImportant) ->
 
   from = moment.utc().add(-1, "d").startOf("d").unix()
   to = moment.utc().unix()
@@ -60,6 +60,7 @@ module.exports = (opts, reports, forecast) ->
 
   snapshot =
     forecast : if forecast then forecast[0]
+    latestImportant : latestImportant[0]?.data.text
     report :
       summary : summary
       conditions : conditions

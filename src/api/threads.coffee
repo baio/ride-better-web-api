@@ -21,6 +21,9 @@ exports.getThreads = (tags, opts) ->
   .then (res) -> 
     res.map (m) -> mapThread(m, opts)
 
+exports.getLatestImportantMessages = (spot) ->
+  threadsDA.getLatestImportantMessages spot
+
 exports.updateThread = (user, threadId, data) ->
   threadsDA.updateThread(user, threadId, data)
 

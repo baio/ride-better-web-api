@@ -12,6 +12,7 @@ queryValidationSchema =
   since : joi.number().allow("")
   till : joi.number().allow("")
   culture : joi.string().allow("")
+  priority : joi.string().allow("")
 
 module.exports =
   method : "GET"
@@ -30,6 +31,7 @@ module.exports =
     query = 
       since : query.since
       till : query.till
+      priority : query.priority
       spots : spot.split("-").filter (f) -> f
       boards :  if board then board.split("-").filter((f) -> f) else undefined
     threadsApi.getThreads(query, opts).then (res) ->
