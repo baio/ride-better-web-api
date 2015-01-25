@@ -1,0 +1,81 @@
+{
+  "id": "web-api-controller",
+  "kind": "ReplicationController",
+  "apiVersion": "v1beta2",
+  "desiredState": {
+    "replicas": 3,
+    "replicaSelector": {
+      "name": "web-api"
+    },
+    "podTemplate": {
+      "desiredState": {
+        "manifest": {
+          "version": "v1beta2",
+          "id": "web-api-controller",
+          "containers": [
+            {
+              "name": "web-api",
+              "image": "gcr.io/rb_gce/ride-better-web-api",
+              "cpu": 1000,
+              "ports": [
+                {
+                  "name": "web-api-port",
+                  "containerPort": 8080,
+                  "hostPort": 85
+                }
+              ],
+              "env": [
+                {
+                  "name": "NODE_ENV",
+                  "value": "gce-stage"
+                },
+                {
+                  "name": "MONGO_URI",
+                  "value": "mongodb://heroku_app31445045:db9rp9npiecuson5oj9u61n233@ds053080.mongolab.com:53080/heroku_app31445045"
+                },
+                {
+                  "name": "REDUCED_MONGO_URI",
+                  "value": "mongodb://baio:123@ds055680.mongolab.com:55680/ride-better-fhist"
+                },
+                {
+                  "name": "WEBCAMS_MONGO_URI",
+                  "value": "mongodb://baio:123@ds053080.mongolab.com:53080/heroku_app31445045"
+                },
+                {
+                  "name": "ELASTIC_URI",
+                  "value": "https://m09vdd3s:aohppx2un3q90oa3@maple-9608858.us-east-1.bonsai.io"
+                },
+                {
+                  "name": "PORT",
+                  "value": "8080"
+                },
+                {
+                  "name": "FORECASTIO_KEY",
+                  "value": "c627c992deb04400940b50c6e1ee0562"
+                },
+                {
+                  "name": "JWT_SECRET",
+                  "value": "allBestthings1979"
+                },
+                                {
+                  "name": "TRANSLOADIT_KEY",
+                  "value": "290e6190a00011e491358df208cf6f2f"
+                },
+                {
+                  "name": "TRANSLOADIT_SECRET",
+                  "value": "8def32446ff5b80760bda159ee5d743bc38a5fd9"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "labels": {
+        "name": "web-api"
+      }
+    }
+  },
+  "labels": {
+    "name": "web-api"
+  }
+}

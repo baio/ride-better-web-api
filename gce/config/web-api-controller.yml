@@ -1,6 +1,6 @@
 id: "web-api-controller"
 kind: "ReplicationController"
-apiVersion: "v1beta1"
+apiVersion: "v1beta2"
 desiredState: 
   replicas: 3
   replicaSelector: 
@@ -8,12 +8,12 @@ desiredState:
   podTemplate: 
     desiredState: 
       manifest: 
-        version: "v1beta1"
+        version: "v1beta2"
         id: "web-api-controller"
         containers: 
           - 
             name: "web-api"
-            image: "google/baio/ride-better-web-api"
+            image: "gcr.io/rb_gce/ride-better-web-api"
             cpu: 1000
             ports: 
               - 

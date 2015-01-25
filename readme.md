@@ -1,11 +1,15 @@
 Ride Better Web Api
 ===================
 
+gcloud config set project PROJECT
+
+gcloud preview container clusters create rb-satge --num-nodes 3 --machine-type n1-standard-1
+gcloud config set compute/zone europe-west1-c
 
 ```
 sudo docker run -d -p 85:8080 --restart=always \
 -e "NODE_ENV=gce-stage" \
--e "MONGO_URI=mongodb://heroku_app31445045:db9rp9npiecuson5oj9u61n233@ds053080.mongolab.com:53080/heroku_app31445045" \
+-e "MONGO_URI=mongodb://heroku_app31445045:db9rp9npiecuson5oj9u61n233@ds053080.mongolab.com:53080/<head></head>eroku_app31445045" \
 -e "REDUCED_MONGO_URI=mongodb://baio:123@ds055680.mongolab.com:55680/ride-better-fhist" \
 -e "WEBCAMS_MONGO_URI=mongodb://baio:123@ds053080.mongolab.com:53080/heroku_app31445045" \
 -e "ELASTIC_URI=https://m09vdd3s:aohppx2un3q90oa3@maple-9608858.us-east-1.bonsai.io" \
