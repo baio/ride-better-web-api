@@ -1,6 +1,11 @@
 Ride Better Web Api
 ===================
 
+
+Forwarding rule must be created once per project! 
+
+Network Load Balancing - cluster pool ports - 85-86
+
 gcloud config set project PROJECT
 
 gcloud preview container clusters create rb-satge --num-nodes 3 --machine-type n1-standard-1
