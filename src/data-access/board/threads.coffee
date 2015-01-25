@@ -115,7 +115,7 @@ exports.createReply = (user, threadId, msg) ->
   reply = mapReply user, msg
   reply._id = mongo.ObjectId()
   mongo.threads.findAndModifyAsync(
-    query : {_id : mongo.ObjectId(threadId), "user.key" : user.key}
+    query : {_id : mongo.ObjectId(threadId)}
     update : $push : replies : reply          
     new : false
     upsert : false
