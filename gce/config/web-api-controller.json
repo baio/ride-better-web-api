@@ -15,7 +15,7 @@
           "containers": [
             {
               "name": "web-api",
-              "image": "gcr.io/rb_gce/ride-better-web-api",
+              "image": "gcr.io/rb_gce/ride-better-web-api-1",
               "cpu": 1000,
               "ports": [
                 {

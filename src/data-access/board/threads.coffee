@@ -131,10 +131,10 @@ exports.updateReply = (user, replyId, msg) ->
   mongo.threads.findAndModifyAsync(
     query : {"replies._id" : mongo.ObjectId(replyId), "user.key" : user.key}
     update : $set : "replies.$.data" :  reply.data
-    new : false
+    new : true
     upsert : false
-    fields : _id : 1
   ).then (res) ->
+    console.log "threads.coffee:138 >>>", res
     if res.n == 0
       throw new Error "Reply #{replyId} not found"
     else
