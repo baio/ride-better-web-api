@@ -1,9 +1,10 @@
 {
   "id": "web-api-service",
   "kind": "Service",
-  "apiVersion": "v1beta2",
+  "apiVersion": "v1beta1",
   "port": 85,
   "containerPort": "web-api-port",
+  "createExternalLoadBalancer": true,
   "selector": {
     "name": "web-api"
   },

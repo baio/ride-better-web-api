@@ -1,7 +1,7 @@
 {
   "id": "web-api-controller",
   "kind": "ReplicationController",
-  "apiVersion": "v1beta2",
+  "apiVersion": "v1beta1",
   "desiredState": {
     "replicas": 3,
     "replicaSelector": {
@@ -10,12 +10,12 @@
     "podTemplate": {
       "desiredState": {
         "manifest": {
-          "version": "v1beta2",
+          "version": "v1beta1",
           "id": "web-api-controller",
           "containers": [
             {
               "name": "web-api",
-              "image": "gcr.io/rb_gce/ride-better-web-api-1",
+              "image": "gcr.io/rb_gce/ride-better-web-api:latest",
               "cpu": 1000,
               "ports": [
                 {

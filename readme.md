@@ -8,11 +8,12 @@ Network Load Balancing - cluster pool ports - 85-86
 
 gcloud config set project PROJECT
 
+gcloud config set compute/zone europe-west1-b
 gcloud preview container clusters create rb-satge --num-nodes 3 --machine-type n1-standard-1
-gcloud config set compute/zone europe-west1-c
+
 
 ```
-sudo docker run -d -p 85:8080 --restart=always \
+docker run -d -p 85:8080 --restart=always \
 -e "NODE_ENV=gce-stage" \
 -e "MONGO_URI=mongodb://heroku_app31445045:db9rp9npiecuson5oj9u61n233@ds053080.mongolab.com:53080/<head></head>eroku_app31445045" \
 -e "REDUCED_MONGO_URI=mongodb://baio:123@ds055680.mongolab.com:55680/ride-better-fhist" \
@@ -31,10 +32,12 @@ sudo docker run -d -p 86:8080 --restart=always \
 -e "JWT_SECRET=allBestthings1979" \
 baio/auth-api 
 
-sudo docker run -d -p 80:8080 --restart=always \
+sudo docker run -d -p 80:8080 \
 -e "NODE_ENV=gce_stage" \
 -e "PORT=8080" \
 -e "NEW_RELIC_LICENSE_KEY=cdc04e9a1643f8b59cbfe567de85e9fa2e7e39f8" \
+gcr.io/rb_gce/ride-better-web-app
+
 baio/ride-better-web-app
 
 
