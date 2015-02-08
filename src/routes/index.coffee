@@ -35,5 +35,6 @@ module.exports = [
   require("./board/transfers/transfer-request-post")  
   require("./board/transfers/transfer-request-delete")  
   require("./board/transfers/transfer-accept-request-put")  
-  require("./history/snowfall-history")  
+  require("./history/snowfall-history")
+  require("./platforms/platforms-post")
 ]
