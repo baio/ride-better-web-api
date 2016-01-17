@@ -16,7 +16,7 @@ AZURE_STORAGE_ACCOUNT=dataavail
 AZURE_STORAGE_ACCESS_KEY=rwdE+L8oCXMnuCPVbFudvRDt28fqEjl9KVKbA+ZzcbVGYZQ6OR7YyK95Pk+QSNGEsgb3k6ZL4wctZFz5bhl26A==
 ```
 
-#Initialize es data
+##Initialize es data
 
 Commands should be executed in `scripts/es` dir
 
@@ -29,7 +29,11 @@ Commands should be executed in `scripts/es` dir
 4. import data from buld to  elastic search
 `curl https://m09vdd3s:aohppx2un3q90oa3@maple-9608858.us-east-1.bonsai.io:443/_bulk --data-binary @bulk.txt`
  
-# OLD STUFF HERE
+##Run
+
+`npm start`
+ 
+## OLD STUFF HERE
 
 Forwarding rule must be created once per project! 
 
