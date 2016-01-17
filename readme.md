@@ -1,6 +1,35 @@
 Ride Better Web Api
 ===================
 
+## Config Vars
+
+`.env` file with following variables should be created in root 
+
+```
+NODE_ENV=
+MONGO_URI=
+ELASTIC_URI=
+FORECASTIO_KEY=
+REDUCED_MONGO_URI=
+WEBCAMS_MONGO_URI=
+AZURE_STORAGE_ACCOUNT=dataavail
+AZURE_STORAGE_ACCESS_KEY=rwdE+L8oCXMnuCPVbFudvRDt28fqEjl9KVKbA+ZzcbVGYZQ6OR7YyK95Pk+QSNGEsgb3k6ZL4wctZFz5bhl26A==
+```
+
+#Initialize es data
+
+Commands should be executed in `scripts/es` dir
+
+1. Export data from mongo `skimap` collection
+`mongoexport --host ds053080.mongolab.com:53080 --db heroku_app31445045  --collection skimap --out "./spots.json"`
+2. Create `bulk.txt` file
+`coffee spots-es-bulk.coffee`
+3. create `rmap` index 
+`curl -XPUT https://m09vdd3s:aohppx2un3q90oa3@maple-9608858.us-east-1.bonsai.io/rspots/ --data-binary @es-spots-index.json`
+4. import data from buld to  elastic search
+`curl https://m09vdd3s:aohppx2un3q90oa3@maple-9608858.us-east-1.bonsai.io:443/_bulk --data-binary @bulk.txt`
+ 
+# OLD STUFF HERE
 
 Forwarding rule must be created once per project! 
 
@@ -13,9 +42,6 @@ gcloud preview container clusters create rb-satge --num-nodes 3 --machine-type n
 
 
 docker run -d -p 85:8080 --env-file .envs/stage.env baio/ride-better-web-api 
-
-
-
 
 ```
 

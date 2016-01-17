@@ -16,4 +16,5 @@ module.exports =
     validate : query : queryValidationSchema
   handler : (req, resp) ->
     geo = req.query.geo.split(",").map (m) -> parseFloat m
+    console.log geo
     nearestSpotsGet(geo).then resp, (err) -> resp hapi.Error.badRequest err
