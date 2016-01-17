@@ -18,7 +18,7 @@ module.exports =
     resorts.getResortInfo(req.params.spot).then (res) ->
       if !res
         resp hapi.Error.notFound()
-      else
+      else      
         resp res
     , (err) ->
       resp hapi.Error.badRequest err

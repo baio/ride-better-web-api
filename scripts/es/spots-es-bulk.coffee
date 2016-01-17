@@ -6,6 +6,7 @@ lazy = require "lazy"
 #curl -s -XPOST localhost:9200/_bulk --data-binary @bulk.txt; echo
 #curl -s -XPOST https://eszkh0q3:7w0zo4acg2sz893k@box-777024.us-east-1.bonsai.io:443/_bulk --data-binary @bulk.txt; echo
 #curl -s -https://m09vdd3s:aohppx2un3q90oa3@maple-9608858.us-east-1.bonsai.io:443/_bulk --data-binary @bulk.txt; echo
+#curl https://m09vdd3s:aohppx2un3q90oa3@maple-9608858.us-east-1.bonsai.io:443/_bulk --data-binary @bulk.txt
 
 try
   fs.unlinkSync('./bulk.txt')
